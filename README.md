@@ -1,5 +1,5 @@
 # Employee Referral Front End Application 
-# Tech Stack - HTML, CSS, Angular 7
+Tech Stack - HTML, CSS, Angular 7
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.0.
 
