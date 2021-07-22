@@ -1,0 +1,15 @@
+body {
+  background-color: #f5f5f5;
+}
+h6,
+h1,
+h5,
+li {
+  font-family: "Candara", cursive, sans-serif;
+}
+li {
+  padding: 25px 25px;
+}
+a {
+  color: #8a25b1;
+}

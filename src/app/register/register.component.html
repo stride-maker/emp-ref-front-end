@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> </head>
+
+  <body>
+    <div class="register">
+      <!-- Header Section -->
+      <nav class="navbar navbar-expand-xl navbar-dark">
+        <a routerLink="" class="navbar-brand ml-1"
+          ><img
+            src="/assets/images/logo.png"
+            width="90px"
+            height="90px"
+            alt="FootstepsBrandLogo"
+        /></a>
+        <button
+          type="button"
+          class="navbar-toggler"
+          data-toggle="collapse"
+          data-target="#navbarCollapse"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item ml-4">
+              <a routerLink="/home" class="btn btn-sm btn-outline-dark px-3"
+                >HOME</a
+              >
+            </li>
+            <li class="nav-item ml-4">
+              <a routerLink="/about-us" class="btn btn-sm btn-outline-dark px-3"
+                >ABOUT US</a
+              >
+            </li>
+            <li class="nav-item ml-4">
+              <a
+                routerLink="/job-seeker"
+                class="btn btn-sm btn-outline-dark px-3"
+                >JOB SEEKER</a
+              >
+            </li>
+            <li class="nav-item ml-4">
+              <a
+                routerLink="/job-referrer"
+                class="btn btn-sm btn-outline-dark px-3"
+                >JOB REFERRER</a
+              >
+            </li>
+            <li class="nav-item dropdown ml-4">
+              <a
+                class="btn btn-sm btn-outline-dark dropdown-toggle px-3"
+                data-toggle="dropdown"
+              >
+                MORE
+              </a>
+              <div class="dropdown-menu">
+                <a routerLink="/contact-us" class="btn btn-sm dropdown-item"
+                  >Contact Us</a
+                >
+              </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item ml-4">
+              <a routerLink="/login" class="btn btn-sm btn-outline-dark px-3"
+                >LOGIN &nbsp;&nbsp; <i class="fa fa-sign-in"></i
+              ></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Register Header -->
+      <div class="container-fluid">
+        <hr />
+        <div class="row">
+          <div class="col-sm-4 offset-sm-4 text-center">
+            <h2>Register</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 offset-sm-3 text-center">
+            <h5>
+              Create recruiting opportunities in businesses of concern with
+              peers
+            </h5>
+          </div>
+        </div>
+        <hr />
+      </div>
+
+      <!-- Registration Form-->
+
+      <div class="container">
+        <form
+          #registerForm="ngForm"
+          (ngSubmit)="register(registerForm); registerForm.reset()"
+        >
+          <div *ngIf="isLoading" class="form-group row">
+            <div class="col-sm-4 offset-sm-4">
+              <h6 style="text-align: center">Please wait...</h6>
+              <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-4 offset-sm-2">
+              <label for="firstName"></label>
+              <input
+                ngModel
+                name="firstName"
+                #firstName="ngModel"
+                type="text"
+                maxlength="36"
+                class="form-control"
+                id="firstName"
+                placeholder="Enter your first name"
+                required
+              />
+            </div>
+            <div class="col-sm-4">
+              <label for="lastName"></label>
+              <input
+                ngModel
+                name="lastName"
+                #lastName="ngModel"
+                type="text"
+                maxlength="36"
+                class="form-control"
+                id="lastName"
+                placeholder="Enter your last name"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-4 offset-sm-2">
+              <label for="email"></label>
+              <input
+                ngModel
+                name="email"
+                #email="ngModel"
+                type="email"
+                maxlength="36"
+                class="form-control"
+                id="email"
+                pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+                placeholder="Enter your email"
+                required
+              />
+              <small class="form-text text-muted">
+                Email should be a valid address.
+              </small>
+            </div>
+            <div class="col-sm-4">
+              <label for="password"></label>
+              <input
+                ngModel
+                name="password"
+                #password="ngModel"
+                type="password"
+                maxlength="36"
+                class="form-control"
+                id="password"
+                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                placeholder="Enter your password"
+                required
+              />
+              <small class="form-text text-muted">
+                Your password must be minimum 8 characters and contain a digit,
+                lowercase, uppercase and special character.
+              </small>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <div class="col-sm-5 offset-sm-2">
+              <label class="form-check-label"
+                ><input
+                  ngModel
+                  name="terms"
+                  #terms="ngModel"
+                  type="checkbox"
+                  required
+                /><em>
+                  I agree to the
+                  <a routerLink="/terms-and-conditions">terms of service</a>
+                  and
+                  <a routerLink="/privacy-policy">privacy policy.</a></em
+                ></label
+              >
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-4 offset-sm-4">
+              <button
+                type="submit"
+                class="btn btn-lg btn-success btn-block"
+                [disabled]="!registerForm.valid"
+              >
+                Sign Up
+              </button>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <div class="col-sm-4 offset-sm-4">
+              <p class="text-center">
+                Already a member?
+                <b><a routerLink="/login">Login</a></b>
+              </p>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div
+        id="registerSuccessfulModal"
+        class="modal fade animate__animated animate__heartBeat"
+        [ngStyle]="{ display: showRegisterSuccessfulModal ? 'block' : 'none' }"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div
+              class="modal-header justify-content-center"
+              id="registerHeader"
+            >
+              <br />
+              <div class="icon-box">
+                <i id="registerIcon" class="fa fa-check-square fa-5x"></i>
+              </div>
+              <br />
+            </div>
+            <div class="modal-body text-center">
+              <h4 style="color: black">Awesome.</h4>
+              <p style="color: black">
+                Your Footsteps account is created successfully.
+              </p>
+              <p style="color: black">
+                <small
+                  >You are now ready to refer, apply and earn by
+                  referrals.</small
+                >
+              </p>
+              <button
+                id="registerButton"
+                class="btn"
+                data-dismiss="modal"
+                routerLink="/login"
+              >
+                Let's Login!
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        id="registerSuccessfulButton"
+        [hidden]="true"
+        data-toggle="modal"
+        data-target="#registerSuccessfulModal"
+      ></button>
+      <div class="row">
+        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      </div>
+      <div class="row">
+        <div class="col-sm-10 offset-sm-1">
+          <h5 class="mx-5 text-justify">
+            <strong>DISCLAIMER</strong> <br /><br />You understand that by
+            clicking to acknowledge the terms found in the Privacy Policy and
+            Terms and Conditions of Use, you have read, acknowledged and agreed
+            to be bound by this policy and these terms. If you don't want to be
+            bound by this policy and these words, you cannot access the
+            password-protected parts of this site.
+          </h5>
+        </div>
+      </div>
+      <div class="row"><br /><br /></div>
+    </div>
+    <app-notification></app-notification>
+    <app-footer></app-footer>
+  </body>
+</html>

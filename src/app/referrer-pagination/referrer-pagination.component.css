@@ -1,0 +1,8 @@
+.pagination {
+  font-size: 12px;
+}
+.pagination .page-item.active .page-link {
+  background-color: #37474f;
+  border: #37474f;
+  top: 1px;
+}

@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> </head>
+
+  <body>
+    <app-inside-header class="fixed-top"></app-inside-header>
+    <br />
+    <br />
+    <div *ngIf="showLoadingScreen">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <div *ngIf="!showLoadingScreen">
+      <div class="container-fluid" id="headerContainer">
+        <br /><br /><br />
+        <div class="row">
+          <div class="col-sm-4 offset-sm-3">
+            <h2 style="color: white; font-family: Candara, cursive, sans-serif">
+              Lets Apply!
+              <em>
+                <h5
+                  style="
+                    color: white;
+                    font-family: Candara, cursive, sans-serif;
+                  "
+                >
+                  &nbsp;&nbsp;&nbsp;&nbsp;and get a job by referrals
+                </h5>
+              </em>
+            </h2>
+            <br />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4 offset-sm-2">
+            <br />
+            <em>
+              <h5
+                style="color: white; font-family: Candara, cursive, sans-serif"
+              >
+                <i class="fa fa-briefcase"></i>&nbsp;&nbsp;Recommended jobs for
+                your profile..
+              </h5>
+            </em>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="container" id="bodyContainer">
+        <div class="row text-center">
+          <div class="col-sm-3 offset-sm-1 text-center jobByLocation">
+            <i class="fa fa-filter" aria-hidden="true"></i>
+            <a class="btn"> Jobs by Location </a>
+            <div class="dropdown-menu animate__animated animate__fadeInLeft">
+              <div class="row" style="width: 430px">
+                <div class="col-sm-5 offset-sm-1 text-left">
+                  <ul class="list-unstyled">
+                    <li class="mt-1">
+                      <button (click)="changeLocationFilter('Bengaluru')">
+                        Jobs in Bengaluru
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button (click)="changeLocationFilter('Gurgaon')">
+                        Jobs in Gurgaon
+                      </button>
+                    </li>
+                    <hr />
+                    <li class="mt-1">
+                      <button (click)="changeLocationFilter('Delhi')">
+                        Jobs in Delhi
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button (click)="changeLocationFilter('Kolkata')">
+                        Jobs in Kolkata
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button (click)="changeLocationFilter('Ahmedabad')">
+                        Jobs in Ahmedabad
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-sm-5 text-left">
+                  <ul class="list-unstyled">
+                    <li class="mt-1">
+                      <button (click)="changeLocationFilter('Chennai')">
+                        Jobs in Chennai
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button (click)="changeLocationFilter('Hyderabad')">
+                        Jobs in Hyderabad
+                      </button>
+                    </li>
+                    <hr />
+                    <li class="mt-1">
+                      <button (click)="changeLocationFilter('Pune')">
+                        Jobs in Pune
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button (click)="changeLocationFilter('Mumbai')">
+                        Jobs in Mumbai
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button (click)="changeLocationFilter('Noida')">
+                        Jobs in Noida
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3 offset-sm-1 text-center jobByExperience">
+            <i class="fa fa-filter" aria-hidden="true"></i>
+            <a class="btn"> Jobs by Experience </a>
+            <div class="dropdown-menu animate__animated animate__fadeInUp">
+              <div class="row" style="width: 430px">
+                <div class="col-sm-5 offset-sm-1 text-left">
+                  <ul class="list-unstyled">
+                    <li class="mt-1">
+                      <button
+                        (click)="changeExperienceFilter('0 year', '0 year')"
+                      >
+                        Fresher
+                      </button>
+                    </li>
+                    <hr />
+                    <li class="mt-1">
+                      <button
+                        (click)="changeExperienceFilter('1 year', '1 year')"
+                      >
+                        1 year of exp
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button
+                        (click)="changeExperienceFilter('2 year', '3 year')"
+                      >
+                        2-3 years of exp
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button
+                        (click)="changeExperienceFilter('4 year', '5 year')"
+                      >
+                        4-5 years of exp
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button
+                        (click)="changeExperienceFilter('6 year', '7 year')"
+                      >
+                        6-7 years of exp
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-sm-5 text-left">
+                  <ul class="list-unstyled">
+                    <li class="mt-1">
+                      <button
+                        (click)="changeExperienceFilter('15 year', '15 year')"
+                      >
+                        15+ years of exp
+                      </button>
+                    </li>
+                    <hr />
+                    <li class="mt-1">
+                      <button
+                        (click)="changeExperienceFilter('8 year', '9 year')"
+                      >
+                        8-9 years of exp
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button
+                        (click)="changeExperienceFilter('10 year', '11 year')"
+                      >
+                        10-11 years of exp
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button
+                        (click)="changeExperienceFilter('12 year', '13 year')"
+                      >
+                        12-13 years of exp
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button
+                        (click)="changeExperienceFilter('14 year', '15 year')"
+                      >
+                        14-15 years of exp
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-sm-3 offset-sm-1 offset-right-1 text-center jobByDesignation"
+          >
+            <i class="fa fa-filter" aria-hidden="true"></i>
+            <a class="btn"> Jobs by Designation </a>
+            <div class="dropdown-menu animate__animated animate__fadeInRight">
+              <div class="row" style="width: 430px">
+                <div class="col-sm-5 offset-sm-1 text-left">
+                  <ul class="list-unstyled">
+                    <li class="mt-1">
+                      <button (click)="changeDesignationFilter('Team Lead')">
+                        Team Lead
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button (click)="changeDesignationFilter('Project Lead')">
+                        Project Lead
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button
+                        (click)="changeDesignationFilter('Web Developer')"
+                      >
+                        Web Developer
+                      </button>
+                    </li>
+                    <hr />
+                    <li class="mt-1">
+                      <button
+                        (click)="changeDesignationFilter('Technical Lead')"
+                      >
+                        Technical Lead
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button
+                        (click)="changeDesignationFilter('Design Engineer')"
+                      >
+                        Design Engineer
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button
+                        (click)="changeDesignationFilter('Project Manager')"
+                      >
+                        Project Manager
+                      </button>
+                    </li>
+                    <hr />
+                    <li class="mt-1">
+                      <button
+                        (click)="changeDesignationFilter('Quality Analyst')"
+                      >
+                        Quality Analyst
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button
+                        (click)="changeDesignationFilter('System Engineer')"
+                      >
+                        System Engineer
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button
+                        (click)="changeDesignationFilter('Business Analyst')"
+                      >
+                        Business Analyst
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-sm-5 text-left">
+                  <ul class="list-unstyled">
+                    <li class="mt-1">
+                      <button
+                        (click)="changeDesignationFilter('Delivery Manager')"
+                      >
+                        Delivery Manager
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button
+                        (click)="changeDesignationFilter('Quality Engineer')"
+                      >
+                        Quality Engineer
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button
+                        (click)="changeDesignationFilter('Security Analyst')"
+                      >
+                        Security Analyst
+                      </button>
+                    </li>
+                    <hr />
+                    <li class="mt-1">
+                      <button
+                        (click)="changeDesignationFilter('Software Analyst')"
+                      >
+                        Software Analyst
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button
+                        (click)="changeDesignationFilter('Software Engineer')"
+                      >
+                        Software Engineer
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button
+                        (click)="changeDesignationFilter('Technical Manager')"
+                      >
+                        Technical Manager
+                      </button>
+                    </li>
+                    <hr />
+                    <li class="mt-1">
+                      <button
+                        (click)="changeDesignationFilter('Solutions Architect')"
+                      >
+                        Solutions Architect
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button
+                        (click)="changeDesignationFilter('Technology Analyst')"
+                      >
+                        Technology Analyst
+                      </button>
+                    </li>
+                    <li class="mt-1">
+                      <button
+                        (click)="changeDesignationFilter('Technical Architect')"
+                      >
+                        Technical Architect
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="container-fluid">
+        <div class="row">
+          <div *ngIf="!skillsPresentForUser" class="col-sm-12">
+            <br /><br />
+            <div class="row">
+              <div class="col-sm-12 text-center">
+                <img
+                  src="/assets/images/fresh_page.png"
+                  width="350px"
+                  height="200px"
+                />
+                <br /><br />
+                <h2>You haven't provided us your skillset</h2>
+                <h5>
+                  Please navigate to profile page to configure your skills..
+                </h5>
+                <br />
+                <a class="btn btn-sm btn-primary" routerLink="/profile">
+                  <i class="fa fa-user-circle"></i>&nbsp;&nbsp; Navigate to edit
+                  profile
+                </a>
+              </div>
+            </div>
+          </div>
+          <div
+            *ngIf="
+              filteredAllJobCardResponses?.length == 0 &&
+              skillsPresentForUser &&
+              !showLoadingJobs
+            "
+            class="col-sm-8"
+          >
+            <br /><br />
+            <div class="row">
+              <div class="col-sm-12 text-center">
+                <img
+                  src="/assets/images/no_job.png"
+                  width="350px"
+                  height="200px"
+                />
+                <br /><br /><br />
+                <h2>Sorry! We couldn't find any active referrals.</h2>
+                <h5>Please do comeback and try again..</h5>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="showLoadingJobs && skillsPresentForUser" class="col-sm-8">
+            <app-job-spinner></app-job-spinner>
+            <div class="row text-center">
+              <div class="col-sm-2 offset-sm-5">Searching jobs</div>
+            </div>
+          </div>
+          <div
+            *ngIf="filteredAllJobCardResponses?.length != 0 && !showLoadingJobs"
+            class="col-sm-8"
+          >
+            <br />
+            <strong class="offset-sm-1"
+              ><em>Jobs based on Your Skill Preferences</em></strong
+            >
+            <div class="row justify-content-end mr-3">
+              <app-seeker-pagination
+                [items]="items"
+                (changePage)="onChangePage($event)"
+              ></app-seeker-pagination>
+            </div>
+            <div *ngFor="let jobCard of pageOfItems" class="col-sm-12">
+              <div class="card text-white" id="job">
+                <div class="card-header">
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <h5>
+                        <b
+                          ><i>{{ jobCard.jobCardTitle }}</i></b
+                        >
+                      </h5>
+                    </div>
+                    <div class="col-sm-3">
+                      <a
+                        routerLink="/apply-job"
+                        [queryParams]="{
+                          jobId: jobCard.jobId
+                        }"
+                        style="
+                          color: white;
+                          font-family: Candara, cursive, sans-serif;
+                        "
+                        class="btn btn-sm btn-primary btn-block active"
+                        target="_blank"
+                        >Apply</a
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <h6 class="card-title">
+                        {{ jobCard.jobCardDesignation }} at
+                        <a
+                          href="{{ jobCard.jobCardCompanyURL }}"
+                          style="color: white"
+                          target="_blank"
+                          ><i>{{ jobCard.jobCardOrganization }}</i></a
+                        >
+                      </h6>
+                    </div>
+                    <div
+                      *ngFor="let skill of jobCard.jobSkills"
+                      class="col-sm-4 text-right"
+                    >
+                      <a
+                        *ngIf="skill.jobSkillType == 'Primary'"
+                        style="color: white; font-size: 16px"
+                        class="chip1"
+                        disabled
+                      >
+                        {{ skill.jobSkillName }}
+                      </a>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <p>
+                        <small
+                          ><span><i class="fa fa-briefcase"></i></span
+                          >&nbsp;&nbsp;{{ jobCard.jobCardMinExperience }} -
+                          {{ jobCard.jobCardMaxExperience }}</small
+                        >&nbsp;&nbsp;&nbsp;&nbsp;
+                        <small
+                          ><span><i class="fa fa-map-marker"></i></span
+                          >&nbsp;&nbsp;{{ jobCard.jobCardLocation }}</small
+                        >
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 text-justify">
+                      <p>
+                        <i class="fa fa-book"></i>
+                        {{ jobCard.jobCardDescription | slice: 0:275 }}...
+                        <a
+                          routerLink="/apply-job"
+                          [queryParams]="{
+                            jobId: jobCard.jobId
+                          }"
+                          target="_blank"
+                          >See more</a
+                        >
+                      </p>
+                    </div>
+                  </div>
+                  <p *ngIf="jobCard.jobSkills?.length > 1" class="card-text">
+                    <i class="fa fa-angle-double-down"></i
+                    >&nbsp;&nbsp;Additional Skills
+                  </p>
+                  <div
+                    *ngFor="let skill of jobCard.jobSkills"
+                    style="display: inline-block"
+                  >
+                    <a
+                      *ngIf="skill.jobSkillType == 'Secondary'"
+                      class="chip1 ml-3 mt-2"
+                      >{{ skill.jobSkillName }}</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <hr />
+            </div>
+            <div *ngIf="pageOfItems?.length >= 5" class="col-sm-2 offset-sm-10">
+              <a
+                class="btn btn-sm btn-block"
+                id="scrollUp"
+                (click)="scrollToTop()"
+              >
+                <b>Scroll Up</b>&nbsp;
+                <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+          <div *ngIf="skillsPresentForUser" class="col-sm-3 ml-5">
+            <br />
+            <br />
+            <div class="row">
+              <div class="col-sm-9 offset-sm-2">
+                <div class="card" id="jobDetailCard">
+                  <div class="card-header">
+                    <h5>Applied Jobs</h5>
+                    <hr />
+                    <h4
+                      style="
+                        color: #81282d;
+                        font-family: Arial, Helvetica, sans-serif;
+                      "
+                    >
+                      <b> {{ jobCount.appliedJobCount | number }}</b>
+                    </h4>
+                    <h6>and counting!</h6>
+                  </div>
+
+                  <div class="card-header">
+                    <h5>Referred Jobs</h5>
+                    <hr />
+                    <h4
+                      style="
+                        color: #81282d;
+                        font-family: Arial, Helvetica, sans-serif;
+                      "
+                    >
+                      <b> {{ jobCount.referredJobCount | number }}</b>
+                    </h4>
+                    <h6>and counting!</h6>
+                  </div>
+
+                  <div class="card-footer">
+                    <div class="row">
+                      <div class="col-sm-6 mt-1 text-left">
+                        <h6>Share Us!</h6>
+                      </div>
+                      <div class="col-sm-6 text-right">
+                        <a href=""
+                          ><span
+                            ><i
+                              class="fa fa-facebook-square fa-lg"
+                              aria-hidden="true"
+                            ></i></span
+                        ></a>
+                        <a href="">
+                          <span class="ml-2"
+                            ><i
+                              class="fa fa-twitter-square fa-lg"
+                              aria-hidden="true"
+                            ></i> </span
+                        ></a>
+                        <a href="">
+                          <span class="ml-2"
+                            ><i
+                              class="fa fa-linkedin-square fa-lg"
+                              aria-hidden="true"
+                            ></i> </span
+                        ></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <app-notification></app-notification>
+      <app-inside-footer></app-inside-footer>
+    </div>
+  </body>
+</html>

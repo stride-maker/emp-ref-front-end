@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> </head>
+
+  <body>
+    <app-inside-header class="fixed-top"></app-inside-header>
+    <br />
+    <br />
+    <div *ngIf="showLoadingScreen">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <div *ngIf="!showLoadingScreen">
+      <div class="container-fluid" id="headerContainer">
+        <br /><br /><br />
+        <div class="row">
+          <div class="col-sm-3 offset-sm-9">
+            <h2 style="font-family: Candara, cursive, sans-serif; color: white">
+              Track
+              <em>
+                <h5 style="font-family: Candara, cursive, sans-serif">
+                  &nbsp;&nbsp;&nbsp;&nbsp;status of your job applications
+                </h5>
+              </em>
+            </h2>
+            <br />
+            <p style="font-family: Candara, cursive, sans-serif; color: white">
+              Keep applying..
+            </p>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="container-fluid">
+        <div class="row">
+          <div *ngIf="appliedJobResponse?.length == 0" class="col-sm-12">
+            <br /><br />
+            <div class="row">
+              <div class="col-sm-12 text-center">
+                <img
+                  src="/assets/images/fresh_page.png"
+                  width="350px"
+                  height="200px"
+                />
+                <br /><br />
+                <h2>We don't have any applied job by you</h2>
+                <h5>Please click below button and start applying..</h5>
+                <br />
+                <br />
+                <a class="btn btn-primary" routerLink="/job-portal">
+                  Navigate to Job Portal
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3 mx-5">
+            <div
+              *ngIf="resumeName && appliedJobResponse?.length != 0"
+              class="row"
+            >
+              <div class="col-sm-10 ml-2">
+                <div *ngIf="showUpdatedResume" class="form-group row">
+                  <div class="col-sm-12">
+                    <h6 style="text-align: center; color: black">
+                      Downloading Resume...
+                    </h6>
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                  </div>
+                </div>
+                <h4 *ngIf="!showLoadingJobs" class="ml-4">Resume</h4>
+              </div>
+            </div>
+            <div
+              *ngIf="
+                resumeName &&
+                appliedJobResponse?.length != 0 &&
+                !showLoadingJobs
+              "
+              class="row"
+            >
+              <div class="col-sm-10 ml-2 mt-2">
+                <div>
+                  <p class="chip ml-4" style="font-size: 16px">
+                    {{ resumeName }} &nbsp;&nbsp;&nbsp;&nbsp;<a
+                      (click)="getUpdatedResume()"
+                      class="btn btn-sm"
+                      ><i
+                        class="fa fa-cloud-download"
+                        style="font-size: 18px"
+                      ></i
+                    ></a>
+                  </p>
+                  <br />
+                </div>
+              </div>
+            </div>
+            <br />
+            <div *ngIf="appliedJobResponse?.length != 0 && !showLoadingJobs">
+              <div class="row">
+                <div class="col-sm-7 ml-2">
+                  <h4 class="ml-4"><strong>Filters</strong></h4>
+                </div>
+                <div class="col-sm-3 mt-2 ml-2">
+                  x
+                  <a class="clearAll" (click)="clearFilter()">Clear</a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-10 ml-2">
+                  <hr />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-10 ml-2">
+                  <h6 class="ml-4"><strong>Job Status</strong></h6>
+                  <hr />
+                  <div class="row">
+                    <div class="col-sm-10 ml-4">
+                      <input
+                        type="checkbox"
+                        id="activeCheckBox"
+                        [(ngModel)]="filterForJobStatus.active"
+                        (ngModelChange)="applyFilter()"
+                      />
+                      <label for="activeCheckBox">&nbsp;&nbsp; Active</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-10 ml-4">
+                      <input
+                        type="checkbox"
+                        id="expiredCheckBox"
+                        [(ngModel)]="filterForJobStatus.expired"
+                        (ngModelChange)="applyFilter()"
+                      />
+                      <label for="expiredCheckBox">&nbsp;&nbsp; Expired</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col-sm-10 ml-2">
+                  <h6 class="ml-4"><strong>Application Status</strong></h6>
+                  <hr />
+                  <div class="row">
+                    <div class="col-sm-10 ml-4">
+                      <input
+                        type="checkbox"
+                        id="appliedCheckBox"
+                        [(ngModel)]="filterForAppStatus.applied"
+                        (ngModelChange)="applyFilter()"
+                      />
+                      <label for="appliedCheckBox">&nbsp;&nbsp; Applied</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-10 ml-4">
+                      <input
+                        type="checkbox"
+                        id="referredCheckBox"
+                        [(ngModel)]="filterForAppStatus.referred"
+                        (ngModelChange)="applyFilter()"
+                      />
+                      <label for="referredCheckBox"
+                        >&nbsp;&nbsp; Referred</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col-sm-10 ml-2">
+                  <h6 class="ml-4"><strong>Applied Date</strong></h6>
+                  <hr />
+                  <div class="row">
+                    <div class="col-sm-10 ml-4">
+                      <input
+                        type="checkbox"
+                        id="todayCheckBox"
+                        [(ngModel)]="filterForDates.today"
+                        (ngModelChange)="applyFilter()"
+                      />
+                      <label for="todayCheckBox">&nbsp;&nbsp; Today</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-10 ml-4">
+                      <input
+                        type="checkbox"
+                        id="yesterdayCheckBox"
+                        [(ngModel)]="filterForDates.yesterday"
+                        (ngModelChange)="applyFilter()"
+                      />
+                      <label for="yesterdayCheckBox"
+                        >&nbsp;&nbsp; Yesterday</label
+                      >
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-10 ml-4">
+                      <input
+                        type="checkbox"
+                        id="thisWeekCheckBox"
+                        [(ngModel)]="filterForDates.thisWeek"
+                        (ngModelChange)="applyFilter()"
+                      />
+                      <label for="thisWeekCheckBox"
+                        >&nbsp;&nbsp; This Week</label
+                      >
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-10 ml-4">
+                      <input
+                        type="checkbox"
+                        id="thisMonthCheckBox"
+                        [(ngModel)]="filterForDates.thisMonth"
+                        (ngModelChange)="applyFilter()"
+                      />
+                      <label for="thisMonthCheckBox"
+                        >&nbsp;&nbsp; This Month</label
+                      >
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-10 ml-4">
+                      <input
+                        type="checkbox"
+                        id="thisYearCheckBox"
+                        [(ngModel)]="filterForDates.thisYear"
+                        (ngModelChange)="applyFilter()"
+                      />
+                      <label for="thisYearCheckBox"
+                        >&nbsp;&nbsp; This Year</label
+                      >
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-10 ml-4">
+                      <input
+                        type="checkbox"
+                        id="lastWeekCheckBox"
+                        [(ngModel)]="filterForDates.lastWeek"
+                        (ngModelChange)="applyFilter()"
+                      />
+                      <label for="lastWeekCheckBox"
+                        >&nbsp;&nbsp; Previous Week</label
+                      >
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-10 ml-4">
+                      <input
+                        type="checkbox"
+                        id="lastMonthCheckBox"
+                        [(ngModel)]="filterForDates.lastMonth"
+                        (ngModelChange)="applyFilter()"
+                      />
+                      <label for="lastMonthCheckBox"
+                        >&nbsp;&nbsp; Previous Month</label
+                      >
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-10 ml-4">
+                      <input
+                        type="checkbox"
+                        id="lastYearCheckBox"
+                        [(ngModel)]="filterForDates.lastYear"
+                        (ngModelChange)="applyFilter()"
+                      />
+                      <label for="lastYearCheckBox"
+                        >&nbsp;&nbsp; Previous Year</label
+                      >
+                    </div>
+                  </div>
+                  <hr />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            *ngIf="
+              filteredAppliedJobResponse?.length == 0 &&
+              appliedJobResponse?.length != 0
+            "
+            class="col-sm-8"
+          >
+            <br /><br />
+            <div class="row">
+              <div class="col-sm-12 text-center">
+                <img
+                  src="/assets/images/no_job.png"
+                  width="350px"
+                  height="200px"
+                />
+                <br /><br /><br />
+                <h2>Sorry! We couldn't find any applied job.</h2>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="showLoadingJobs" class="col-sm-12">
+            <br />
+            <app-job-spinner></app-job-spinner>
+            <div class="row text-center">
+              <div class="col-sm-2 offset-sm-5">Searching applications</div>
+            </div>
+          </div>
+          <div
+            *ngIf="filteredAppliedJobResponse?.length != 0 && !showLoadingJobs"
+            class="col-sm-8"
+          >
+            <div class="row justify-content-end mr-3">
+              <app-seeker-pagination
+                [items]="items"
+                (changePage)="onChangePage($event)"
+              ></app-seeker-pagination>
+            </div>
+            <div
+              *ngFor="let appliedJob of pageOfItems; let i = index"
+              class="col-sm-12"
+            >
+              <div class="card text-white">
+                <div class="card-header">
+                  <div class="row">
+                    <div class="col-sm-8 mt-2">
+                      <h6>
+                        <i>{{ appliedJob.jobOrganization }}</i>
+                      </h6>
+                    </div>
+                    <div class="col-sm-3 mt-2 text-right">
+                      <h6>
+                        Applied on: &nbsp;&nbsp;
+                        {{ appliedJob.createdDate | date: "mediumDate" }}
+                      </h6>
+                    </div>
+                    <div class="col-sm-1 text-right">
+                      <a
+                        class="btn btn-sm"
+                        data-toggle="collapse"
+                        [attr.data-target]="'#applyBasic' + i"
+                        ><i class="fa fa-angle-left"></i>&nbsp;<i
+                          class="fa fa-angle-right"
+                        ></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="card-body"
+                  id="applyBasic{{ i }}"
+                  class="collapse show"
+                >
+                  <br />
+                  <div *ngIf="showDownloadingResume" class="form-group row">
+                    <div class="col-sm-4 offset-sm-4">
+                      <h6 style="text-align: center; color: black">
+                        Downloading Resume...
+                      </h6>
+                      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-8 mx-4">
+                      <p><b>Job Title:</b> {{ appliedJob.jobTitle }}</p>
+                    </div>
+                    <div
+                      *ngIf="appliedJob.jobStatus == 'Active'"
+                      class="col-sm-3 text-right"
+                    >
+                      <a
+                        style="color: white"
+                        class="btn btn-sm btn-block btn-success active"
+                        disabled
+                      >
+                        Job Status: {{ appliedJob.jobStatus }}
+                      </a>
+                    </div>
+                    <div
+                      *ngIf="
+                        appliedJob.jobStatus == 'Expired' ||
+                        appliedJob.jobStatus == 'Removed'
+                      "
+                      class="col-sm-3 text-right"
+                    >
+                      <a
+                        style="color: white"
+                        class="btn btn-sm btn-block btn-danger active"
+                        disabled
+                      >
+                        Job Status: {{ appliedJob.jobStatus }}
+                      </a>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-8 mx-4">
+                      <p>
+                        <b>Job Designation:</b> {{ appliedJob.jobDesignation }}
+                      </p>
+                    </div>
+                    <div
+                      *ngIf="appliedJob.applicationStatus == 'Applied'"
+                      class="col-sm-3 text-right"
+                    >
+                      <a
+                        (click)="fillConfirmationModal(appliedJob.jobId)"
+                        style="color: white"
+                        data-toggle="modal"
+                        data-target="#confirmationModal"
+                        class="btn btn-sm btn-block btn-outline-danger"
+                      >
+                        Withdraw application
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div
+                      *ngIf="appliedJob.applicationStatus != 'Applied'"
+                      class="col-sm-3 mx-4 mt-2"
+                    >
+                      <a class="referredStatus btn btn-sm btn-block">
+                        Referred
+                      </a>
+                    </div>
+                    <div
+                      *ngIf="appliedJob.applicationStatus == 'Applied'"
+                      class="col-sm-3 mx-4 mt-2"
+                    >
+                      <a class="notReferredStatus btn btn-sm btn-block">
+                        Applied
+                      </a>
+                    </div>
+                    <div class="col-sm-3 offset-sm-5 mt-2 text-right">
+                      <a
+                        (click)="downloadResume(appliedJob.jobId)"
+                        class="btn btn-sm btn-block btn-outline-primary"
+                      >
+                        Applied Resume &nbsp;&nbsp;<i
+                          class="fa fa-arrow-circle-o-down"
+                          style="font-size: 18px"
+                        ></i>
+                      </a>
+                    </div>
+                  </div>
+                  <br />
+                  <div class="row">
+                    <div
+                      *ngIf="appliedJob.applicationStatus == 'Applied'"
+                      class="col-sm-8 mx-4"
+                    >
+                      <p>
+                        <b>Status:</b>
+                        Resume has been forwarded to the referrer.
+                      </p>
+                    </div>
+                    <div
+                      *ngIf="appliedJob.applicationStatus == 'Applied'"
+                      class="col-sm-3 text-center"
+                    >
+                      <a
+                        routerLink="/view-job"
+                        [queryParams]="{
+                          jobId: appliedJob.jobId
+                        }"
+                        style="color: #90a4ae"
+                        target="_blank"
+                        >View job details</a
+                      >
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div
+                      *ngIf="appliedJob.applicationStatus != 'Applied'"
+                      class="col-sm-8 mx-4"
+                    >
+                      <p>
+                        <b>Status:</b> Your application has been forwarded to
+                        organization by the referrer.
+                      </p>
+                    </div>
+                    <div
+                      *ngIf="appliedJob.applicationStatus != 'Applied'"
+                      class="col-sm-3 text-center"
+                    >
+                      <a
+                        routerLink="/view-job"
+                        [queryParams]="{
+                          jobId: appliedJob.jobId
+                        }"
+                        style="color: #90a4ae"
+                        target="_blank"
+                        >View job details</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr />
+            </div>
+            <div *ngIf="pageOfItems?.length >= 5" class="col-sm-2 offset-sm-10">
+              <a
+                class="btn btn-sm btn-block"
+                id="scrollUp"
+                (click)="scrollToTop()"
+              >
+                <b>Scroll Up</b>&nbsp;
+                <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Withdraw Confirmation Model-->
+      <div
+        id="confirmationModal"
+        class="modal fade"
+        role="dialog"
+        [ngStyle]="{
+          display: showWithdrawConfirmationModal ? 'block' : 'none'
+        }"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" style="color: white">Confirmation</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                style="color: white"
+              >
+                <span>&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Do you really want to withdraw your application?
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-sm btn-secondary"
+                data-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                class="btn btn-sm btn-primary"
+                data-dismiss="modal"
+                (click)="withdrawApplication()"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <app-notification></app-notification>
+      <app-inside-footer></app-inside-footer>
+    </div>
+  </body>
+</html>

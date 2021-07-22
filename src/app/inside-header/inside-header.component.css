@@ -1,0 +1,107 @@
+.navbar {
+  background-color: #1e2326;
+  background-size: cover;
+}
+.btn {
+  color: white;
+}
+.btn:hover {
+  background: transparent;
+  background-color: #37474f;
+  color: white;
+}
+.btn:visited {
+  background: transparent;
+  color: white;
+}
+.btn:active {
+  background: transparent;
+}
+.btn:link {
+  background: transparent;
+}
+.dropdown-menu {
+  background-color: #1e2326;
+  font-family: "Courier New", Courier, monospace;
+}
+.pointer {
+  cursor: pointer;
+}
+li {
+  color: white;
+}
+h5,
+h6 {
+  font-family: "Candara", cursive, sans-serif;
+  color: black;
+}
+.form-control {
+  border-radius: 10px;
+}
+.form-control.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+input[type="text"] {
+  font-family: "Candara", cursive, sans-serif;
+}
+.modal-content {
+  border-radius: 10px;
+}
+.modal-footer {
+  background-color: #eeeeee;
+  background-size: cover;
+}
+#logoutHeader {
+  background-color: #1e2326;
+}
+#changeHeader {
+  background-color: #1e2326;
+}
+#checkIcon {
+  color: white;
+}
+#checkHeader {
+  background-color: #4caf50;
+  color: white;
+}
+#checkButton {
+  background-color: #4caf50;
+  color: white;
+}
+#logoutButton {
+  font-family: "Courier New", Courier, monospace;
+}
+#logoutButton:hover {
+  background-color: gray;
+}
+#insideHeaderButton {
+  color: white;
+  font-family: "Courier New", Courier, monospace;
+  text-decoration: none;
+  padding: 5px 1px;
+}
+#insideHeaderButton:hover,
+#insideHeaderButton:active {
+  padding-bottom: 4px;
+  border-bottom: 2px solid gray;
+  color: gray;
+}
+#insideHeaderButton:focus {
+  box-shadow: none;
+}
+#insideDropdownButton {
+  color: white;
+  font-family: "Courier New", Courier, monospace;
+  text-decoration: none;
+  padding: 5px 1px;
+}
+#insideDropdownButton:hover,
+#insideDropdownButton:active {
+  color: white;
+}
+#insideDropdownButton:focus {
+  box-shadow: none;
+}
+button:focus {
+  outline: 0;
+}

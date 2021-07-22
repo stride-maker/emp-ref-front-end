@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> </head>
+
+  <body>
+    <app-inside-header class="fixed-top"></app-inside-header>
+    <br />
+    <br />
+    <div *ngIf="showLoadingScreen">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <div *ngIf="!showLoadingScreen">
+      <div class="container-fluid" id="headerContainer">
+        <br /><br /><br />
+        <div class="row">
+          <div class="col-sm-4 offset-sm-3">
+            <h2 style="font-family: Candara, cursive, sans-serif; color: black">
+              Start
+              <em>
+                <h5 style="font-family: Candara, cursive, sans-serif">
+                  &nbsp;&nbsp;&nbsp;&nbsp;building your referral network
+                </h5>
+              </em>
+            </h2>
+            <br />
+            <p style="font-family: Candara, cursive, sans-serif; color: black">
+              Submit your referrals..
+            </p>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="container-fluid">
+        <div class="row">
+          <div *ngIf="jobCardResponse?.length == 0" class="col-sm-12">
+            <br /><br />
+            <div class="row">
+              <div class="col-sm-12 text-center">
+                <img
+                  src="/assets/images/fresh_page.png"
+                  width="350px"
+                  height="200px"
+                />
+                <br /><br />
+                <h2>We don't have any referred job by you</h2>
+                <h5>Please click below button and start referring..</h5>
+                <br />
+                <br />
+                <a
+                  href=""
+                  class="btn btn-primary"
+                  data-toggle="modal"
+                  data-target="#addReferJobModal"
+                >
+                  Add a Referral
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3 mx-5">
+            <br />
+            <div
+              *ngIf="jobCardResponse?.length != 0 && !showLoadingJobs"
+              class="row"
+            >
+              <div class="col-sm-6 offset-sm-2">
+                <a
+                  href=""
+                  id="addReferJobButton"
+                  class="btn btn-block"
+                  data-toggle="modal"
+                  data-target="#addReferJobModal"
+                >
+                  Add a Referral
+                </a>
+                <hr />
+              </div>
+            </div>
+            <br />
+            <div *ngIf="jobCardResponse?.length != 0 && !showLoadingJobs">
+              <div class="row">
+                <div class="col-sm-7 ml-2">
+                  <h4><strong>Filters</strong></h4>
+                </div>
+                <div class="col-sm-3 mt-2 ml-2">
+                  x
+                  <a class="clearAll" (click)="clearFilter()">Clear</a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-10 ml-2">
+                  <hr />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-10 ml-2">
+                  <h6><strong>Job Status</strong></h6>
+                  <hr />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-5 ml-2">
+                  <input
+                    type="checkbox"
+                    id="activeCheckBox"
+                    [(ngModel)]="filterForJob.active"
+                    (ngModelChange)="applyFilter()"
+                  />
+                  <label for="activeCheckBox">&nbsp;&nbsp; Active</label>
+                </div>
+                <div class="col-sm-6 ml-2">
+                  <input
+                    type="checkbox"
+                    id="expiredCheckBox"
+                    [(ngModel)]="filterForJob.expired"
+                    (ngModelChange)="applyFilter()"
+                  />
+                  <label for="expiredCheckBox">&nbsp;&nbsp; Expired</label>
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col-sm-10 ml-2">
+                  <h6><strong>Locations</strong></h6>
+                  <hr />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-5 ml-2">
+                  <input
+                    type="checkbox"
+                    id="bengaluruCheckBox"
+                    [(ngModel)]="filterForLocations.bengaluru"
+                    (ngModelChange)="applyFilter()"
+                  />
+                  <label for="bengaluruCheckBox">&nbsp;&nbsp; Bengaluru</label>
+                </div>
+                <div class="col-sm-6 ml-2">
+                  <input
+                    type="checkbox"
+                    id="delhiCheckBox"
+                    [(ngModel)]="filterForLocations.delhi"
+                    (ngModelChange)="applyFilter()"
+                  />
+                  <label for="delhiCheckBox">&nbsp;&nbsp; Delhi</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-5 ml-2">
+                  <input
+                    type="checkbox"
+                    id="chennaiCheckBox"
+                    [(ngModel)]="filterForLocations.chennai"
+                    (ngModelChange)="applyFilter()"
+                  />
+                  <label for="chennaiCheckBox">&nbsp;&nbsp; Chennai</label>
+                </div>
+                <div class="col-sm-6 ml-2">
+                  <input
+                    type="checkbox"
+                    id="hyderabadCheckBox"
+                    [(ngModel)]="filterForLocations.hyderabad"
+                    (ngModelChange)="applyFilter()"
+                  />
+                  <label for="hyderabadCheckBox">&nbsp;&nbsp; Hyderabad</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-5 ml-2">
+                  <input
+                    type="checkbox"
+                    id="gurgaonCheckBox"
+                    [(ngModel)]="filterForLocations.gurgaon"
+                    (ngModelChange)="applyFilter()"
+                  />
+                  <label for="gurgaonCheckBox">&nbsp;&nbsp; Gurgaon</label>
+                </div>
+                <div class="col-sm-6 ml-2">
+                  <input
+                    type="checkbox"
+                    id="puneCheckBox"
+                    [(ngModel)]="filterForLocations.pune"
+                    (ngModelChange)="applyFilter()"
+                  />
+                  <label for="puneCheckBox">&nbsp;&nbsp; Pune</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-5 ml-2">
+                  <input
+                    type="checkbox"
+                    id="mumbaiCheckBox"
+                    [(ngModel)]="filterForLocations.mumbai"
+                    (ngModelChange)="applyFilter()"
+                  />
+                  <label for="mumbaiCheckBox">&nbsp;&nbsp; Mumbai</label>
+                </div>
+                <div class="col-sm-6 ml-2">
+                  <input
+                    type="checkbox"
+                    id="ahmedabadCheckBox"
+                    [(ngModel)]="filterForLocations.ahmedabad"
+                    (ngModelChange)="applyFilter()"
+                  />
+                  <label for="ahmedabadCheckBox">&nbsp;&nbsp; Ahmedabad</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-5 ml-2">
+                  <input
+                    type="checkbox"
+                    id="kolkataCheckBox"
+                    [(ngModel)]="filterForLocations.kolkata"
+                    (ngModelChange)="applyFilter()"
+                  />
+                  <label for="kolkataCheckBox">&nbsp;&nbsp; Kolkata</label>
+                </div>
+                <div class="col-sm-6 ml-2">
+                  <input
+                    type="checkbox"
+                    id="noidaCheckBox"
+                    [(ngModel)]="filterForLocations.noida"
+                    (ngModelChange)="applyFilter()"
+                  />
+                  <label for="noidaCheckBox">&nbsp;&nbsp; Noida</label>
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col-sm-10 ml-2">
+                  <h6><strong>Referred Date</strong></h6>
+                  <hr />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-5 ml-2">
+                  <input
+                    type="checkbox"
+                    id="todayCheckBox"
+                    [(ngModel)]="filterForDates.today"
+                    (ngModelChange)="applyFilter()"
+                  />
+                  <label for="todayCheckBox">&nbsp;&nbsp; Today</label>
+                </div>
+                <div class="col-sm-6 ml-2">
+                  <input
+                    type="checkbox"
+                    id="yesterdayCheckBox"
+                    [(ngModel)]="filterForDates.yesterday"
+                    (ngModelChange)="applyFilter()"
+                  />
+                  <label for="yesterdayCheckBox">&nbsp;&nbsp; Yesterday</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-5 ml-2">
+                  <input
+                    type="checkbox"
+                    id="thisWeekCheckBox"
+                    [(ngModel)]="filterForDates.thisWeek"
+                    (ngModelChange)="applyFilter()"
+                  />
+                  <label for="thisWeekCheckBox">&nbsp;&nbsp; This Week</label>
+                </div>
+                <div class="col-sm-6 ml-2">
+                  <input
+                    type="checkbox"
+                    id="lastWeekCheckBox"
+                    [(ngModel)]="filterForDates.lastWeek"
+                    (ngModelChange)="applyFilter()"
+                  />
+                  <label for="lastWeekCheckBox"
+                    >&nbsp;&nbsp; Previous Week</label
+                  >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-5 ml-2">
+                  <input
+                    type="checkbox"
+                    id="thisMonthCheckBox"
+                    [(ngModel)]="filterForDates.thisMonth"
+                    (ngModelChange)="applyFilter()"
+                  />
+                  <label for="thisMonthCheckBox">&nbsp;&nbsp; This Month</label>
+                </div>
+                <div class="col-sm-6 ml-2">
+                  <input
+                    type="checkbox"
+                    id="lastMonthCheckBox"
+                    [(ngModel)]="filterForDates.lastMonth"
+                    (ngModelChange)="applyFilter()"
+                  />
+                  <label for="lastMonthCheckBox"
+                    >&nbsp;&nbsp; Previous Month</label
+                  >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-5 ml-2">
+                  <input
+                    type="checkbox"
+                    id="thisYearCheckBox"
+                    [(ngModel)]="filterForDates.thisYear"
+                    (ngModelChange)="applyFilter()"
+                  />
+                  <label for="thisYearCheckBox">&nbsp;&nbsp; This Year</label>
+                </div>
+                <div class="col-sm-6 ml-2">
+                  <input
+                    type="checkbox"
+                    id="lastYearCheckBox"
+                    [(ngModel)]="filterForDates.lastYear"
+                    (ngModelChange)="applyFilter()"
+                  />
+                  <label for="lastYearCheckBox"
+                    >&nbsp;&nbsp; Previous Year</label
+                  >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-10 ml-2">
+                  <hr />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            *ngIf="
+              filteredJobCardResponse?.length == 0 &&
+              jobCardResponse?.length != 0
+            "
+            class="col-sm-8"
+          >
+            <br /><br />
+            <div class="row">
+              <div class="col-sm-12 text-center">
+                <img
+                  src="/assets/images/no_job.png"
+                  width="350px"
+                  height="200px"
+                />
+                <br /><br /><br />
+                <h2>Sorry! We couldn't find any referred job.</h2>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="showLoadingJobs" class="col-sm-12">
+            <app-job-spinner></app-job-spinner>
+            <div class="row text-center">
+              <div class="col-sm-2 offset-sm-5">Searching referrals</div>
+            </div>
+          </div>
+          <div
+            *ngIf="filteredJobCardResponse?.length != 0 && !showLoadingJobs"
+            class="col-sm-8"
+          >
+            <div class="row justify-content-end mr-3">
+              <app-referrer-pagination
+                [items]="items"
+                (changePage)="onChangePage($event)"
+              ></app-referrer-pagination>
+            </div>
+            <div *ngFor="let jobCard of pageOfItems" class="col-sm-12">
+              <div class="card text-white" id="job">
+                <div class="card-header">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <h5>
+                        <b
+                          ><i>{{ jobCard.jobCardTitle }}</i></b
+                        >
+                      </h5>
+                    </div>
+                    <div class="col-sm-1 text-right">
+                      <a
+                        href=""
+                        style="color: white"
+                        class="btn btn-sm"
+                        data-toggle="dropdown"
+                      >
+                        <i class="fa fa-sliders"></i>
+                      </a>
+                      <ul class="dropdown-menu">
+                        <li *ngIf="jobCard.jobCardStatus == 'Active'">
+                          <button
+                            type="button"
+                            class="dropdown-item cardDropBtn"
+                            data-toggle="modal"
+                            data-target="#editReferJobModal"
+                            (click)="openEditJobModal(jobCard)"
+                          >
+                            <i class="fa fa-edit"></i>&nbsp;&nbsp; Edit Referral
+                          </button>
+                        </li>
+                        <li *ngIf="jobCard.jobCardStatus != 'Active'">
+                          <button
+                            type="button"
+                            class="dropdown-item cardDropBtn"
+                            (click)="setActiveStatus(jobCard)"
+                          >
+                            <i class="fa fa-toggle-off"></i>&nbsp;&nbsp;
+                            Referral Active
+                          </button>
+                        </li>
+                        <li *ngIf="jobCard.jobCardStatus == 'Active'">
+                          <button
+                            type="button"
+                            class="dropdown-item cardDropBtn"
+                            (click)="setExpiredStatus(jobCard)"
+                          >
+                            <i class="fa fa-toggle-on"></i>&nbsp;&nbsp; Referral
+                            Expired
+                          </button>
+                        </li>
+
+                        <li>
+                          <button
+                            type="button"
+                            class="dropdown-item cardDropBtn"
+                            data-toggle="modal"
+                            data-target="#confirmationModal"
+                            (click)="fillConfirmationModal(jobCard)"
+                          >
+                            <i class="fa fa-trash"></i>&nbsp;&nbsp; Remove
+                            Referral
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                    <div
+                      *ngIf="jobCard.jobCardStatus == 'Active'"
+                      class="col-sm-3"
+                    >
+                      <a
+                        style="
+                          color: white;
+                          font-family: Candara, cursive, sans-serif;
+                        "
+                        class="btn btn-sm btn-success btn-block active"
+                        disabled
+                      >
+                        {{ jobCard.jobCardStatus }}
+                      </a>
+                    </div>
+                    <div
+                      *ngIf="jobCard.jobCardStatus != 'Active'"
+                      class="col-sm-3"
+                    >
+                      <a
+                        style="
+                          color: white;
+                          font-family: Candara, cursive, sans-serif;
+                        "
+                        class="btn btn-sm btn-danger btn-block active"
+                        disabled
+                      >
+                        {{ jobCard.jobCardStatus }}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <h6 class="card-title">
+                        {{ jobCard.jobCardDesignation }} at
+                        <a
+                          href="{{ jobCard.jobCardCompanyURL }}"
+                          style="color: white"
+                          target="_blank"
+                          ><i>{{ jobCard.jobCardOrganization }}</i></a
+                        >
+                      </h6>
+                    </div>
+                    <div
+                      *ngFor="let skill of jobCard.jobSkills"
+                      class="col-sm-4 text-right"
+                    >
+                      <a
+                        *ngIf="skill.jobSkillType == 'Primary'"
+                        style="color: white; font-size: 16px"
+                        class="chip1"
+                        disabled
+                      >
+                        {{ skill.jobSkillName }}
+                      </a>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <p>
+                        <small
+                          ><span><i class="fa fa-briefcase"></i></span
+                          >&nbsp;&nbsp;{{ jobCard.jobCardMinExperience }} -
+                          {{ jobCard.jobCardMaxExperience }}</small
+                        >&nbsp;&nbsp;&nbsp;&nbsp;
+                        <small
+                          ><span><i class="fa fa-map-marker"></i></span
+                          >&nbsp;&nbsp;{{ jobCard.jobCardLocation }}</small
+                        >
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 text-justify">
+                      <p>
+                        <i class="fa fa-book"></i>
+                        {{ jobCard.jobCardDescription | slice: 0:275 }}...
+                        <a
+                          routerLink="/view-job"
+                          [queryParams]="{
+                            jobId: jobCard.jobId
+                          }"
+                          style="color: #1e88e5"
+                          target="_blank"
+                          >See More</a
+                        >
+                      </p>
+                    </div>
+                  </div>
+                  <div *ngIf="jobCard.jobSkills?.length > 1" class="row">
+                    <div class="col-sm-12">
+                      <h6>
+                        <i class="fa fa-angle-double-down"></i
+                        >&nbsp;&nbsp;Additional Skills
+                      </h6>
+                    </div>
+                  </div>
+                  <div *ngIf="jobCard.jobSkills?.length > 1" class="row">
+                    <div
+                      *ngFor="let skill of jobCard.jobSkills"
+                      style="display: inline-block"
+                    >
+                      <a
+                        *ngIf="skill.jobSkillType == 'Secondary'"
+                        class="chip1 ml-3 mt-2"
+                        >{{ skill.jobSkillName }}</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr />
+            </div>
+            <div *ngIf="pageOfItems?.length >= 5" class="col-sm-2 offset-sm-10">
+              <a
+                class="btn btn-sm btn-block"
+                id="scrollUp"
+                (click)="scrollToTop()"
+              >
+                <b>Scroll Up</b>&nbsp;
+                <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Job Modal-->
+      <div
+        id="addReferJobModal"
+        class="modal fade animate__animated animate__zoomIn"
+        role="dialog"
+      >
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title ml-5" style="color: white">
+                Add a referral
+              </h4>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                style="color: white"
+              >
+                &times;
+              </button>
+            </div>
+            <div class="modal-body">
+              <form #addReferJobModalForm="ngForm">
+                <div class="form-group">
+                  <div class="row justify-content-center">
+                    <div class="col-sm-7">
+                      <h5 class="mt-4">Please fill in the job details..</h5>
+                    </div>
+                    <div class="col-sm-3 offset-sm-1">
+                      <label for="jobStatus"><small>Job Status</small></label>
+                      <input
+                        ngModel
+                        type="text"
+                        id="jobStatus"
+                        value="Active"
+                        class="form-control"
+                        placeholder="Active"
+                        name="modalJobStatus"
+                        #modalJobStatus="ngModel"
+                        disabled
+                      />
+                    </div>
+                  </div>
+                  <br />
+                  <div class="row justify-content-center">
+                    <div class="col-sm-5">
+                      <label for="jobTitle"
+                        ><small>&nbsp;&nbsp;Job Title</small></label
+                      >
+                      <input
+                        ngModel
+                        type="text"
+                        id="jobTitle"
+                        class="form-control"
+                        name="modalJobTitle"
+                        #modalJobTitle="ngModel"
+                        maxlength="54"
+                        required
+                      />
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          modalJobTitle.touched &&
+                          modalJobTitle.errors?.required
+                        "
+                      >
+                        <small style="color: red">Job Title is required</small>
+                      </div>
+                    </div>
+                    <div class="col-sm-5 offset-sm-1">
+                      <label for="jobDesignation"
+                        ><small>&nbsp;&nbsp;Designation</small></label
+                      >
+                      <input
+                        ngModel
+                        type="text"
+                        id="jobDesignation"
+                        class="form-control"
+                        name="modalJobDesignation"
+                        #modalJobDesignation="ngModel"
+                        maxlength="54"
+                        required
+                      />
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          modalJobDesignation.touched &&
+                          modalJobDesignation.errors?.required
+                        "
+                      >
+                        <small style="color: red"
+                          >Job Designation is required</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <div class="row justify-content-center">
+                    <div class="col-sm-5">
+                      <label for="jobOrganization"
+                        ><small>&nbsp;&nbsp;Organization</small></label
+                      >
+                      <input
+                        ngModel
+                        type="text"
+                        id="jobOrganization"
+                        class="form-control"
+                        name="modalJobOrganization"
+                        #modalJobOrganization="ngModel"
+                        maxlength="54"
+                        required
+                      />
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          modalJobOrganization.touched &&
+                          modalJobOrganization.errors?.required
+                        "
+                      >
+                        <small style="color: red"
+                          >Job Organization is required</small
+                        >
+                      </div>
+                    </div>
+                    <div class="col-sm-5 offset-sm-1">
+                      <label for="jobCompanyUrl"
+                        ><small>&nbsp;&nbsp;Company Site URL</small></label
+                      >
+                      <input
+                        ngModel
+                        type="text"
+                        id="jobCompanyUrl"
+                        class="form-control"
+                        name="modalJobCompanyUrl"
+                        #modalJobCompanyUrl="ngModel"
+                        maxlength="54"
+                        required
+                      />
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          modalJobCompanyUrl.touched &&
+                          modalJobCompanyUrl.errors?.required
+                        "
+                      >
+                        <small style="color: red"
+                          >Company URL is required</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <div class="row justify-content-center">
+                    <div class="col-sm-11">
+                      <label for="jobDescription"
+                        ><small>&nbsp;&nbsp;Job Description</small></label
+                      >
+                      <textarea
+                        ngModel
+                        rows="5"
+                        id="jobDescription"
+                        class="form-control"
+                        name="modalJobDescription"
+                        #modalJobDescription="ngModel"
+                        maxlength="1800"
+                        required
+                      >
+                      </textarea>
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          modalJobDescription.touched &&
+                          modalJobDescription.errors?.required
+                        "
+                      >
+                        <small style="color: red"
+                          >Job Description is required</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <div class="row justify-content-center">
+                    <div class="col-sm-2">
+                      <label for="jobMinExperience"
+                        ><small>&nbsp;&nbsp;Minimum Experience</small></label
+                      >
+                      <select
+                        ngModel
+                        type="text"
+                        id="jobMinExperience"
+                        class="form-control"
+                        name="modalJobMinExperience"
+                        #modalJobMinExperience="ngModel"
+                        required
+                      >
+                        <option *ngFor="let minYearExp of expYears">
+                          {{ minYearExp }}
+                        </option>
+                      </select>
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          modalJobMinExperience.touched &&
+                          modalJobMinExperience.errors?.required
+                        "
+                      >
+                        <small style="color: red">Min Exp is required</small>
+                      </div>
+                    </div>
+                    <div class="col-sm-2 offset-sm-1">
+                      <label for="jobMaxExperience"
+                        ><small>&nbsp;&nbsp;Maximum Experience</small></label
+                      >
+                      <select
+                        ngModel
+                        type="text"
+                        id="jobMaxExperience"
+                        class="form-control"
+                        name="modalJobMaxExperience"
+                        #modalJobMaxExperience="ngModel"
+                        required
+                      >
+                        <option *ngFor="let maxYearExp of expYears">
+                          {{ maxYearExp }}
+                        </option>
+                      </select>
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          modalJobMaxExperience.touched &&
+                          modalJobMaxExperience.errors?.required
+                        "
+                      >
+                        <small style="color: red">Max Exp is required</small>
+                      </div>
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          (modalJobMaxExperience.dirty ||
+                            modalJobMaxExperience.touched) &&
+                          validateExperience(
+                            modalJobMinExperience.value,
+                            modalJobMaxExperience.value
+                          )
+                        "
+                      >
+                        <small style="color: red">Max Exp < Min Exp</small>
+                      </div>
+                    </div>
+                    <div class="col-sm-5 offset-sm-1">
+                      <label for="jobLocation"
+                        ><small>&nbsp;&nbsp;Job Location</small></label
+                      >
+                      <select
+                        ngModel
+                        type="text"
+                        id="jobLocation"
+                        class="form-control"
+                        name="modalJobLocation"
+                        #modalJobLocation="ngModel"
+                        required
+                      >
+                        <option *ngFor="let location of locations">
+                          {{ location }}
+                        </option>
+                      </select>
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          modalJobLocation.touched &&
+                          modalJobLocation.errors?.required
+                        "
+                      >
+                        <small style="color: red"
+                          >Job Location is required</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <div class="row justify-content-center">
+                    <div class="col-sm-11">
+                      <label for="jobRole"
+                        ><small
+                          >&nbsp;&nbsp;Role & Responsibilities</small
+                        ></label
+                      >
+                      <textarea
+                        ngModel
+                        rows="5"
+                        id="jobRole"
+                        class="form-control"
+                        name="modalJobRole"
+                        #modalJobRole="ngModel"
+                        maxlength="1800"
+                        required
+                      >
+                      </textarea>
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          modalJobRole.touched && modalJobRole.errors?.required
+                        "
+                      >
+                        <small style="color: red"
+                          >Role and Responsibilities is required</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <div class="row justify-content-center">
+                    <div class="col-sm-5">
+                      <label for="jobUGDescription"
+                        ><small
+                          >&nbsp;&nbsp;Under Graduate Requirement</small
+                        ></label
+                      >
+                      <input
+                        ngModel
+                        type="text"
+                        id="jobUGDescription"
+                        class="form-control"
+                        name="modalJobUGDescription"
+                        #modalJobUGDescription="ngModel"
+                        maxlength="54"
+                        required
+                      />
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          modalJobUGDescription.touched &&
+                          modalJobUGDescription.errors?.required
+                        "
+                      >
+                        <small style="color: red"
+                          >Under Graduate qualification is required</small
+                        >
+                      </div>
+                    </div>
+                    <div class="col-sm-5 offset-sm-1">
+                      <label for="jobPGDescription"
+                        ><small
+                          >&nbsp;&nbsp;Post Graduate Requirement</small
+                        ></label
+                      >
+                      <input
+                        ngModel
+                        type="text"
+                        id="jobPGDescription"
+                        class="form-control"
+                        name="modalJobPGDescription"
+                        #modalJobPGDescription="ngModel"
+                        maxlength="54"
+                        required
+                      />
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          modalJobPGDescription.touched &&
+                          modalJobPGDescription.errors?.required
+                        "
+                      >
+                        <small style="color: red"
+                          >Post Graduate qualification is required</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <div class="row justify-content-center">
+                    <div class="col-sm-11">
+                      <label for="jobAboutCompany"
+                        ><small>&nbsp;&nbsp;About Company</small></label
+                      >
+                      <textarea
+                        ngModel
+                        rows="3"
+                        id="jobAboutCompany"
+                        class="form-control"
+                        name="modalJobAboutCompany"
+                        #modalJobAboutCompany="ngModel"
+                        maxlength="900"
+                        required
+                      >
+                      </textarea>
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          modalJobAboutCompany.touched &&
+                          modalJobAboutCompany.errors?.required
+                        "
+                      >
+                        <small style="color: red"
+                          >About Company is required</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <div *ngIf="jobSecondarySkillSet.length != 0" class="row">
+                    <div class="col-sm-11 offset-sm-1">
+                      <small>Required Secondary Skills</small>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-11 offset-sm-1">
+                      <div
+                        *ngFor="let secondarySkill of jobSecondarySkillSet"
+                        style="color: white"
+                        class="chip ml-3 mt-4"
+                      >
+                        {{ secondarySkill }}
+                        &nbsp;&nbsp;
+                        <a
+                          (click)="updateSecondarySkillSet(secondarySkill)"
+                          style="color: white"
+                        >
+                          <i class="fa fa-times"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <form #skillForm="ngForm">
+                    <div class="form-group">
+                      <div class="row justify-content-center">
+                        <div class="col-sm-4">
+                          <label for="jobPrimarySkill"
+                            ><small>&nbsp;&nbsp;Job Primary Skill</small></label
+                          >
+                          <select
+                            ngModel
+                            type="text"
+                            id="jobPrimarySkill"
+                            class="form-control"
+                            name="modalJobPrimarySkill"
+                            #modalJobPrimarySkill="ngModel"
+                            required
+                          >
+                            <option
+                              *ngFor="let skill of skills"
+                              value="{{ skill }}"
+                            >
+                              {{ skill }}
+                            </option>
+                          </select>
+                          <div
+                            class="row ml-3 mt-1"
+                            *ngIf="
+                              modalJobPrimarySkill.touched &&
+                              modalJobPrimarySkill.errors?.required
+                            "
+                          >
+                            <small style="color: red"
+                              >Primary Skill is required</small
+                            >
+                          </div>
+                        </div>
+                        <div class="col-sm-3 offset-sm-1">
+                          <label for="jobSecondarySkill"
+                            ><small
+                              >&nbsp;&nbsp;Enter secondary skills</small
+                            ></label
+                          >
+                          <input
+                            type="text"
+                            id="jobSecondarySkill"
+                            class="form-control"
+                            name="modalJobSecondarySkill"
+                            [(ngModel)]="modalJobSecondarySkill"
+                          />
+                        </div>
+                        <div class="col-sm-2 offset-sm-1 mt-4">
+                          <label for="addSkillButton"></label>
+                          <button
+                            type="button"
+                            id="addSkillButton"
+                            class="btn btn-sm btn-info addSkillButton"
+                            (click)="fillSecondarySkillSet(skillForm)"
+                          >
+                            Add Secondary Skill
+                          </button>
+                        </div>
+                        <br />
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <div class="row">
+                <div class="col-sm-4">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-success"
+                    data-dismiss="modal"
+                    [disabled]="
+                      !addReferJobModalForm.valid ||
+                      !skillForm.valid ||
+                      validateExperience(
+                        modalJobMinExperience.value,
+                        modalJobMaxExperience.value
+                      )
+                    "
+                    (click)="addJobToReferrals(addReferJobModalForm, skillForm)"
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Job Modal-->
+      <div
+        id="editReferJobModal"
+        class="modal fade animate__animated animate__zoomIn"
+        role="dialog"
+        [ngStyle]="{ display: showEditJobModal ? 'block' : 'none' }"
+      >
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title ml-5" style="color: white">
+                Edit referral
+              </h4>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                style="color: white"
+              >
+                &times;
+              </button>
+            </div>
+            <div *ngIf="showEditJobScreen" class="form-group row">
+              <div class="col-sm-8 offset-sm-2">
+                <h6 style="text-align: center; color: black">
+                  Fetching Job details....
+                </h6>
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+              </div>
+            </div>
+            <div class="modal-body">
+              <form #editReferJobModalForm="ngForm">
+                <div class="form-group">
+                  <div class="row justify-content-center">
+                    <div class="col-sm-7">
+                      <h5 class="mt-4">Edit job details..</h5>
+                    </div>
+                    <div class="col-sm-3 offset-sm-1">
+                      <label for="jobStatus"><small>Job Status</small></label>
+                      <input
+                        [(ngModel)]="editJobParentModal.jobStatus"
+                        type="text"
+                        id="editJobStatus"
+                        value="Active"
+                        class="form-control"
+                        placeholder="Active"
+                        name="editModalJobStatus"
+                        #editModalJobStatus="ngModel"
+                        disabled
+                      />
+                    </div>
+                  </div>
+                  <br />
+                  <div class="row justify-content-center">
+                    <div class="col-sm-5">
+                      <label for="editJobTitle"
+                        ><small>&nbsp;&nbsp;Job Title</small></label
+                      >
+                      <input
+                        [(ngModel)]="editJobParentModal.jobTitle"
+                        type="text"
+                        id="editJobTitle"
+                        class="form-control"
+                        name="editModalJobTitle"
+                        #editModalJobTitle="ngModel"
+                        maxlength="54"
+                        required
+                      />
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          editModalJobTitle.touched &&
+                          editModalJobTitle.errors?.required
+                        "
+                      >
+                        <small style="color: red">Job Title is required</small>
+                      </div>
+                    </div>
+                    <div class="col-sm-5 offset-sm-1">
+                      <label for="editJobDesignation"
+                        ><small>&nbsp;&nbsp;Designation</small></label
+                      >
+                      <input
+                        [(ngModel)]="editJobParentModal.jobDesignation"
+                        type="text"
+                        id="editJobDesignation"
+                        class="form-control"
+                        name="editModalJobDesignation"
+                        #editModalJobDesignation="ngModel"
+                        maxlength="54"
+                        required
+                      />
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          editModalJobDesignation.touched &&
+                          editModalJobDesignation.errors?.required
+                        "
+                      >
+                        <small style="color: red"
+                          >Job Designation is required</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <div class="row justify-content-center">
+                    <div class="col-sm-5">
+                      <label for="editJobOrganization"
+                        ><small>&nbsp;&nbsp;Organization</small></label
+                      >
+                      <input
+                        [(ngModel)]="editJobParentModal.jobOrganization"
+                        type="text"
+                        id="editJobOrganization"
+                        class="form-control"
+                        name="editModalJobOrganization"
+                        #editModalJobOrganization="ngModel"
+                        maxlength="54"
+                        required
+                      />
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          editModalJobOrganization.touched &&
+                          editModalJobOrganization.errors?.required
+                        "
+                      >
+                        <small style="color: red"
+                          >Job Organization is required</small
+                        >
+                      </div>
+                    </div>
+                    <div class="col-sm-5 offset-sm-1">
+                      <label for="editJobCompanyUrl"
+                        ><small>&nbsp;&nbsp;Company Site URL</small></label
+                      >
+                      <input
+                        [(ngModel)]="editJobParentModal.jobCompanyUrl"
+                        type="text"
+                        id="editJobCompanyUrl"
+                        class="form-control"
+                        name="editModalJobCompanyUrl"
+                        #editModalJobCompanyUrl="ngModel"
+                        maxlength="54"
+                        required
+                      />
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          editModalJobCompanyUrl.touched &&
+                          editModalJobCompanyUrl.errors?.required
+                        "
+                      >
+                        <small style="color: red"
+                          >Company URL is required</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <div class="row justify-content-center">
+                    <div class="col-sm-11">
+                      <label for="editJobDescription"
+                        ><small>&nbsp;&nbsp;Job Description</small></label
+                      >
+                      <textarea
+                        [(ngModel)]="editJobParentModal.jobDescription"
+                        rows="5"
+                        id="editJobDescription"
+                        class="form-control"
+                        name="editModalJobDescription"
+                        #editModalJobDescription="ngModel"
+                        maxlength="1800"
+                        required
+                      >
+                      </textarea>
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          editModalJobDescription.touched &&
+                          editModalJobDescription.errors?.required
+                        "
+                      >
+                        <small style="color: red"
+                          >Job Description is required</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <div class="row justify-content-center">
+                    <div class="col-sm-2">
+                      <label for="editJobMinExperience"
+                        ><small>&nbsp;&nbsp;Minimum Experience</small></label
+                      >
+                      <select
+                        [(ngModel)]="editJobParentModal.jobMinExperience"
+                        type="text"
+                        id="editJobMinExperience"
+                        class="form-control"
+                        name="editModalJobMinExperience"
+                        #editModalJobMinExperience="ngModel"
+                        required
+                      >
+                        <option *ngFor="let minYearExp of expYears">
+                          {{ minYearExp }}
+                        </option>
+                      </select>
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          editModalJobMinExperience.touched &&
+                          editModalJobMinExperience.errors?.required
+                        "
+                      >
+                        <small style="color: red">Min Exp is required</small>
+                      </div>
+                    </div>
+                    <div class="col-sm-2 offset-sm-1">
+                      <label for="editJobMaxExperience"
+                        ><small>&nbsp;&nbsp;Maximum Experience</small></label
+                      >
+                      <select
+                        [(ngModel)]="editJobParentModal.jobMaxExperience"
+                        type="text"
+                        id="editJobMaxExperience"
+                        class="form-control"
+                        name="editModalJobMaxExperience"
+                        #editModalJobMaxExperience="ngModel"
+                        required
+                      >
+                        <option *ngFor="let maxYearExp of expYears">
+                          {{ maxYearExp }}
+                        </option>
+                      </select>
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          editModalJobMaxExperience.touched &&
+                          editModalJobMaxExperience.errors?.required
+                        "
+                      >
+                        <small style="color: red">Max Exp is required</small>
+                      </div>
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          (editModalJobMaxExperience.dirty ||
+                            editModalJobMaxExperience.touched) &&
+                          validateExperience(
+                            editModalJobMinExperience.value,
+                            editModalJobMaxExperience.value
+                          )
+                        "
+                      >
+                        <small style="color: red">Max Exp < Min Exp</small>
+                      </div>
+                    </div>
+                    <div class="col-sm-5 offset-sm-1">
+                      <label for="editJobLocation"
+                        ><small>&nbsp;&nbsp;Job Location</small></label
+                      >
+                      <select
+                        [(ngModel)]="editJobParentModal.jobLocation"
+                        type="text"
+                        id="editJobLocation"
+                        class="form-control"
+                        name="editModalJobLocation"
+                        #editModalJobLocation="ngModel"
+                        required
+                      >
+                        <option *ngFor="let location of locations">
+                          {{ location }}
+                        </option>
+                      </select>
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          editModalJobLocation.touched &&
+                          editModalJobLocation.errors?.required
+                        "
+                      >
+                        <small style="color: red"
+                          >Job Location is required</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <div class="row justify-content-center">
+                    <div class="col-sm-11">
+                      <label for="editJobRole"
+                        ><small
+                          >&nbsp;&nbsp;Role & Responsibilities</small
+                        ></label
+                      >
+                      <textarea
+                        [(ngModel)]="editJobParentModal.jobRole"
+                        rows="5"
+                        id="editJobRole"
+                        class="form-control"
+                        name="editModalJobRole"
+                        #editModalJobRole="ngModel"
+                        maxlength="1800"
+                        required
+                      >
+                      </textarea>
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          editModalJobRole.touched &&
+                          editModalJobRole.errors?.required
+                        "
+                      >
+                        <small style="color: red"
+                          >Role and Responsibilities is required</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <div class="row justify-content-center">
+                    <div class="col-sm-5">
+                      <label for="editJobUGDescription"
+                        ><small
+                          >&nbsp;&nbsp;Under Graduate Requirement</small
+                        ></label
+                      >
+                      <input
+                        [(ngModel)]="editJobParentModal.jobUGDescription"
+                        type="text"
+                        id="editJobUGDescription"
+                        class="form-control"
+                        name="editModalJobUGDescription"
+                        #editModalJobUGDescription="ngModel"
+                        maxlength="54"
+                        required
+                      />
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          editModalJobUGDescription.touched &&
+                          editModalJobUGDescription.errors?.required
+                        "
+                      >
+                        <small style="color: red"
+                          >Under Graduate qualification is required</small
+                        >
+                      </div>
+                    </div>
+                    <div class="col-sm-5 offset-sm-1">
+                      <label for="editJobPGDescription"
+                        ><small
+                          >&nbsp;&nbsp;Post Graduate Requirement</small
+                        ></label
+                      >
+                      <input
+                        [(ngModel)]="editJobParentModal.jobPGDescription"
+                        type="text"
+                        id="editJobPGDescription"
+                        class="form-control"
+                        name="editModalJobPGDescription"
+                        #editModalJobPGDescription="ngModel"
+                        maxlength="54"
+                        required
+                      />
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          editModalJobPGDescription.touched &&
+                          editModalJobPGDescription.errors?.required
+                        "
+                      >
+                        <small style="color: red"
+                          >Post Graduate qualification is required</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <div class="row justify-content-center">
+                    <div class="col-sm-11">
+                      <label for="editJobAboutCompany"
+                        ><small>&nbsp;&nbsp;About Company</small></label
+                      >
+                      <textarea
+                        [(ngModel)]="editJobParentModal.jobAboutCompany"
+                        rows="3"
+                        id="editJobAboutCompany"
+                        class="form-control"
+                        name="editModalJobAboutCompany"
+                        #editModalJobAboutCompany="ngModel"
+                        maxlength="900"
+                        required
+                      >
+                      </textarea>
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          editModalJobAboutCompany.touched &&
+                          editModalJobAboutCompany.errors?.required
+                        "
+                      >
+                        <small style="color: red"
+                          >About Company is required</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <div *ngIf="editJobSecondarySkillSet.length != 0" class="row">
+                    <div class="col-sm-11 offset-sm-1">
+                      <small>Required Secondary Skills</small>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-11 offset-sm-1">
+                      <div
+                        *ngFor="
+                          let editSecondarySkill of editJobSecondarySkillSet
+                        "
+                        style="color: white"
+                        class="chip ml-3 mt-4"
+                      >
+                        {{ editSecondarySkill }}
+                        &nbsp;&nbsp;
+                        <a
+                          (click)="
+                            updateEditSecondarySkillSet(editSecondarySkill)
+                          "
+                          style="color: white"
+                        >
+                          <i class="fa fa-times"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <form #editSkillForm="ngForm">
+                    <div class="form-group">
+                      <div class="row justify-content-center">
+                        <div class="col-sm-4">
+                          <label for="jobPrimarySkill"
+                            ><small>&nbsp;&nbsp;Job Primary Skill</small></label
+                          >
+                          <select
+                            [(ngModel)]="editJobPrimarySkill"
+                            type="text"
+                            id="editJobPrimarySkill"
+                            class="form-control"
+                            name="editModalJobPrimarySkill"
+                            #editModalJobPrimarySkill="ngModel"
+                            required
+                          >
+                            <option
+                              *ngFor="let skill of skills"
+                              value="{{ skill }}"
+                            >
+                              {{ skill }}
+                            </option>
+                          </select>
+                          <div
+                            class="row ml-3 mt-1"
+                            *ngIf="
+                              editModalJobPrimarySkill.touched &&
+                              editModalJobPrimarySkill.errors?.required
+                            "
+                          >
+                            <small style="color: red"
+                              >Primary Skill is required</small
+                            >
+                          </div>
+                        </div>
+                        <div class="col-sm-3 offset-sm-1">
+                          <label for="editJobSecondarySkill"
+                            ><small
+                              >&nbsp;&nbsp;Enter secondary skills</small
+                            ></label
+                          >
+                          <input
+                            type="text"
+                            id="editJobSecondarySkill"
+                            class="form-control"
+                            name="editModalJobSecondarySkill"
+                            [(ngModel)]="editModalJobSecondarySkill"
+                          />
+                        </div>
+                        <div class="col-sm-2 offset-sm-1 mt-4">
+                          <label for="editAddSkillButton"></label>
+                          <button
+                            type="button"
+                            id="editAddSkillButton"
+                            class="btn btn-sm btn-info editAddSkillButton"
+                            (click)="fillEditSecondarySkillSet(editSkillForm)"
+                          >
+                            Add Secondary Skill
+                          </button>
+                        </div>
+                        <br />
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <div class="row">
+                <div class="col-sm-4">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-success"
+                    data-dismiss="modal"
+                    [disabled]="
+                      !editReferJobModalForm.valid ||
+                      !editSkillForm.valid ||
+                      validateExperience(
+                        editModalJobMinExperience.value,
+                        editModalJobMaxExperience.value
+                      )
+                    "
+                    (click)="
+                      editJobReferral(editReferJobModalForm, editSkillForm)
+                    "
+                  >
+                    Update
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delete Job Confirmation Modal-->
+      <div
+        id="confirmationModal"
+        class="modal fade"
+        role="dialog"
+        [ngStyle]="{
+          display: showDeleteJobConfirmationModal ? 'block' : 'none'
+        }"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" style="color: white">Confirmation</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                style="color: white"
+              >
+                <span>&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Do you really want to remove the referral?
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-sm btn-secondary"
+                data-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                class="btn btn-sm btn-primary"
+                data-dismiss="modal"
+                (click)="deleteThisJob()"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <app-notification></app-notification>
+      <app-inside-footer></app-inside-footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+.privacy-policy {
+  background-image: url("/assets/images/home.jpg");
+  background-size: auto;
+  min-height: 100vh;
+}
+.btn {
+  color: #d7ccc8;
+  border: none;
+  font-family: "Cambria", cursive, sans-serif;
+  border-radius: 10px;
+}
+.btn:hover {
+  color: white;
+}
+.btn:focus {
+  box-shadow: none;
+}
+.jumbotron-fluid {
+  background-image: url("/assets/images/policy.jpg");
+  background-size: contain;
+}
+h1,
+h2,
+h4,
+p {
+  font-family: "Cambria", cursive, sans-serif;
+}

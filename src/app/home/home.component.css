@@ -1,0 +1,35 @@
+.home {
+  background-image: url("/assets/images/home.jpg");
+  background-size: cover;
+}
+.btn {
+  color: #d7ccc8;
+  border: none;
+  font-family: "Cambria";
+  border-radius: 10px;
+}
+.btn:hover {
+  color: white;
+}
+.btn:focus {
+  box-shadow: none;
+}
+.dropdown-menu {
+  background: transparent;
+  border: none;
+}
+.dropdown-item:hover {
+  background: transparent;
+}
+.carousel-item {
+  text-align: center;
+  min-height: 280px;
+}
+h1,
+h3,
+h4,
+h5,
+p {
+  color: #d7ccc8;
+  font-family: "Candara", cursive, sans-serif;
+}

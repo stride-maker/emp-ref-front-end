@@ -1,0 +1,98 @@
+body {
+  background-color: #f5f5f5;
+}
+#headerContainer {
+  background-image: url("/assets/images/user-responder-head.jpg");
+  background-size: cover;
+  min-height: 30vh;
+}
+#addMoreReferralsButton {
+  background-color: #455a64;
+  color: white;
+}
+#addMoreReferralsButton:hover {
+  background-color: #37474f;
+  color: white;
+}
+#scrollUp {
+  border-color: #37474f;
+  color: #37474f;
+}
+#scrollUp:hover {
+  background-color: #37474f;
+  color: white;
+}
+p,
+a,
+h2,
+h4,
+h5,
+h6 {
+  font-family: "Candara", cursive, sans-serif;
+}
+.card {
+  border-radius: 5px;
+  background-color: #37474f;
+  background-size: cover;
+}
+.referredStatus {
+  color: white;
+  cursor: auto;
+  background-color: #2e7d32;
+}
+.referredStatus:hover {
+  color: white;
+  cursor: auto;
+  background-color: #2e7d32;
+}
+.notReferredStatus {
+  color: black;
+  background-color: #eeeeee;
+}
+.notReferredStatus:hover {
+  color: black;
+  background-color: #eeeeee;
+}
+input[type="checkbox"] {
+  display: none;
+}
+input[type="checkbox"] + label {
+  position: relative;
+  padding-left: 20px;
+  font-family: "Candara", cursive, sans-serif;
+  color: black;
+  cursor: pointer;
+}
+input[type="checkbox"] + label:before {
+  content: "";
+  display: block;
+  width: 15px;
+  height: 15px;
+  border: 2px solid #37474f;
+  position: absolute;
+  left: 0;
+  top: 5px;
+  -webkit-transition: all 0.12s, border-color 0.08s;
+  transition: all 0.12s, border-color 0.08s;
+}
+input[type="checkbox"]:checked + label:before {
+  width: 10px;
+  top: 0px;
+  left: 1px;
+  border-radius: 0;
+  opacity: 1;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+button {
+  outline: 0;
+}
+.clearAll {
+  color: #37474f;
+  cursor: pointer;
+}
+.clearAll:hover {
+  text-decoration: underline;
+}

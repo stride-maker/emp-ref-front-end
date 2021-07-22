@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> </head>
+
+  <body>
+    <nav class="navbar navbar-expand-xl navbar-dark">
+      <a routerLink="/dashboard" class="navbar-brand pointer"
+        ><img
+          src="/assets/images/logo.png"
+          width="35px"
+          height="35px"
+          alt="FootstepsBrandLogo"
+      /></a>
+      <button
+        type="button"
+        class="navbar-toggler"
+        data-toggle="collapse"
+        data-target="#navbarCollapse"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item ml-3 mr-4 pb-1">
+            <a routerLink="/job-portal" class="pointer" id="insideHeaderButton"
+              >Job Portal
+            </a>
+          </li>
+          <li class="nav-item ml-3 mr-4 pb-1 dropdown">
+            <a class="pointer" id="insideHeaderButton" data-toggle="dropdown">
+              Referrer
+            </a>
+            <div class="dropdown-menu animate__animated animate__fadeInUp mt-3">
+              <button type="button" class="btn btn-sm dropdown-item">
+                <a
+                  routerLink="/user-referrer"
+                  class="pointer"
+                  id="insideDropdownButton"
+                  ><i class="fa fa-clipboard"></i>&nbsp; Refer Jobs
+                </a>
+              </button>
+              <button type="button" class="btn btn-sm dropdown-item">
+                <a
+                  routerLink="/user-responder"
+                  class="pointer"
+                  id="insideDropdownButton"
+                  ><i class="fa fa-reply-all"></i>&nbsp; Response Jobs
+                </a>
+              </button>
+            </div>
+          </li>
+          <li class="nav-item ml-3 mr-4 pb-1 dropdown">
+            <a class="pointer" id="insideHeaderButton" data-toggle="dropdown">
+              Seeker
+            </a>
+            <div class="dropdown-menu animate__animated animate__fadeInUp mt-3">
+              <button type="button" class="btn btn-sm dropdown-item">
+                <a
+                  routerLink="/user-seeker"
+                  class="pointer"
+                  id="insideDropdownButton"
+                  ><i class="fa fa-paper-plane"></i>&nbsp; Applied Jobs
+                </a>
+              </button>
+            </div>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="mt-2 ml-3">
+            <h6
+              style="color: white; font-family: Courier New, Courier, monospace"
+            >
+              {{ time | date: "medium" }}
+            </h6>
+          </li>
+          <li class="mt-1 ml-3">
+            <a
+              href=""
+              class="btn btn-sm btn-outline-secondary"
+              data-toggle="dropdown"
+            >
+              <i class="fa fa-sliders"></i>
+            </a>
+            <div
+              class="dropdown-menu dropdown-menu-right animate__animated animate__fadeInUp"
+            >
+              <button type="button" class="btn btn-sm dropdown-item" disabled>
+                <h6
+                  *ngIf="headerNames.firstName && headerNames.lastName"
+                  style="
+                    color: white;
+                    font-family: Candara, cursive, sans-serif;
+                  "
+                >
+                  Hello!&nbsp; {{ headerNames.firstName }}
+                  {{ headerNames.lastName }}
+                </h6>
+              </button>
+              <button
+                type="button"
+                class="btn btn-sm dropdown-item"
+                routerLink="/profile"
+              >
+                <i class="fa fa-user-circle"></i>&nbsp;&nbsp; Edit Profile
+              </button>
+              <button
+                type="button"
+                class="btn btn-sm dropdown-item"
+                data-toggle="modal"
+                data-target="#changeEmailModel"
+              >
+                <i class="fa fa-envelope"></i>&nbsp;&nbsp; Change Email
+              </button>
+              <button
+                type="button"
+                class="btn btn-sm dropdown-item"
+                data-toggle="modal"
+                data-target="#changePasswordModel"
+              >
+                <i class="fa fa-key"></i>&nbsp;&nbsp; Change Password
+              </button>
+            </div>
+          </li>
+          <li class="mt-1 ml-3">
+            <button
+              type="button"
+              id="logoutButton"
+              class="btn btn-sm btn-outline-dark"
+              data-toggle="modal"
+              data-target="#logoutConfirmModal"
+            >
+              Logout
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Change email model-->
+    <div
+      id="changeEmailModel"
+      class="modal fade animate__animated animate__fadeInDown"
+      role="dialog"
+      data-backdrop="false"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header" id="changeHeader">
+            <h5 class="modal-title" style="color: white">Set New Email</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              (click)="resetChangeEmailForm(changeEmailModelForm)"
+              style="color: white"
+            >
+              &times;
+            </button>
+          </div>
+          <div class="modal-body">
+            <form #changeEmailModelForm="ngForm">
+              <div class="form-group">
+                <div class="row justify-content-center">
+                  <br />
+                  <div class="col-sm-4 mt-2">
+                    <label for="setEmail1"
+                      ><h6><b>&nbsp;&nbsp; Enter new email</b></h6></label
+                    >
+                  </div>
+                  <div class="col-sm-8">
+                    <input
+                      ngModel
+                      name="setEmail1"
+                      #setEmail1="ngModel"
+                      type="text"
+                      maxlength="36"
+                      class="form-control"
+                      id="setEmail1"
+                      pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+                      required
+                    />
+                  </div>
+                </div>
+                <br />
+                <div class="row justify-content-center">
+                  <div class="col-sm-4 mt-2">
+                    <label for="setEmail2"
+                      ><h6><b>&nbsp;&nbsp; Confirm email</b></h6></label
+                    >
+                  </div>
+                  <div class="col-sm-8">
+                    <input
+                      ngModel
+                      name="setEmail2"
+                      #setEmail2="ngModel"
+                      type="password"
+                      maxlength="36"
+                      class="form-control"
+                      id="setEmail2"
+                      pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <div class="row">
+              <div class="col-4">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-dark"
+                  data-dismiss="modal"
+                  [disabled]="!changeEmailModelForm.valid"
+                  (click)="changeEmail(changeEmailModelForm)"
+                >
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Change password model-->
+    <div
+      id="changePasswordModel"
+      class="modal fade animate__animated animate__fadeInDown"
+      role="dialog"
+      data-backdrop="false"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header" id="changeHeader">
+            <h5 class="modal-title" style="color: white">
+              Set New Password
+              <hr />
+              <h6 style="color: white">
+                <small>
+                  Your password must be minimum 8 characters and contain a
+                  digit, lowercase, uppercase and special character.
+                </small>
+              </h6>
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              (click)="resetChangePasswordForm(changePasswordModelForm)"
+              style="color: white"
+            >
+              &times;
+            </button>
+          </div>
+          <div class="modal-body">
+            <form #changePasswordModelForm="ngForm">
+              <div class="form-group">
+                <div class="row justify-content-center">
+                  <div class="col-sm-5 mt-2">
+                    <label for="setPassword1"
+                      ><h6><b>&nbsp;&nbsp; Enter new password</b></h6></label
+                    >
+                  </div>
+                  <div class="col-sm-7">
+                    <input
+                      ngModel
+                      name="setPassword1"
+                      #setPassword1="ngModel"
+                      type="password"
+                      maxlength="36"
+                      class="form-control"
+                      id="setPassword1"
+                      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                      required
+                    />
+                  </div>
+                </div>
+                <br />
+                <div class="row justify-content-center">
+                  <div class="col-sm-5 mt-2">
+                    <label for="setPassword2"
+                      ><h6><b>&nbsp;&nbsp; Confirm password</b></h6></label
+                    >
+                  </div>
+                  <div class="col-sm-7">
+                    <input
+                      ngModel
+                      name="setPassword2"
+                      #setPassword2="ngModel"
+                      type="password"
+                      maxlength="36"
+                      class="form-control"
+                      id="setPassword2"
+                      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <div class="row">
+              <div class="col-4">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-dark"
+                  data-dismiss="modal"
+                  [disabled]="!changePasswordModelForm.valid"
+                  (click)="changePassword(changePasswordModelForm)"
+                >
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Logout Confirm model-->
+    <div
+      id="logoutConfirmModal"
+      class="modal fade"
+      role="dialog"
+      data-backdrop="false"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header" id="logoutHeader">
+            <h5 class="modal-title" style="color: white">Confirmation</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              style="color: white"
+            >
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body text-center">
+            Are you sure you want to logout now?
+          </div>
+          <div class="modal-footer">
+            <div class="row">
+              <button
+                type="button"
+                class="btn btn-sm btn-dark"
+                data-dismiss="modal"
+                (click)="logout()"
+              >
+                Yes! I am sure.
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="emailCheckModal"
+      class="modal fade animate__animated animate__zoomInDown"
+      data-backdrop="false"
+      [ngStyle]="{ display: showEmailCheckModal ? 'block' : 'none' }"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header justify-content-center" id="checkHeader">
+            <br />
+            <div class="icon-box">
+              <i id="checkIcon" class="fa fa-check-square-o fa-5x"></i>
+            </div>
+            <br />
+          </div>
+          <div class="modal-body text-center">
+            <h4>Great!</h4>
+            <p>Your email has been changed successfully.</p>
+            <p>
+              <small
+                >For security purpose, you need to login again with your new
+                credentials</small
+              >
+            </p>
+            <br />
+            <button
+              id="checkButton"
+              class="btn"
+              data-dismiss="modal"
+              (click)="loginAgain()"
+            >
+              Proceed
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      id="openEmailModalButton"
+      [hidden]="true"
+      data-toggle="modal"
+      data-target="#emailCheckModal"
+    ></button>
+
+    <div
+      id="passwordCheckModal"
+      class="modal fade animate__animated animate__zoomInDown"
+      data-backdrop="false"
+      [ngStyle]="{ display: showPasswordCheckModal ? 'block' : 'none' }"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header justify-content-center" id="checkHeader">
+            <br />
+            <div class="icon-box">
+              <i id="checkIcon" class="fa fa-check-square-o fa-5x"></i>
+            </div>
+            <br />
+          </div>
+          <div class="modal-body text-center">
+            <h4>Great!</h4>
+            <p>Your password has been changed successfully.</p>
+            <p>
+              <small
+                >For security purpose, you need to login again with your new
+                credentials</small
+              >
+            </p>
+            <br />
+            <button
+              id="checkButton"
+              class="btn"
+              data-dismiss="modal"
+              (click)="loginAgain()"
+            >
+              Proceed
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      id="openPasswordModalButton"
+      [hidden]="true"
+      data-toggle="modal"
+      data-target="#passwordCheckModal"
+    ></button>
+  </body>
+</html>

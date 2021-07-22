@@ -1,0 +1,21 @@
+body {
+  background-size: cover;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.4),
+      rgba(255, 255, 255, 0.4)
+    ),
+    url("/assets/images/apply.jpeg");
+}
+#candidateDetailsContainer {
+  background-color: #f5f5f5;
+}
+.card-header {
+  background-color: #455a64;
+}
+p,
+a,
+h5,
+h6,
+td {
+  font-family: "Candara", cursive, sans-serif;
+}

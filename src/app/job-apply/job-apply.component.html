@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> </head>
+
+  <body>
+    <app-inside-header class="fixed-top"></app-inside-header>
+    <br />
+    <br />
+    <div *ngIf="showLoadingScreen">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <div *ngIf="!showLoadingScreen">
+      <br /><br />
+      <div class="container" id="jobApplyContainer">
+        <br />
+        <div *ngIf="showApplying" class="form-group row">
+          <div class="col-sm-4 offset-sm-4">
+            <h6 style="text-align: center; color: black">
+              Please wait while we submit your application...
+            </h6>
+            <mat-progress-bar
+              mode="indeterminate"
+              color="accent"
+            ></mat-progress-bar>
+          </div>
+        </div>
+        <div *ngIf="showFetching" class="form-group row">
+          <div class="col-sm-4 offset-sm-4">
+            <h6 style="text-align: center; color: black">
+              Please wait while we fetch your details...
+            </h6>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-sm-2 mt-2">
+                <a
+                  style="
+                    color: white;
+                    font-family: Candara, cursive, sans-serif;
+                  "
+                  class="btn btn-sm btn-outline-primary btn-block"
+                  (click)="validateApplication(job.jobId)"
+                  >Apply Now</a
+                >
+              </div>
+              <div class="col-sm-9 text-center mt-2">
+                <h5 style="color: white">
+                  <b>{{ job.jobTitle }}</b>
+                </h5>
+              </div>
+              <div class="col-sm-1 text-center mt-2">
+                <a
+                  class="btn"
+                  style="color: white"
+                  data-toggle="collapse"
+                  data-target="#jobBasic"
+                  ><i class="fa fa-align-justify"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card-body" id="jobBasic" class="collapse show">
+            <div class="row">
+              <div class="col-sm-8 ml-4">
+                <br />
+                <h6 class="card-title">
+                  {{ job.jobDesignation }}
+                </h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8 ml-4">
+                <a href="{{ job.jobCompanyUrl }}" target="_blank"
+                  ><i>{{ job.jobOrganization }}</i></a
+                >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8 ml-4 mt-2">
+                <p>
+                  <small
+                    ><span><i class="fa fa-briefcase"></i></span>&nbsp;&nbsp;{{
+                      job.jobMinExperience
+                    }}
+                    - {{ job.jobMaxExperience }}</small
+                  >&nbsp;&nbsp;&nbsp;&nbsp;
+                  <small
+                    ><span><i class="fa fa-map-marker"></i></span>&nbsp;&nbsp;{{
+                      job.jobLocation
+                    }}</small
+                  >
+                </p>
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-8 ml-4">
+                <p>
+                  <small>Applied Candidates: 152</small>&nbsp;&nbsp; | &nbsp;
+                  <small>Referred: 3 days ago</small>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="card">
+          <div class="card-body" id="jobDescription">
+            <div class="row">
+              <div class="col-sm-10">
+                <h5><b>Job Description</b></h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-10 mt-1">
+                <p>
+                  <em>{{ job.jobDesignation }}</em>
+                </p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-10 mt-2">
+                <h6><b>Description</b></h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 mt-1 text-justify">
+                <pre>
+                  <em>{{ job.jobDescription }}</em>
+                </pre>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-10 mt-2">
+                <h6><b>Qualification</b></h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-10 mt-1 mx-1">
+                <table class="table table-sm table-borderless">
+                  <tbody>
+                    <tr class="row">
+                      <td class="col-sm-2 ml-2">Master Education:</td>
+                      <td>
+                        <em>{{ job.jobPGDescription }}</em>
+                      </td>
+                    </tr>
+                    <tr class="row">
+                      <td class="col-sm-2 ml-2">Bachelor Education:</td>
+                      <td>
+                        <em>{{ job.jobUGDescription }}</em>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-10 mt-2">
+                <h6><b>Roles and Responsibilties</b></h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 mt-1 text-justify">
+                <pre>
+                  <em>{{ job.jobRole }}</em>
+                </pre>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-10 mt-2">
+                <h6><b>Skills</b></h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-10 mt-1 mx-1">
+                <p>Primary Skill</p>
+                <div *ngFor="let skill of job.jobSkills">
+                  <a *ngIf="skill.jobSkillType == 'Primary'" class="chip"
+                    ><em>{{ skill.jobSkillName }}</em></a
+                  >
+                </div>
+                <br />
+                <p *ngIf="job.jobSkills?.length > 1">Additional Skills:</p>
+                <div
+                  *ngFor="let skill of job.jobSkills"
+                  style="display: inline-block"
+                >
+                  <a *ngIf="skill.jobSkillType == 'Secondary'" class="chip mr-3"
+                    ><em>{{ skill.jobSkillName }}</em></a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="card">
+          <div class="card-body" id="jobCompany">
+            <div class="row">
+              <div class="col-sm-10">
+                <h5><b>About Company</b></h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 mt-1 text-justify">
+                <pre>
+                  <em>{{ job.jobAboutCompany }} </em>
+                </pre>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 mt-1">
+                <a
+                  href="{{ job.jobCompanyUrl }}"
+                  class="btn btn-sm btn-outline-info"
+                  target="_blank"
+                  >Visit Company Site</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+      </div>
+      <br />
+      <div class="container-fluid" id="warningContainer">
+        <br />
+        <div class="container">
+          <h4>Beware of Imposters!</h4>
+          <br />
+          <p>
+            Our company does not promise a job or an interview in exchange of
+            money. Fraudsters may ask you to pay in the pretext of registration
+            fee, Refundable Fee etc for scheduling a job interview or job
+            acceptance. Notify us about such communication who are imposting us
+            and connect with you.
+          </p>
+        </div>
+        <br /><br />
+        <app-notification></app-notification>
+        <app-inside-footer></app-inside-footer>
+      </div>
+    </div>
+
+    <!-- Submit Referral-->
+    <div
+      id="applyJobModal"
+      class="modal fade animate__animated animate__flipInX"
+      role="dialog"
+      [ngStyle]="{ display: showApplyJobModal ? 'block' : 'none' }"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" style="color: white">
+              Confirm your application
+            </h5>
+          </div>
+          <div *ngIf="showLoadingResume" class="form-group row">
+            <div class="col-sm-4 offset-sm-4">
+              <h6 style="text-align: center; color: black">
+                Fetching resume...
+              </h6>
+              <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            </div>
+          </div>
+          <div *ngIf="showSavingResume" class="form-group row">
+            <div class="col-sm-4 offset-sm-4">
+              <h6 style="text-align: center; color: black">Saving...</h6>
+              <mat-progress-bar
+                mode="indeterminate"
+                color="accent"
+              ></mat-progress-bar>
+            </div>
+          </div>
+          <div class="modal-body">
+            <br />
+            <div class="row">
+              <div class="col-sm-3 offset-sm-2">
+                <label class="hoverable pointer" for="updateResume">
+                  <h6>
+                    Update Resume<img
+                      src="/assets/images/updateresume.png"
+                      height="50px"
+                      width="50px"
+                    />
+                  </h6>
+                </label>
+                <input
+                  style="display: none"
+                  id="updateResume"
+                  type="file"
+                  (change)="onUpdateResume($event)"
+                />
+              </div>
+              <div
+                *ngIf="!isResume"
+                class="col-sm-6 offset-sm-1 mt-2"
+                style="color: red"
+              >
+                <p>You haven't uploaded a resume yet!</p>
+              </div>
+              <div
+                *ngIf="isResume && showPDFResumeIcon"
+                class="col-sm-6 offset-sm-1 mt-2"
+              >
+                <i class="fa fa-file-pdf-o fa-2x"></i>&nbsp;&nbsp;
+                {{ resumeName }}
+              </div>
+              <div
+                *ngIf="isResume && showWordResumeIcon"
+                class="col-sm-6 offset-sm-1 mt-2"
+              >
+                <i class="fa fa-file-word-o fa-2x"></i>&nbsp;&nbsp;
+                {{ resumeName }}
+              </div>
+              <br /><br /><br /><br />
+              <div class="row">
+                <div>
+                  <p class="col-sm-10 offset-sm-1">
+                    <u>Note:</u><br />Once your application is referred by the
+                    referrer, it cannot be revoked. You can find your status of
+                    application in applied job section.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="row">
+              <div class="col-sm-12">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-success ml-5"
+                  data-dismiss="modal"
+                  (click)="applyForJob()"
+                  [disabled]="!resumeName"
+                >
+                  Accept
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      id="applyJobButton"
+      [hidden]="true"
+      data-toggle="modal"
+      data-target="#applyJobModal"
+      (click)="openApplyJobModal()"
+    ></button>
+
+    <!-- Apply to job-->
+    <div
+      id="appliedJobModal"
+      class="modal fade animate__animated animate__flipInX"
+      [ngStyle]="{ display: showAppliedJobModal ? 'block' : 'none' }"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header justify-content-center" id="appliedHeader">
+            <br />
+            <div class="icon-box">
+              <i style="color: white" class="fa fa-check-circle-o fa-5x"></i>
+            </div>
+            <br />
+          </div>
+          <div class="modal-body text-center">
+            <h4>Congratulations!</h4>
+            <p>You have applied for this job!</p>
+            <p>
+              <small
+                >You can find status of your application in applied jobs
+                section.</small
+              >
+              <br />
+              <small
+                >Now, this particular job will not be shown in your job
+                portal</small
+              >
+            </p>
+            <br />
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      id="appliedJobButton"
+      [hidden]="true"
+      data-toggle="modal"
+      data-target="#appliedJobModal"
+      (click)="openAppliedJobModal(true)"
+    ></button>
+
+    <!-- Already Applied-->
+    <div
+      id="alreadyAppliedJobModal"
+      class="modal fade animate__animated animate__flipInX"
+      [ngStyle]="{ display: showAlreadyAppliedJobModal ? 'block' : 'none' }"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div
+            class="modal-header justify-content-center"
+            id="alreadyAppliedHeader"
+          >
+            <br />
+            <div class="icon-box">
+              <i style="color: white" class="fa fa-info-circle fa-5x"></i>
+            </div>
+            <br />
+          </div>
+          <div class="modal-body text-center">
+            <h4>Be informed!</h4>
+            <p>You have already applied for this job!</p>
+            <br />
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      id="alreadyAppliedJobButton"
+      [hidden]="true"
+      data-toggle="modal"
+      data-target="#alreadyAppliedJobModal"
+      (click)="openAlreadyAppliedJobModal(true)"
+    ></button>
+
+    <!-- Email Not Verified-->
+    <div
+      id="emailVerifyModal"
+      class="modal fade animate__animated animate__flipInX"
+      [ngStyle]="{ display: showEmailVerifyModal ? 'block' : 'none' }"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div
+            class="modal-header justify-content-center"
+            id="emailVerifyHeader"
+          >
+            <br />
+            <div class="icon-box">
+              <i
+                style="color: white"
+                class="fa fa-exclamation-triangle fa-5x"
+              ></i>
+            </div>
+            <br />
+          </div>
+          <div class="modal-body text-center">
+            <h4>Sorry!</h4>
+            <p>Please verfiy your mail prior to applying for jobs!</p>
+            <p>
+              <small>Navigate to dashboard and verfiy your email.</small>
+            </p>
+            <br />
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      id="emailVerifyButton"
+      [hidden]="true"
+      data-toggle="modal"
+      data-target="#emailVerifyModal"
+      (click)="openEmailVerifyModal(true)"
+    ></button>
+  </body>
+</html>

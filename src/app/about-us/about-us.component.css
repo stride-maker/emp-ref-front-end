@@ -1,0 +1,36 @@
+.aboutus {
+  background-image: url("/assets/images/home.jpg");
+  background-size: cover;
+}
+.btn {
+  color: #d7ccc8;
+  border: none;
+  font-family: "Cambria", cursive, sans-serif;
+  border-radius: 10px;
+}
+.btn:hover {
+  color: white;
+}
+.btn:focus {
+  box-shadow: none;
+}
+.dropdown-menu {
+  background: transparent;
+  border: none;
+}
+.dropdown-item:hover {
+  background: transparent;
+}
+h1,
+h2,
+h4,
+h5,
+li,
+p {
+  color: #d7ccc8;
+  font-family: "Cambria", cursive, sans-serif;
+}
+.benefits {
+  float: left;
+  margin: 0 20px;
+}

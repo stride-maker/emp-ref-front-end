@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> </head>
+
+  <body>
+    <app-inside-header class="fixed-top"></app-inside-header>
+    <br /><br />
+    <div *ngIf="showLoadingScreen">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <div *ngIf="!showLoadingScreen">
+      <div class="container-fluid" id="dashboardContainer">
+        <br />
+        <br />
+        <div class="row">
+          <div class="col-sm-4">
+            <h3>
+              Welcome!
+              <em>
+                <h1>&nbsp;&nbsp;&nbsp;&nbsp;footsteps..</h1>
+              </em>
+            </h3>
+            <p style="color: white">
+              Your one stop point for submitting your referrals and to seek
+              jobs..
+            </p>
+            <br />
+            <br />
+            <button
+              routerLink="/job-portal"
+              type="button"
+              class="btn btn-sm btn-outline-info float-left"
+            >
+              Our job portal
+            </button>
+            <button
+              routerLink="/learn-more"
+              type="button"
+              class="btn btn-sm btn-outline-info ml-4"
+            >
+              Learn more ...
+            </button>
+          </div>
+          <div class="col-sm-4 offset-sm-4">
+            <br />
+            <h2>
+              {{ dashboard.firstName }}
+              {{ dashboard.lastName }}
+            </h2>
+            <div class="row">
+              <div class="col-sm-8">
+                <h6 *ngIf="dashboard.location">
+                  Location: &nbsp; {{ dashboard.location }}
+                </h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <h6 *ngIf="dashboard.phoneNumber">
+                  Contact number: &nbsp; {{ dashboard.phoneNumber }}
+                </h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-11">
+                <h6>
+                  Email: &nbsp; {{ currentUser }} &nbsp;&nbsp;
+                  <b *ngIf="dashboard.mailVerified == false"
+                    ><a
+                      href=""
+                      style="color: red"
+                      data-toggle="modal"
+                      data-target="#verifyEmailModal"
+                      (click)="showVerifyEmail()"
+                      >Verify Now</a
+                    ></b
+                  >
+                  <b
+                    *ngIf="dashboard.mailVerified == true"
+                    style="color: #00c853"
+                    >Verified &nbsp;&nbsp;<i
+                      class="fa fa-check-square"
+                      style="color: #00c853"
+                    ></i>
+                  </b>
+                </h6>
+              </div>
+            </div>
+            <br />
+          </div>
+        </div>
+        <br />
+      </div>
+      <br />
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-3 offset-sm-1">
+            <hr />
+            <div class="card">
+              <img
+                class="card-img-top"
+                src="/assets/images/card-top1.jpg"
+                alt="Card image"
+              />
+              <div class="card-body">
+                <h2 class="card-title">
+                  <em>Referrals..</em>
+                </h2>
+                <hr />
+                <p>You have referred</p>
+                <h2>
+                  {{ dashboard.referralsCount }}<small> &nbsp;jobs</small>
+                </h2>
+                <p>in your network..</p>
+              </div>
+              <div class="card-footer">
+                <button
+                  routerLink="/user-referrer"
+                  type="button"
+                  class="btn btn-sm btn-outline-info"
+                >
+                  View details..
+                </button>
+                <small class="text-muted float-right mt-2"
+                  >Last referred {{ referredJobTime }} ago</small
+                >
+              </div>
+            </div>
+            <hr />
+            <p class="text-justify">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was
+              popularised in the 1960s with the release of Letraset sheets
+              containing Lorem Ipsum passages, and more recently with desktop
+              publishing software like Aldus PageMaker including versions of
+              Lorem Ipsum. It is a long established fact that a reader will be
+              distracted by the readable content of a page when looking at its
+              layout.
+            </p>
+          </div>
+          <div class="col-sm-3 mx-5">
+            <p class="text-justify">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was
+              popularised in the 1960s with the release of Letraset sheets
+              containing Lorem Ipsum passages, and more recently with desktop
+              publishing software like Aldus PageMaker including versions of
+              Lorem Ipsum. It is a long established fact that a reader will be
+              distracted by the readable content of a page when looking at its
+              layout.
+            </p>
+            <hr />
+            <div class="card">
+              <img
+                class="card-img-top"
+                src="/assets/images/card-top3.jpg"
+                alt="Card image"
+              />
+              <div class="card-body">
+                <h2 class="card-title">
+                  <em>Responses..</em>
+                </h2>
+                <hr />
+                <p>You have responded</p>
+                <h2>
+                  {{ dashboard.responsesCount }}<small> &nbsp;jobs</small>
+                </h2>
+                <p>in your network..</p>
+              </div>
+              <div class="card-footer">
+                <button
+                  routerLink="/user-responder"
+                  type="button"
+                  class="btn btn-sm btn-outline-info"
+                >
+                  View details..
+                </button>
+                <small class="text-muted float-right mt-2"
+                  >Last responded {{ respondedJobTime }} ago</small
+                >
+              </div>
+            </div>
+            <hr />
+          </div>
+          <div class="col-sm-3 offset-sm-right-1">
+            <hr />
+            <div class="card">
+              <img
+                class="card-img-top"
+                src="/assets/images/card-top2.jpg"
+                alt="Card image"
+              />
+              <div class="card-body">
+                <h2 class="card-title">
+                  <em>Applications..</em>
+                </h2>
+                <hr />
+                <p>You have applied</p>
+                <h2>
+                  {{ dashboard.applicationsCount }}<small> &nbsp;jobs</small>
+                </h2>
+                <p>in your network..</p>
+              </div>
+              <div class="card-footer">
+                <button
+                  routerLink="/user-seeker"
+                  type="button"
+                  class="btn btn-sm btn-outline-info"
+                >
+                  View details..
+                </button>
+                <small class="text-muted float-right mt-2"
+                  >Last applied {{ seekedJobTime }} ago</small
+                >
+              </div>
+            </div>
+            <hr />
+            <p class="text-justify">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was
+              popularised in the 1960s with the release of Letraset sheets
+              containing Lorem Ipsum passages, and more recently with desktop
+              publishing software like Aldus PageMaker including versions of
+              Lorem Ipsum. It is a long established fact that a reader will be
+              distracted by the readable content of a page when looking at its
+              layout.
+            </p>
+          </div>
+        </div>
+      </div>
+      <br />
+      <br />
+      <div
+        id="verifyEmailModal"
+        class="modal fade animate__animated animate__fadeInDown"
+        role="dialog"
+        data-backdrop="false"
+        [hidden]="hideEmailModal"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" id="verifyEmailHeader">
+              <h5 class="modal-title" style="color: white">
+                Verification Email Sent
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                (click)="resetEmailForm(verifyEmailModalForm)"
+                style="color: white"
+              >
+                <span>&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div *ngIf="showWaiting" class="form-group row">
+                <div class="col-sm-12">
+                  <h6 style="text-align: center; color: black">
+                    Please wait while we verify your code...
+                  </h6>
+                  <mat-progress-bar
+                    mode="indeterminate"
+                    color="accent"
+                  ></mat-progress-bar>
+                </div>
+              </div>
+              <h6 style="color: black">
+                We have sent a confirmation code on your email address.
+              </h6>
+              <h6 style="color: black">Enter your confirmation code below.</h6>
+              <form #verifyEmailModalForm="ngForm">
+                <div class="form-group">
+                  <br />
+                  <div class="row">
+                    <div class="col-sm-5 mt-2">
+                      <h6 style="color: black"><b>Confirmation Code:</b></h6>
+                    </div>
+                    <div class="col-sm-6">
+                      <input
+                        ngModel
+                        name="code"
+                        #code="ngModel"
+                        type="text"
+                        minlength="6"
+                        maxlength="6"
+                        class="form-control"
+                        id="code"
+                        pattern="^[0-9]*$"
+                        placeholder="Enter Code"
+                        required
+                      />
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="code.touched && code.errors?.required"
+                      >
+                        <small style="color: red">Code is required</small>
+                      </div>
+                      <div class="row ml-3 mt-1" *ngIf="code.errors?.pattern">
+                        <small style="color: red"
+                          >Code should be digits only</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <div *ngIf="emailCountdownTimer == 0" class="row">
+                    <div class="col-sm-4">
+                      <button
+                        class="btn btn-sm btn-primary"
+                        (click)="showVerifyEmail()"
+                      >
+                        Resend Code
+                      </button>
+                    </div>
+                  </div>
+                  <div *ngIf="emailCountdownTimer != 0" class="row">
+                    <div class="col-sm-12">
+                      <h6 style="color: green">
+                        <b
+                          >Code expires in:
+                          {{ emailCountdownTimer | formatTime }} seconds</b
+                        >
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-sm btn-dark ml-auto"
+                data-dismiss="modal"
+                (click)="resetEmailForm(verifyEmailModalForm)"
+              >
+                Cancel
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-sm btn-dark mr-auto ml-5"
+                [disabled]="
+                  !verifyEmailModalForm.valid || emailCountdownTimer == 0
+                "
+                (click)="verifyEmail(verifyEmailModalForm)"
+              >
+                Enter
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="emailModal"
+        class="modal fade animate__animated animate__zoomInDown"
+        [ngStyle]="{ display: showEmailModal ? 'block' : 'none' }"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div
+              class="modal-header justify-content-center"
+              id="emailModalHeader"
+            >
+              <br />
+              <div class="icon-box">
+                <i id="emailModalIcon" class="fa fa-check-square-o fa-5x"></i>
+              </div>
+              <br />
+            </div>
+            <div class="modal-body text-center">
+              <h4>Congratulations!</h4>
+              <p>Your email has been verified successfully.</p>
+              <p>
+                <small>You can now refer and apply to the jobs!</small>
+              </p>
+              <br />
+              <button id="emailModalButton" class="btn" data-dismiss="modal">
+                Okay
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        id="openEmailButton"
+        [hidden]="true"
+        data-toggle="modal"
+        data-target="#emailModal"
+      ></button>
+      <app-notification></app-notification>
+      <app-inside-footer></app-inside-footer>
+    </div>
+  </body>
+  <html></html>
+</html>

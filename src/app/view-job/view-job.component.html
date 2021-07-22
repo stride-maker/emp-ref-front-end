@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> </head>
+
+  <body>
+    <app-inside-header class="fixed-top"></app-inside-header>
+    <br />
+    <br />
+    <div *ngIf="showLoadingScreen">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <div *ngIf="!showLoadingScreen">
+      <br /><br />
+      <div class="container" id="jobApplyContainer">
+        <br />
+        <div class="card">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-sm-10 text-center mt-2">
+                <h5 style="color: white">
+                  <b>{{ job.jobTitle }}</b>
+                </h5>
+              </div>
+              <div *ngIf="job.jobStatus == 'Active'" class="col-sm-2 mt-2">
+                <a
+                  style="
+                    color: white;
+                    font-family: Candara, cursive, sans-serif;
+                  "
+                  class="btn btn-sm btn-success btn-block active"
+                  disabled
+                >
+                  {{ job.jobStatus }}
+                </a>
+              </div>
+              <div *ngIf="job.jobStatus != 'Active'" class="col-sm-2 mt-2">
+                <a
+                  style="
+                    color: white;
+                    font-family: Candara, cursive, sans-serif;
+                  "
+                  class="btn btn-sm btn-danger btn-block active"
+                  disabled
+                >
+                  {{ job.jobStatus }}
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card-body" id="jobBasic">
+            <div class="row">
+              <div class="col-sm-8 ml-4">
+                <br />
+                <h6 class="card-title">
+                  {{ job.jobDesignation }}
+                </h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8 ml-4">
+                <a href="{{ job.jobCompanyUrl }}" target="_blank"
+                  ><i>{{ job.jobOrganization }}</i></a
+                >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8 ml-4 mt-2">
+                <p>
+                  <small
+                    ><span><i class="fa fa-briefcase"></i></span>&nbsp;&nbsp;{{
+                      job.jobMinExperience
+                    }}
+                    - {{ job.jobMaxExperience }}</small
+                  >&nbsp;&nbsp;&nbsp;&nbsp;
+                  <small
+                    ><span><i class="fa fa-map-marker"></i></span>&nbsp;&nbsp;{{
+                      job.jobLocation
+                    }}</small
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="card">
+          <div class="card-body" id="jobDescription">
+            <div class="row">
+              <div class="col-sm-10">
+                <h5><b>Job Description</b></h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-10 mt-1">
+                <p>
+                  <em>{{ job.jobDesignation }}</em>
+                </p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-10 mt-2">
+                <h6><b>Description</b></h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 mt-1 text-justify">
+                <pre>
+                  <em>{{ job.jobDescription }}</em>
+                </pre>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-10 mt-2">
+                <h6><b>Qualification</b></h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-10 mt-1 mx-1">
+                <table class="table table-sm table-borderless">
+                  <tbody>
+                    <tr class="row">
+                      <td class="col-sm-2 ml-2">Master Education:</td>
+                      <td>
+                        <em>{{ job.jobPGDescription }}</em>
+                      </td>
+                    </tr>
+                    <tr class="row">
+                      <td class="col-sm-2 ml-2">Bachelor Education:</td>
+                      <td>
+                        <em>{{ job.jobUGDescription }}</em>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-10 mt-2">
+                <h6><b>Roles and Responsibilties</b></h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 mt-1 text-justify">
+                <pre>
+                  <em>{{ job.jobRole }}</em>
+                </pre>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-10 mt-2">
+                <h6><b>Skills</b></h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-10 mt-1 mx-1">
+                <p>Primary Skill</p>
+                <div *ngFor="let skill of job.jobSkills">
+                  <a *ngIf="skill.jobSkillType == 'Primary'" class="chip"
+                    ><em>{{ skill.jobSkillName }}</em></a
+                  >
+                </div>
+                <br />
+                <p *ngIf="job.jobSkills?.length > 1">Additional Skills:</p>
+                <div
+                  *ngFor="let skill of job.jobSkills"
+                  style="display: inline-block"
+                >
+                  <a *ngIf="skill.jobSkillType == 'Secondary'" class="chip mr-3"
+                    ><em>{{ skill.jobSkillName }}</em></a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="card">
+          <div class="card-body" id="jobCompany">
+            <div class="row">
+              <div class="col-sm-10">
+                <h5><b>About Company</b></h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 mt-1 text-justify">
+                <pre>
+                  <em>{{ job.jobAboutCompany }} </em>
+                </pre>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 mt-1">
+                <a
+                  href="{{ job.jobCompanyUrl }}"
+                  class="btn btn-sm btn-outline-info"
+                  target="_blank"
+                  >Visit Company Site</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+      </div>
+      <br />
+      <app-notification></app-notification>
+      <app-inside-footer></app-inside-footer>
+    </div>
+  </body>
+</html>

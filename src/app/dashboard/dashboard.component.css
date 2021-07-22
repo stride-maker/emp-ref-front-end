@@ -1,0 +1,62 @@
+body {
+  background-color: #f5f5f5;
+}
+#dashboardContainer {
+  background-image: url("/assets/images/banner.jpg");
+  background-size: cover;
+}
+.row {
+  background: transparent;
+}
+.btn {
+  border-radius: 5px;
+}
+h2,
+h3,
+h6,
+h5 {
+  font-family: "Candara", cursive, sans-serif;
+  color: white;
+}
+.card {
+  border-radius: 15px;
+}
+.card-img-top {
+  border-radius: 10px;
+}
+.card-body {
+  background-image: url("/assets/images/banner.jpg");
+  background-position: cover;
+}
+.card p,
+h2 {
+  font-family: "Candara", cursive, sans-serif;
+  color: white;
+}
+#verifyEmailHeader,
+#verifyPhoneHeader {
+  background-image: url("/assets/images/banner.jpg");
+}
+input[type="password"] {
+  font-family: "Candara", cursive, sans-serif;
+}
+button:focus {
+  outline: 0;
+}
+.form-control {
+  border-radius: 7px;
+}
+.form-control.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+#emailModalIcon {
+  color: white;
+}
+#emailModalHeader {
+  background-color: #4caf50;
+  color: white;
+}
+#emailModalButton {
+  background-color: #4caf50;
+  color: white;
+}

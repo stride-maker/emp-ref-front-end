@@ -1,0 +1,48 @@
+.login {
+  background-image: url("/assets/images/home.jpg");
+  background-size: cover;
+}
+.btn {
+  color: #d7ccc8;
+  border: none;
+  font-family: "Cambria", cursive, sans-serif;
+  border-radius: 10px;
+}
+.btn:hover {
+  color: white;
+}
+.btn:focus {
+  box-shadow: none;
+}
+.dropdown-menu {
+  background: transparent;
+  border: none;
+}
+.dropdown-item:hover {
+  background: transparent;
+}
+.modal-header {
+  background-color: #607d8b;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+li,
+em {
+  color: #d7ccc8;
+  font-family: "Candara", cursive, sans-serif;
+}
+.form-control {
+  border-radius: 10px;
+}
+.form-control.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+button:focus {
+  outline: 0;
+}

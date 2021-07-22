@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> </head>
+
+  <body>
+    <app-inside-header class="fixed-top"></app-inside-header>
+    <br />
+    <br />
+    <div *ngIf="showLoadingScreen">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <div *ngIf="!showLoadingScreen">
+      <div class="container-fluid" id="headerContainer">
+        <br /><br /><br />
+        <div class="row">
+          <div class="col-sm-3 offset-sm-9">
+            <h2 style="font-family: Candara, cursive, sans-serif; color: black">
+              Respond
+              <em>
+                <h5 style="font-family: Candara, cursive, sans-serif">
+                  &nbsp;&nbsp;&nbsp;&nbsp;to applicants about their referrals..
+                </h5>
+              </em>
+            </h2>
+            <br />
+            <p style="font-family: Candara, cursive, sans-serif; color: black">
+              Start Responding..
+            </p>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="container-fluid">
+        <div class="row">
+          <div *ngIf="referredJobResponse?.length == 0" class="col-sm-12">
+            <br /><br />
+            <div class="row">
+              <div class="col-sm-12 text-center">
+                <img
+                  src="/assets/images/fresh_page.png"
+                  width="350px"
+                  height="200px"
+                />
+                <br /><br />
+                <h2>We don't have any job for your response</h2>
+                <h5>Please refer a job and start responding..</h5>
+                <br />
+                <br />
+                <a class="btn btn-primary" routerLink="/user-referrer">
+                  Navigate to Refer Job
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3 mx-5">
+            <br />
+            <div
+              *ngIf="referredJobResponse?.length != 0 && !showLoadingJobs"
+              class="row"
+            >
+              <div class="col-sm-6 offset-sm-2">
+                <a
+                  id="addMoreReferralsButton"
+                  class="btn btn-block"
+                  routerLink="/user-referrer"
+                >
+                  Add More Referrals
+                </a>
+                <hr />
+              </div>
+            </div>
+            <br />
+            <div *ngIf="referredJobResponse?.length != 0 && !showLoadingJobs">
+              <div class="row">
+                <div class="col-sm-7 ml-2">
+                  <h4 class="ml-4"><strong>Filters</strong></h4>
+                </div>
+                <div class="col-sm-3 mt-2 ml-2">
+                  x
+                  <a class="clearAll" (click)="clearFilter()">Clear</a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-10 ml-2">
+                  <hr />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-10 ml-2">
+                  <h6 class="ml-4"><strong>Response Status</strong></h6>
+                  <hr />
+                  <div class="row">
+                    <div class="col-sm-10 ml-4">
+                      <input
+                        type="checkbox"
+                        id="appliedCheckBox"
+                        [(ngModel)]="filterForAppStatus.referred"
+                        (ngModelChange)="applyFilter()"
+                      />
+                      <label for="appliedCheckBox"
+                        >&nbsp;&nbsp; Responded</label
+                      >
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-10 ml-4">
+                      <input
+                        type="checkbox"
+                        id="referredCheckBox"
+                        [(ngModel)]="filterForAppStatus.applied"
+                        (ngModelChange)="applyFilter()"
+                      />
+                      <label for="referredCheckBox"
+                        >&nbsp;&nbsp; Not Responded</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col-sm-10 ml-2">
+                  <h6 class="ml-4"><strong>Applicants Range</strong></h6>
+                  <hr />
+                  <div class="row">
+                    <div class="col-sm-10 ml-4">
+                      <input
+                        type="checkbox"
+                        id="lessThanFiftyCheckBox"
+                        [(ngModel)]="filterForApplicantRange.lessThanFifty"
+                        (ngModelChange)="applyFilter()"
+                      />
+                      <label for="lessThanFiftyCheckBox"
+                        >&nbsp;&nbsp; Less than 50</label
+                      >
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-10 ml-4">
+                      <input
+                        type="checkbox"
+                        id="fiftyToHundredCheckBox"
+                        [(ngModel)]="filterForApplicantRange.fiftyToHundred"
+                        (ngModelChange)="applyFilter()"
+                      />
+                      <label for="fiftyToHundredCheckBox"
+                        >&nbsp;&nbsp; 50 to 100</label
+                      >
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-10 ml-4">
+                      <input
+                        type="checkbox"
+                        id="hundredToOneFiftyCheckBox"
+                        [(ngModel)]="filterForApplicantRange.hundredToOneFifty"
+                        (ngModelChange)="applyFilter()"
+                      />
+                      <label for="hundredToOneFiftyCheckBox"
+                        >&nbsp;&nbsp; 100 to 150</label
+                      >
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-10 ml-4">
+                      <input
+                        type="checkbox"
+                        id="oneFiftyToTwoHundredCheckBox"
+                        [(ngModel)]="
+                          filterForApplicantRange.oneFiftyToTwoHundred
+                        "
+                        (ngModelChange)="applyFilter()"
+                      />
+                      <label for="oneFiftyToTwoHundredCheckBox"
+                        >&nbsp;&nbsp; 150 to 200</label
+                      >
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-10 ml-4">
+                      <input
+                        type="checkbox"
+                        id="twoHundredToTwoFiftyCheckBox"
+                        [(ngModel)]="
+                          filterForApplicantRange.twoHundredToTwoFifty
+                        "
+                        (ngModelChange)="applyFilter()"
+                      />
+                      <label for="twoHundredToTwoFiftyCheckBox"
+                        >&nbsp;&nbsp; 200 to 250
+                      </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-10 ml-4">
+                      <input
+                        type="checkbox"
+                        id="moreThanTwoFiftyCheckBox"
+                        [(ngModel)]="filterForApplicantRange.moreThanTwoFifty"
+                        (ngModelChange)="applyFilter()"
+                      />
+                      <label for="moreThanTwoFiftyCheckBox"
+                        >&nbsp;&nbsp; More Than 250</label
+                      >
+                    </div>
+                  </div>
+                  <hr />
+                </div>
+              </div>
+            </div>
+            <br />
+          </div>
+          <div
+            *ngIf="
+              filteredReferredJobResponse?.length == 0 &&
+              referredJobResponse?.length != 0
+            "
+            class="col-sm-8"
+          >
+            <br /><br />
+            <div class="row">
+              <div class="col-sm-12 text-center">
+                <img
+                  src="/assets/images/no_job.png"
+                  width="350px"
+                  height="200px"
+                />
+                <br /><br /><br />
+                <h2>Sorry! We couldn't find any job for your response.</h2>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="showLoadingJobs" class="col-sm-12">
+            <app-job-spinner></app-job-spinner>
+            <div class="row text-center">
+              <div class="col-sm-2 offset-sm-5">Searching responses</div>
+            </div>
+          </div>
+          <div
+            *ngIf="filteredReferredJobResponse?.length != 0 && !showLoadingJobs"
+            class="col-sm-8"
+          >
+            <div class="row justify-content-end mr-3">
+              <app-referrer-pagination
+                [items]="items"
+                (changePage)="onChangePage($event)"
+              ></app-referrer-pagination>
+            </div>
+            <div
+              *ngFor="let appliedJob of pageOfItems; let i = index"
+              class="col-sm-12"
+            >
+              <div class="card text-white">
+                <div class="card-header">
+                  <div class="row">
+                    <div class="col-sm-9 mt-2">
+                      <h6>
+                        <b
+                          ><i>{{ appliedJob.jobTitle }}</i></b
+                        >
+                      </h6>
+                    </div>
+                    <div class="col-sm-3 text-right">
+                      <a
+                        class="btn btn-sm btn-block btn-outline-primary mt-2"
+                        (click)="
+                          downloadAllResumes(
+                            appliedJob.jobId,
+                            appliedJob.jobTitle
+                          )
+                        "
+                        >Download All Resumes
+                      </a>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-9 mt-2">
+                      <h6>
+                        {{ appliedJob.jobDesignation }} at
+                        <i>{{ appliedJob.jobOrganization }}</i>
+                      </h6>
+                    </div>
+                    <div class="col-sm-3 text-right">
+                      <a
+                        class="btn btn-sm btn-block btn-outline-success mt-2"
+                        (click)="changeAllToReferred(appliedJob.jobId)"
+                        >Respond to all applicants
+                      </a>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-8 mt-2">
+                      <h6>
+                        Number of applicants:
+                        <i
+                          ><b style="font-size: 22px">{{
+                            appliedJob.numberOfApplicants
+                          }}</b></i
+                        >
+                      </h6>
+                    </div>
+                    <div class="col-sm-3 mt-2 text-right">
+                      <a
+                        routerLink="/candidate-details"
+                        [queryParams]="{
+                          jobId: appliedJob.jobId
+                        }"
+                        style="color: #90a4ae"
+                        target="_blank"
+                        >View all applicants</a
+                      >
+                    </div>
+                    <div class="col-sm-1 text-right">
+                      <a
+                        class="btn btn-sm mt-2"
+                        data-toggle="collapse"
+                        [attr.data-target]="'#respondBasic' + i"
+                        ><i class="fa fa-angle-left"></i>&nbsp;<i
+                          class="fa fa-angle-right"
+                        ></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="card-body"
+                  id="respondBasic{{ i }}"
+                  class="collapse hide"
+                >
+                  <div class="row">
+                    <div
+                      *ngIf="appliedJob.applicants.length > 3"
+                      class="col-sm-12 ml-4"
+                      style="color: #90a4ae"
+                    >
+                      Note: You can only see first few applicants over here.
+                    </div>
+                  </div>
+                  <div
+                    *ngFor="
+                      let candidate of appliedJob.applicants.slice(0, 3);
+                      let j = index
+                    "
+                    class="row mt-1"
+                  >
+                    <div class="col-sm-12">
+                      <div class="row">
+                        <div class="col-sm-3 ml-4 mt-1">
+                          <p style="color: white">
+                            <i class="fa fa-caret-right"></i>&nbsp;
+                            {{ candidate.firstName }}
+                            {{ candidate.lastName }}
+                          </p>
+                        </div>
+                        <div class="col-sm-4 ml-4 mt-1">
+                          <p style="color: white">
+                            {{ candidate.email }}
+                          </p>
+                        </div>
+                        <div
+                          *ngIf="candidate.applicationStatus != 'Applied'"
+                          class="col-sm-3"
+                        >
+                          <a class="referredStatus btn btn-sm btn-block">
+                            Referred
+                          </a>
+                        </div>
+                        <div
+                          *ngIf="candidate.applicationStatus == 'Applied'"
+                          class="col-sm-3"
+                        >
+                          <a
+                            class="notReferredStatus btn btn-sm btn-block"
+                            (click)="
+                              changeToReferred(
+                                appliedJob.jobId,
+                                candidate.applicationId
+                              )
+                            "
+                          >
+                            Respond to applicant
+                          </a>
+                        </div>
+                        <a
+                          (click)="
+                            downloadCandidateResume(
+                              candidate.applicationId,
+                              candidate.firstName,
+                              candidate.lastName,
+                              candidate.createdDate,
+                              candidate.applicationStatus
+                            )
+                          "
+                          class="btn"
+                          title="Download candidate resume"
+                        >
+                          <i class="fa fa-download"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr />
+            </div>
+            <div *ngIf="pageOfItems?.length >= 5" class="col-sm-2 offset-sm-10">
+              <a
+                class="btn btn-sm btn-block"
+                id="scrollUp"
+                (click)="scrollToTop()"
+              >
+                <b>Scroll Up</b>&nbsp;
+                <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <app-notification></app-notification>
+      <app-inside-footer></app-inside-footer>
+    </div>
+  </body>
+</html>

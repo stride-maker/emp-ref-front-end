@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> </head>
+
+  <body>
+    <div class="login">
+      <!-- Header Section -->
+      <nav class="navbar navbar-expand-xl navbar-dark">
+        <a routerLink="" class="navbar-brand ml-1"
+          ><img
+            src="/assets/images/logo.png"
+            width="90px"
+            height="90px"
+            alt="FootstepsBrandLogo"
+        /></a>
+        <button
+          type="button"
+          class="navbar-toggler"
+          data-toggle="collapse"
+          data-target="#navbarCollapse"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item ml-4">
+              <a routerLink="/home" class="btn btn-sm btn-outline-dark px-3"
+                >HOME</a
+              >
+            </li>
+            <li class="nav-item ml-4">
+              <a routerLink="/about-us" class="btn btn-sm btn-outline-dark px-3"
+                >ABOUT US</a
+              >
+            </li>
+            <li class="nav-item ml-4">
+              <a
+                routerLink="/job-seeker"
+                class="btn btn-sm btn-outline-dark px-3"
+                >JOB SEEKER</a
+              >
+            </li>
+            <li class="nav-item ml-4">
+              <a
+                routerLink="/job-referrer"
+                class="btn btn-sm btn-outline-dark px-3"
+                >JOB REFERRER</a
+              >
+            </li>
+            <li class="nav-item dropdown ml-4">
+              <a
+                class="btn btn-sm btn-outline-dark dropdown-toggle px-3"
+                data-toggle="dropdown"
+              >
+                MORE
+              </a>
+              <div class="dropdown-menu">
+                <a routerLink="/contact-us" class="btn btn-sm dropdown-item"
+                  >Contact Us</a
+                >
+              </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item ml-4">
+              <a routerLink="/register" class="btn btn-sm btn-outline-dark px-3"
+                >REGISTER &nbsp;&nbsp; <i class="fa fa-user-plus"></i
+              ></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Login Header -->
+      <div class="container-fluid">
+        <hr />
+        <div *ngIf="isSending" class="form-group row">
+          <div class="col-sm-4 offset-sm-4">
+            <h6 style="text-align: center">Please wait...</h6>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4 offset-sm-4 text-center">
+            <h2>Sign In</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 offset-sm-3 text-center">
+            <h5>Work with peers and colleagues to land your dream career</h5>
+          </div>
+        </div>
+        <hr />
+      </div>
+
+      <!-- Login Form-->
+      <div class="container-fluid">
+        <br />
+        <div *ngIf="isLoading" class="form-group row">
+          <div class="col-sm-3 offset-sm-7">
+            <h6 style="text-align: center">Please wait...</h6>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4 offset-sm-7">
+            <h5>You are one step closer.....</h5>
+          </div>
+        </div>
+        <form
+          #loginForm="ngForm"
+          (ngSubmit)="applogin(loginForm); loginForm.reset()"
+        >
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="col-sm-5 offset-sm-8">
+                  <br />
+                  <a
+                    (click)="socialLogin('facebook')"
+                    class="btn btn-primary btn-block btn-social btn-facebook"
+                  >
+                    <span class="fa fa-facebook"></span>
+                    Sign in with Facebook
+                  </a>
+                </div>
+                <div class="col-sm-5 offset-sm-8">
+                  <br />
+                  <a
+                    (click)="socialLogin('google')"
+                    class="btn btn-danger btn-block btn-social btn-google"
+                  >
+                    <span class="fa fa-google"></span>
+                    Sign in with Google
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="col-sm-6 offset-sm-2">
+                  <label for="loginEmail"></label>
+                  <input
+                    ngModel
+                    name="loginEmail"
+                    #loginEmail="ngModel"
+                    type="email"
+                    maxlength="36"
+                    class="form-control"
+                    id="loginEmail"
+                    pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+                    placeholder="Email address"
+                    required
+                  />
+                </div>
+                <div class="col-sm-6 offset-sm-2">
+                  <label for="loginPassword"></label>
+                  <input
+                    ngModel
+                    name="loginPassword"
+                    #loginPassword="ngModel"
+                    type="password"
+                    maxlength="36"
+                    class="form-control"
+                    id="loginPassword"
+                    placeholder="Password"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4 offset-sm-7">
+              <div class="form-group">
+                <div class="row">
+                  <br />
+                  <div class="col-sm-4 mx-3">
+                    <em
+                      ><a
+                        href=""
+                        data-toggle="modal"
+                        data-target="#passwordModal"
+                        >Forgot Password</a
+                      ></em
+                    >
+                  </div>
+                  <br />
+                  <div class="col-sm-4 offset-sm-1 mx-3">
+                    <button
+                      type="submit"
+                      class="btn btn-success btn-block"
+                      [disabled]="!loginForm.valid"
+                    >
+                      Sign In
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+          </div>
+          <div class="row"><br /><br /></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Forgot Password Section -->
+    <div
+      id="passwordModal"
+      class="modal fade animate__animated animate__fadeInDown"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" style="color: white">Forgot Password</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              style="color: white"
+            >
+              &times;
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="col-md-12">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="text-center">
+                    <p style="color: black">Please enter your email address</p>
+                    <div class="panel-body">
+                      <form #forgotPasswordForm="ngForm">
+                        <div class="form-group row">
+                          <input
+                            ngModel
+                            name="inputEmail"
+                            #inputEmail="ngModel"
+                            type="email"
+                            class="form-control"
+                            id="inputEmail"
+                            pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+                            placeholder="Enter email address"
+                            required
+                          />
+                        </div>
+                        <div class="form-group">
+                          <div class="row">
+                            <button
+                              type="button"
+                              class="btn btn-lg btn-success btn-block"
+                              (click)="forgotPassword(forgotPasswordForm)"
+                              data-dismiss="modal"
+                              [disabled]="!forgotPasswordForm.valid"
+                            >
+                              Send Mail
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="row">
+              <div class="col-sm-12 text-right">
+                <button class="btn btn-secondary" data-dismiss="modal">
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Social SignIn Modal-->
+    <div
+      id="socialLoginModal"
+      class="modal fade animate__animated animate__fadeInDown"
+      role="dialog"
+      [ngStyle]="{ display: showModalBox ? 'block' : 'none' }"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" style="color: white">
+              Set New Password &nbsp;&nbsp;
+              <hr />
+              <h6
+                style="color: white"
+                data-toggle="tooltip"
+                title="Required for normal application login!"
+              >
+                Why is it required ?
+              </h6>
+              <h6 style="color: white">
+                <small>No user is registered with your email.</small>
+              </h6>
+              <h6 style="color: white">
+                <small>We will create a user with your credentials.</small>
+              </h6>
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              style="color: white"
+            >
+              &times;
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="col-12">
+              <form #socialLoginForm="ngForm">
+                <h6 style="color: black">Password requirements:</h6>
+                <ol>
+                  <li style="color: black">
+                    &nbsp;Password be minimum 8 characters
+                  </li>
+                  <li style="color: black">
+                    &nbsp;Must contain atleast one uppercase character
+                  </li>
+                  <li style="color: black">
+                    &nbsp;Must contain atleast one numerical character
+                  </li>
+                  <li style="color: black">
+                    &nbsp;Must contain atleast one special character
+                  </li>
+                </ol>
+                <div class="text-center">
+                  <div class="form-group row">
+                    <label for="setPassword1"></label>
+                    <input
+                      ngModel
+                      name="setPassword1"
+                      #setPassword1="ngModel"
+                      type="password"
+                      maxlength="36"
+                      class="form-control"
+                      id="setPassword1"
+                      placeholder="New password "
+                      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                      required
+                    />
+                  </div>
+                  <div class="form-group row">
+                    <label for="setPassword2"></label>
+                    <input
+                      ngModel
+                      name="setPassword2"
+                      #setPassword2="ngModel"
+                      type="password"
+                      maxlength="36"
+                      class="form-control"
+                      id="setPassword2"
+                      placeholder="Confirm new password"
+                      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                      required
+                    />
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-4 offset-4">
+                      <button
+                        type="button"
+                        class="btn btn btn-success btn-block"
+                        data-dismiss="modal"
+                        (click)="createUserAndLogin(socialLoginForm)"
+                        [disabled]="!socialLoginForm.valid"
+                      >
+                        Proceed
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      id="openModalButton"
+      [hidden]="true"
+      data-toggle="modal"
+      data-target="#socialLoginModal"
+      (click)="openModalBox(true)"
+    ></button>
+    <app-notification></app-notification>
+    <app-footer></app-footer>
+  </body>
+</html>

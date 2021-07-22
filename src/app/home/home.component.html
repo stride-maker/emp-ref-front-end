@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> </head>
+
+  <body>
+    <div class="home">
+      <!-- Header Section -->
+      <nav class="navbar navbar-expand-xl navbar-dark">
+        <a routerLink="" class="navbar-brand mx-1"
+          ><img
+            src="/assets/images/logo.png"
+            width="90px"
+            height="90px"
+            alt="FootstepsBrandLogo"
+        /></a>
+        <button
+          type="button"
+          class="navbar-toggler"
+          data-toggle="collapse"
+          data-target="#navbarCollapse"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item ml-4">
+              <a
+                routerLink="/home"
+                class="btn btn-sm btn-outline-dark px-3 active"
+                >HOME</a
+              >
+            </li>
+            <li class="nav-item ml-4">
+              <a routerLink="/about-us" class="btn btn-sm btn-outline-dark px-3"
+                >ABOUT US</a
+              >
+            </li>
+            <li class="nav-item ml-4">
+              <a
+                routerLink="/job-seeker"
+                class="btn btn-sm btn-outline-dark px-3"
+                >JOB SEEKER</a
+              >
+            </li>
+            <li class="nav-item ml-4">
+              <a
+                routerLink="/job-referrer"
+                class="btn btn-sm btn-outline-dark px-3"
+                >JOB REFERRER</a
+              >
+            </li>
+            <li class="nav-item dropdown ml-4">
+              <a
+                class="btn btn-sm btn-outline-dark dropdown-toggle px-3"
+                data-toggle="dropdown"
+              >
+                MORE
+              </a>
+              <div class="dropdown-menu">
+                <a routerLink="/contact-us" class="btn btn-sm dropdown-item"
+                  >Contact Us</a
+                >
+              </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item ml-4">
+              <a routerLink="/register" class="btn btn-sm btn-outline-dark px-3"
+                >REGISTER &nbsp;&nbsp; <i class="fa fa-user-plus"></i
+              ></a>
+            </li>
+            <li class="nav-item ml-4">
+              <a routerLink="/login" class="btn btn-sm btn-outline-dark px-3"
+                >LOGIN &nbsp;&nbsp; <i class="fa fa-sign-in"></i
+              ></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <br /><br />
+      <!-- Carousel Section -->
+      <div
+        id="myCarousel"
+        class="carousel slide"
+        data-ride="carousel"
+        data-interval="3000"
+      >
+        <ol class="carousel-indicators">
+          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel" data-slide-to="1"></li>
+          <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <div class="carousel-inner">
+          <div class="carousel-item">
+            <h4>Footsteps sets up your recruitment network</h4>
+            <br />
+            <p>Reach out to your peers in relevant companies</p>
+            <p>
+              Learn about vacant positions or take advantage of them for your
+              company
+            </p>
+            <br />
+            <a routerLink="/job-portal" class="btn btn-lg btn-info mx-4"
+              >Apply for job</a
+            >
+            <a routerLink="/user-referrer" class="btn btn-lg btn-info mx-4"
+              >Refer a job</a
+            >
+          </div>
+          <div class="carousel-item active">
+            <h4>Referrals by world class professionals in several companies</h4>
+            <br />
+            <p>
+              Apply straight to hidden jobs shared by the company's employees
+            </p>
+            <br />
+            <a routerLink="/register" class="btn btn-lg btn-info mx-4"
+              >Register / Sign Up</a
+            >
+          </div>
+          <div class="carousel-item">
+            <h4>Refer & Earn. Share. Get Paid. Repeat!</h4>
+            <br />
+            <p>
+              Select Company &nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right"></i
+              >&nbsp;&nbsp;&nbsp; Submit Application &nbsp;&nbsp;&nbsp;
+              <i class="fa fa-arrow-right"></i>&nbsp;&nbsp;&nbsp; Procure a job
+            </p>
+            <br />
+            <a routerLink="/login" class="btn btn-lg btn-info mx-4"
+              >Start by Logging in..</a
+            >
+          </div>
+        </div>
+
+        <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </a>
+      </div>
+      <br /><br /><br />
+
+      <!-- Text and Images Section-->
+      <div class="row">
+        <div class="col-sm-6">
+          <h3 class="mx-5">Your career quest has been simpler</h3>
+          <p class="mx-5 text-justify">
+            Build connections with your peers in your target companies and
+            discover hidden jobs. Job screening is more straightforward than
+            ever before.
+          </p>
+        </div>
+      </div>
+      <br /><br /><br /><br /><br /><br />
+      <div class="row">
+        <div class="col-sm-4">
+          <h3 class="mx-5">Benefit from your Employee Referral Bonus</h3>
+          <p class="mx-5 text-justify">
+            Establish secondary income by continually presenting good internal
+            applicants. Post in-house vacancies free of charge. You assist
+            companies to form a team.
+          </p>
+        </div>
+      </div>
+      <br /><br /><br /><br />
+      <br /><br /><br /><br />
+      <div class="row">
+        <div class="col-sm-6 offset-sm-6">
+          <h1 class="mx-5">Start referring jobs and pick candidates</h1>
+          <br />
+          <a routerLink="/register" class="btn btn-lg btn-info text-center mx-5"
+            >Post a job without charge</a
+          >
+        </div>
+      </div>
+      <br /><br />
+      <div class="row">
+        <div class="col-sm-10 offset-sm-1">
+          <h5 class="mx-5"><strong>What is a Employee Referral ?</strong></h5>
+          <p class="mx-5 text-justify">
+            An employee recommendation program is coordinated and used by
+            employers to ask current workers to recommend applicants for open
+            positions in a formal program. Employee referral, unlike sourcing,
+            is an internal process used to locate and recruit the best talent
+            from the current networks of employees.
+          </p>
+          <br />
+          <h5 class="mx-5"><strong>Ease of Employee Referral</strong></h5>
+          <p class="mx-5 text-justify">
+            Seeking talent was described as one of the main hiring obstacles,
+            employee references are seen as one of the key outlets for finding
+            high-quality career applicants by an overwhelming majority of modern
+            recruiters. Optimizing the hiring techniques has become one of the
+            top priorities for many businesses that want to employ and recruit
+            more productively in today's hiring environment.
+          </p>
+        </div>
+      </div>
+      <div class="row"><br /><br /></div>
+    </div>
+    <app-footer></app-footer>
+  </body>
+</html>

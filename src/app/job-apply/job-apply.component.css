@@ -1,0 +1,45 @@
+body {
+  background-size: cover;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.4),
+      rgba(255, 255, 255, 0.4)
+    ),
+    url("/assets/images/apply.jpeg");
+}
+#jobApplyContainer {
+  background-color: #f5f5f5;
+}
+#warningContainer {
+  background-color: #f5f5f5;
+}
+.card-header {
+  background-color: #455a64;
+}
+.modal-header {
+  background-color: #455a64;
+}
+.pointer {
+  cursor: pointer;
+}
+p,
+a,
+h5,
+h6,
+td {
+  font-family: "Candara", cursive, sans-serif;
+}
+pre {
+  font-family: "Candara", cursive, sans-serif;
+  font-size: 16px;
+  white-space: pre-line;
+  word-wrap: break-word;
+}
+.chip {
+  display: inline-block;
+  padding: 0 10px;
+  height: 30px;
+  font-size: 14px;
+  line-height: 30px;
+  border-radius: 5px;
+  background-color: #90caf9;
+}

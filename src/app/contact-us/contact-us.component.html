@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> </head>
+
+  <body>
+    <div class="contactus">
+      <!-- Header Section -->
+      <nav class="navbar navbar-expand-xl navbar-dark">
+        <a routerLink="/" class="navbar-brand ml-1"
+          ><img
+            src="/assets/images/logo.png"
+            width="90px"
+            height="90px"
+            alt="FootstepsBrandLogo"
+        /></a>
+        <button
+          type="button"
+          class="navbar-toggler"
+          data-toggle="collapse"
+          data-target="#navbarCollapse"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item ml-4">
+              <a routerLink="/home" class="btn btn-sm btn-outline-dark px-3"
+                >HOME</a
+              >
+            </li>
+            <li class="nav-item ml-4">
+              <a routerLink="/about-us" class="btn btn-sm btn-outline-dark px-3"
+                >ABOUT US</a
+              >
+            </li>
+            <li class="nav-item ml-4">
+              <a
+                routerLink="/job-seeker"
+                class="btn btn-sm btn-outline-dark px-3"
+                >JOB SEEKER</a
+              >
+            </li>
+            <li class="nav-item ml-4">
+              <a
+                routerLink="/job-referrer"
+                class="btn btn-sm btn-outline-dark px-3"
+                >JOB REFERRER</a
+              >
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item ml-4">
+              <a routerLink="/register" class="btn btn-sm btn-outline-dark px-3"
+                >REGISTER &nbsp;&nbsp; <i class="fa fa-user-plus"></i
+              ></a>
+            </li>
+            <li class="nav-item ml-4">
+              <a routerLink="/login" class="btn btn-sm btn-outline-dark px-3"
+                >LOGIN &nbsp;&nbsp; <i class="fa fa-sign-in"></i
+              ></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <br />
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-8 offset-sm-3">
+              <br /><br /><br />
+              <h2 class="mx-5">Contact Details</h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-8 offset-sm-3">
+              <h5 class="mx-5">Registered Office</h5>
+              <br />
+              <address class="mx-5">
+                A1-508, SNN Raj Greenbay<br />
+                1st Main Road, Electronic City<br />
+                Phase II, Bengaluru - 560100
+              </address>
+              <br />
+              <address class="mx-5">
+                Email:
+                <a href="mailto:contact.footsteps@gmail.com"
+                  >contact.footsteps@gmail.com</a
+                ><br />
+                Cell Phone: (+91) 9650455188, (+91) 9952029434
+              </address>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-12 text-center">
+              <br />
+              <h2>Have Some Questions?</h2>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-sm-12 text-center">
+              <h6><i class="fa fa-globe"></i> Bengaluru, India</h6>
+              <h6>
+                <i class="fa fa-clock-o"></i>
+                {{ currentDateTime | date: "medium" }}
+              </h6>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <br />
+              <form
+                #contactUsForm="ngForm"
+                (ngSubmit)="contactUs(contactUsForm)"
+              >
+                <div *ngIf="isLoading" class="form-group row">
+                  <div class="col-sm-6 offset-sm-3">
+                    <h6 style="text-align: center">Please wait...</h6>
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-8 offset-sm-2 text-center">
+                    <label for="firstName"></label>
+                    <input
+                      ngModel
+                      name="firstName"
+                      #firstName="ngModel"
+                      type="text"
+                      maxlength="36"
+                      class="form-control"
+                      id="firstName"
+                      placeholder="First Name"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-8 offset-sm-2 text-center">
+                    <label for="lastName"></label>
+                    <input
+                      ngModel
+                      name="lastName"
+                      #lastName="ngModel"
+                      type="text"
+                      maxlength="36"
+                      class="form-control"
+                      id="lastName"
+                      placeholder="Last Name"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-8 offset-sm-2 text-center">
+                    <label for="contactEmail"></label>
+                    <input
+                      ngModel
+                      name="contactEmail"
+                      #contactEmail="ngModel"
+                      type="email"
+                      maxlength="36"
+                      class="form-control"
+                      id="contactEmail"
+                      pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+                      placeholder="What's your Email?"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-8 offset-sm-2 text-center">
+                    <label for="contactQuestions"></label>
+                    <textarea
+                      ngModel
+                      name="contactQuestions"
+                      #contactQuestions="ngModel"
+                      class="form-control"
+                      id="contactQuestions"
+                      placeholder="Your questions..."
+                      rows="3"
+                      required
+                    >
+                    </textarea>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-4 offset-sm-4 text-center">
+                    <button
+                      type="submit"
+                      class="btn btn-lg btn-success btn-block"
+                      [disabled]="!contactUsForm.valid"
+                    >
+                      Send Message
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      </div>
+      <div class="row">
+        <div class="col-sm-10 offset-sm-1">
+          <h5 class="mx-5 text-justify">
+            <strong>DISCLAIMER</strong> <br /><br />Please be informed that
+            contacting our company via e-mail will not establish a customer
+            agreement between you and our company. <br />Please do not include
+            any personal material or evidence about the matter.
+          </h5>
+        </div>
+      </div>
+      <div class="row"><br /><br /></div>
+      <app-notification></app-notification>
+      <app-footer></app-footer>
+    </div>
+  </body>
+</html>

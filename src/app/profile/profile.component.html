@@ -1,0 +1,2459 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> </head>
+
+  <body>
+    <app-inside-header class="fixed-top"></app-inside-header>
+    <div *ngIf="showLoadingScreen">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <div *ngIf="!showLoadingScreen">
+      <div class="container-fluid" id="firstContainer">
+        <br />
+        <br />
+        <br />
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-6">
+              <br />
+              <h2>
+                <i class="fa fa-address-card-o"></i>&nbsp;&nbsp;
+                {{ userBasicDetailsResponse.firstName }}
+                {{ userBasicDetailsResponse.lastName }}
+              </h2>
+              <h6 *ngIf="showPosition">
+                {{ currentDesignation }} at
+                {{ currentOrganization }}
+              </h6>
+              <br />
+              <div *ngIf="showDateOfBirth" class="row">
+                <div class="col-sm-5">
+                  <h6>
+                    <i class="fa fa-calendar"></i>&nbsp;&nbsp;
+                    {{ shownDateOfBirth | date }}
+                  </h6>
+                </div>
+                <div *ngIf="showPhoneNumber" class="col-sm-5">
+                  <h6>
+                    <i class="fa fa-phone"></i>&nbsp;&nbsp;
+                    {{ userBasicDetailsResponse.phoneNumber }}
+                  </h6>
+                </div>
+              </div>
+              <div class="row">
+                <div *ngIf="showCurrentLocation" class="col-sm-5">
+                  <h6>
+                    <i class="fa fa-map-marker"></i>&nbsp;&nbsp;
+                    {{ userBasicDetailsResponse.currentLocation }}
+                  </h6>
+                </div>
+                <div class="col-sm-5">
+                  <h6 *ngIf="showCurrentExperience">
+                    <i class="fa fa-briefcase"></i>&nbsp;&nbsp;
+                    {{ userBasicDetailsResponse.currentExperience }}(s) of
+                    experience
+                  </h6>
+                </div>
+              </div>
+              <br />
+              <div *ngIf="isBasicDetails" class="form-group row">
+                <div class="col-sm-12">
+                  <h6 style="text-align: center">Saving...</h6>
+                  <mat-progress-bar
+                    mode="indeterminate"
+                    color="accent"
+                  ></mat-progress-bar>
+                </div>
+              </div>
+              <h6>Profiile Complete - {{ progressValue }} %</h6>
+              <mat-progress-bar
+                mode="determinate"
+                value="{{ progressValue }}"
+                color="warn"
+              ></mat-progress-bar>
+              <br />
+            </div>
+            <div class="col-sm-1 mt-4 text-center">
+              <a
+                (click)="openEditDetailsModel()"
+                data-toggle="modal"
+                data-target="#editDetailsModal"
+              >
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+              </a>
+            </div>
+            <div class="col-sm-1 offset-sm-2 text-center">
+              <br />
+              <label class="hoverable pointer" for="profileImageInput">
+                <img
+                  src="{{ imageUrl }}"
+                  class="rounded-circle"
+                  height="150px"
+                  width="150px"
+                  data-toggle="tooltip"
+                  title="Change profile image"
+                />
+              </label>
+              <input
+                style="display: none"
+                id="profileImageInput"
+                type="file"
+                (change)="onSelectImage($event)"
+              />
+            </div>
+          </div>
+        </div>
+        <br />
+      </div>
+      <div class="container-fluid" id="secondContainer">
+        <div class="accordion" id="profileAccordion">
+          <div class="card">
+            <div class="card-header">
+              <h2>
+                <button
+                  id="accordianbutton"
+                  type="button"
+                  class="btn btn-secondary"
+                  data-toggle="collapse"
+                  data-target="#collapseOne"
+                >
+                  Attach Resume
+                </button>
+              </h2>
+            </div>
+            <div
+              id="collapseOne"
+              class="collapse show"
+              data-parent="#profileAccordion"
+            >
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-12 text-left">
+                    <h6 style="color: black">
+                      Resume is a mandatory document referrers look out for
+                      while applying to companies.
+                    </h6>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12 text-left">
+                    <h6 style="color: black">
+                      <em><u>Important:</u></em> If your profile doesn't have
+                      active resume linked, you cannot apply to the position on
+                      the job portal.
+                    </h6>
+                  </div>
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col-sm-1 offset-sm-1 mt-3">
+                    <label class="hoverable pointer" for="profileResumeInput">
+                      <img
+                        src="/assets/images/upload-resume.jpg"
+                        alt="Upload Resume"
+                      />
+                    </label>
+                    <input
+                      style="display: none"
+                      id="profileResumeInput"
+                      type="file"
+                      (change)="onUploadResume($event)"
+                    />
+                  </div>
+                  <div *ngIf="showResumePdf" class="col-sm-2 offset-sm-2 mt-3">
+                    <i class="fa fa-file-pdf-o fa-2x"></i>&nbsp;&nbsp;
+                    {{ resumeName }}
+                  </div>
+                  <div *ngIf="showResumeWord" class="col-sm-2 offset-sm-2 mt-3">
+                    <i class="fa fa-file-word-o fa-2x"></i>&nbsp;&nbsp;
+                    {{ resumeName }}
+                  </div>
+                  <div class="col-sm-2 offset-sm-2 mt-3">
+                    <a
+                      (click)="downloadResume()"
+                      id="resumeButton"
+                      class="btn btn-sm"
+                    >
+                      <i class="fa fa-download fa-2x"></i>&nbsp; Download
+                    </a>
+                  </div>
+                  <div class="col-sm-2 mt-3">
+                    <a
+                      (click)="deleteResume()"
+                      id="resumeButton"
+                      class="btn btn-sm"
+                    >
+                      <i class="fa fa-trash fa-2x"></i>&nbsp; Delete
+                    </a>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-3 offset-sm-1">
+                    <hr />
+                    <h6 style="color: black">
+                      Supported Formats: doc, docx, pdf.
+                    </h6>
+                  </div>
+                </div>
+                <div *ngIf="isResume" class="form-group row">
+                  <div class="col-sm-4 offset-sm-4">
+                    <h6 style="text-align: center; color: black">Saving...</h6>
+                    <mat-progress-bar
+                      mode="indeterminate"
+                      color="accent"
+                    ></mat-progress-bar>
+                  </div>
+                </div>
+                <div *ngIf="isDownloadResume" class="form-group row">
+                  <div class="col-sm-4 offset-sm-4">
+                    <h6 style="text-align: center; color: black">
+                      Downloading...
+                    </h6>
+                    <mat-progress-bar
+                      mode="indeterminate"
+                      color="accent"
+                    ></mat-progress-bar>
+                  </div>
+                </div>
+                <div *ngIf="isDeleteResume" class="form-group row">
+                  <div class="col-sm-4 offset-sm-4">
+                    <h6 style="text-align: center; color: black">
+                      Deleting...
+                    </h6>
+                    <mat-progress-bar
+                      mode="indeterminate"
+                      color="accent"
+                    ></mat-progress-bar>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="card">
+            <div class="card-header">
+              <h2>
+                <button
+                  id="accordianbutton"
+                  type="button"
+                  class="btn btn-secondary"
+                  data-toggle="collapse"
+                  data-target="#collapseTwo"
+                >
+                  Employment
+                </button>
+              </h2>
+            </div>
+            <div
+              id="collapseTwo"
+              class="collapse"
+              data-parent="#profileAccordion"
+            >
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-2 ml-auto">
+                    <a
+                      href=""
+                      id="addEmployementButton"
+                      class="btn btn-sm"
+                      data-toggle="modal"
+                      data-target="#addEmploymentModal"
+                    >
+                      Add Employment
+                    </a>
+                  </div>
+                </div>
+                <br />
+                <div *ngIf="isEmployment" class="form-group row">
+                  <div class="col-sm-4 offset-sm-4">
+                    <h6 style="text-align: center; color: black">Saving...</h6>
+                    <mat-progress-bar
+                      mode="indeterminate"
+                      color="accent"
+                    ></mat-progress-bar>
+                  </div>
+                </div>
+                <div *ngIf="isDeleteEmployment" class="form-group row">
+                  <div class="col-sm-4 offset-sm-4">
+                    <h6 style="text-align: center; color: black">
+                      Deleting...
+                    </h6>
+                    <mat-progress-bar
+                      mode="indeterminate"
+                      color="accent"
+                    ></mat-progress-bar>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div
+                      *ngFor="let employment of userSortedEmpResponse"
+                      class="card"
+                      id="employmentCard"
+                    >
+                      <div class="card-header">
+                        <div class="row">
+                          <div class="col-sm-7">
+                            <h5 style="color: black">
+                              <em
+                                ><strong>
+                                  {{ employment.organization }}
+                                </strong>
+                              </em>
+                            </h5>
+                          </div>
+                          <div class="col-sm-3 offset-sm-2 text-right">
+                            <a
+                              class="ml-3 btn btn-sm"
+                              id="employmentButton"
+                              data-toggle="modal"
+                              data-target="#editEmploymentModal"
+                              (click)="openEditEmploymentModel(employment)"
+                            >
+                              <i class="fa fa-pencil fa-2x"></i>
+                            </a>
+                            <a
+                              class="ml-3 btn btn-sm"
+                              id="employmentButton"
+                              (click)="deleteEmployment(employment)"
+                            >
+                              <i class="fa fa-trash fa-2x"></i>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-sm-7 offset-sm-1 text-left">
+                            <h6 style="color: black">
+                              <strong>Position:</strong>
+                              {{ employment.designation }}
+                            </h6>
+                          </div>
+                          <div class="col-sm-2 text-right">
+                            <h6 style="color: black">
+                              <strong>Start Date:</strong>
+                              {{ employment.startMonth }}
+                              {{ employment.startYear }}
+                            </h6>
+                          </div>
+                          <div
+                            *ngIf="!employment.currentJob"
+                            class="col-sm-2 text-right"
+                          >
+                            <h6 style="color: black">
+                              <strong>End Date:</strong>
+                              {{ employment.endMonth }}
+                              {{ employment.endYear }}
+                            </h6>
+                          </div>
+                          <div
+                            *ngIf="employment.currentJob"
+                            class="col-sm-2 text-right"
+                          >
+                            <h6 style="color: black">
+                              <strong>End Date:</strong>
+                              Present
+                            </h6>
+                          </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                          <div class="col-sm-7 offset-sm-1">
+                            <h6 style="color: black">
+                              <strong>Roles & Responsibilities</strong>
+                            </h6>
+                            <h6 style="color: black">
+                              {{ employment.jobRole }}
+                            </h6>
+                          </div>
+                        </div>
+                        <div *ngIf="employment.currentJob" class="row">
+                          <div class="col-sm-5 offset-sm-1">
+                            <hr />
+                            <h6 style="color: black">
+                              Notice Period : {{ employment.noticePeriod }}
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="card">
+            <div class="card-header">
+              <h2>
+                <button
+                  id="accordianbutton"
+                  type="button"
+                  class="btn btn-secondary"
+                  data-toggle="collapse"
+                  data-target="#collapseThird"
+                >
+                  Education
+                </button>
+              </h2>
+            </div>
+            <div
+              id="collapseThird"
+              class="collapse"
+              data-parent="#profileAccordion"
+            >
+              <div class="card-body">
+                <!-- Nested Education Accordion for details-->
+                <div class="accordion" id="educationAccordion">
+                  <div class="card">
+                    <div class="card-header">
+                      <h2>
+                        <button
+                          id="accordianbutton"
+                          type="button"
+                          class="btn btn-sm btn-secondary"
+                          data-toggle="collapse"
+                          data-target="#collapseThreeOne"
+                        >
+                          Master's Degree
+                        </button>
+                      </h2>
+                    </div>
+                    <div
+                      id="collapseThreeOne"
+                      class="collapse show"
+                      data-parent="#educationAccordion"
+                    >
+                      <div class="card-body">
+                        <form #masterEducationForm="ngForm">
+                          <div class="row">
+                            <div class="col-sm-4 offset-sm-1">
+                              <label for="masterEducation"
+                                ><em
+                                  ><small>&nbsp;&nbsp; Education</small></em
+                                ></label
+                              >
+                              <input
+                                type="text"
+                                id="masterEducation"
+                                class="form-control"
+                                value="Masters/Post-Graduation"
+                                readonly
+                              />
+                            </div>
+                            <div class="col-sm-5 offset-sm-1">
+                              <label for="masterInstitute"
+                                ><em
+                                  ><small
+                                    >&nbsp;&nbsp; University/Institute</small
+                                  ></em
+                                ></label
+                              >
+                              <input
+                                type="text"
+                                id="masterInstitute"
+                                class="form-control"
+                                [(ngModel)]="
+                                  userMasterEduDetailsResponse.institute
+                                "
+                                name="masterInstitute"
+                                #masterEduInstitute="ngModel"
+                                pattern="^[^-\s][a-zA-Z_ ]*$"
+                                maxlength="72"
+                                required
+                              />
+                              <div
+                                class="row ml-3 mt-1"
+                                *ngIf="
+                                  masterEduInstitute.touched &&
+                                  masterEduInstitute.errors?.required
+                                "
+                              >
+                                <small style="color: red"
+                                  >University/Institute is required</small
+                                >
+                              </div>
+                              <div
+                                class="row ml-3 mt-1"
+                                *ngIf="masterEduInstitute.errors?.pattern"
+                              >
+                                <small style="color: red"
+                                  >University/Institute has invalid
+                                  characters</small
+                                >
+                              </div>
+                            </div>
+                          </div>
+                          <br />
+                          <div class="row">
+                            <div class="col-sm-4 offset-sm-1">
+                              <label for="masterSpecialization"
+                                ><em
+                                  ><small
+                                    >&nbsp;&nbsp; Specialization</small
+                                  ></em
+                                ></label
+                              >
+                              <input
+                                type="text"
+                                id="masterSpecialization"
+                                class="form-control"
+                                [(ngModel)]="
+                                  userMasterEduDetailsResponse.specialization
+                                "
+                                name="masterSpecialization"
+                                #masterEduSpecialization="ngModel"
+                                pattern="^[^-\s][a-zA-Z_ ]*$"
+                                maxlength="72"
+                                required
+                              />
+                              <div
+                                class="row ml-3 mt-1"
+                                *ngIf="
+                                  masterEduSpecialization.touched &&
+                                  masterEduSpecialization.errors?.required
+                                "
+                              >
+                                <small style="color: red"
+                                  >Specialization is required</small
+                                >
+                              </div>
+                              <div
+                                class="row ml-3 mt-1"
+                                *ngIf="masterEduSpecialization.errors?.pattern"
+                              >
+                                <small style="color: red"
+                                  >Specialization has invalid characters</small
+                                >
+                              </div>
+                            </div>
+                            <div class="col-sm-2 offset-sm-1">
+                              <label for="masterPassYear"
+                                ><em
+                                  ><small
+                                    >&nbsp;&nbsp; Passing out year</small
+                                  ></em
+                                ></label
+                              >
+                              <select
+                                id="masterPassYear"
+                                class="form-control"
+                                [(ngModel)]="
+                                  userMasterEduDetailsResponse.passingYear
+                                "
+                                name="masterPassYear"
+                                #masterEduPassYear="ngModel"
+                                required
+                              >
+                                <option
+                                  *ngFor="let year of years"
+                                  value="{{ year }}"
+                                >
+                                  {{ year }}
+                                </option>
+                              </select>
+                              <div
+                                class="row ml-3 mt-1"
+                                *ngIf="
+                                  masterEduPassYear.touched &&
+                                  masterEduPassYear.errors?.required
+                                "
+                              >
+                                <small style="color: red"
+                                  >Passing year is required</small
+                                >
+                              </div>
+                            </div>
+                            <div
+                              class="col-sm-1 ml-5 mt-4 custom-control custom-radio custom-control-inline"
+                            >
+                              <input
+                                type="radio"
+                                class="custom-control-input"
+                                id="customRadio1"
+                                value="Full time"
+                                [(ngModel)]="
+                                  userMasterEduDetailsResponse.courseType
+                                "
+                                name="masterCourseType"
+                              />
+                              <label
+                                class="custom-control-label"
+                                for="customRadio1"
+                                ><em
+                                  ><small>&nbsp;&nbsp; Full time</small></em
+                                ></label
+                              >
+                            </div>
+                            <div
+                              class="col-sm-1 ml-5 mt-4 custom-control custom-radio custom-control-inline"
+                            >
+                              <input
+                                type="radio"
+                                class="custom-control-input"
+                                id="customRadio2"
+                                value="Part time"
+                                [(ngModel)]="
+                                  userMasterEduDetailsResponse.courseType
+                                "
+                                name="masterCourseType"
+                              />
+                              <label
+                                class="custom-control-label"
+                                for="customRadio2"
+                                ><em
+                                  ><small>&nbsp;&nbsp; Part time</small></em
+                                ></label
+                              >
+                            </div>
+                          </div>
+                          <br />
+                          <div class="row">
+                            <div class="col-sm-12 text-right">
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-success"
+                                [disabled]="!masterEducationForm.valid"
+                                (click)="
+                                  addMasterEducation(masterEducationForm)
+                                "
+                              >
+                                Save
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                        <div *ngIf="isMasterEducation" class="form-group row">
+                          <div class="col-sm-4 offset-sm-4">
+                            <h6 style="text-align: center; color: black">
+                              Saving...
+                            </h6>
+                            <mat-progress-bar
+                              mode="indeterminate"
+                              color="accent"
+                            ></mat-progress-bar>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header">
+                      <h2>
+                        <button
+                          id="accordianbutton"
+                          type="button"
+                          class="btn btn-sm btn-secondary"
+                          data-toggle="collapse"
+                          data-target="#collapseThreeTwo"
+                        >
+                          Bachelor's Degree
+                        </button>
+                      </h2>
+                    </div>
+                    <div
+                      id="collapseThreeTwo"
+                      class="collapse"
+                      data-parent="#educationAccordion"
+                    >
+                      <div class="card-body">
+                        <form #bachelorEducationForm="ngForm">
+                          <div class="row">
+                            <div class="col-sm-4 offset-sm-1">
+                              <label for="bachelorEducation"
+                                ><em
+                                  ><small>&nbsp;&nbsp; Education</small></em
+                                ></label
+                              >
+                              <input
+                                type="text"
+                                id="bachelorEducation"
+                                class="form-control"
+                                value="Graduation/Diploma"
+                                readonly
+                              />
+                            </div>
+                            <div class="col-sm-5 offset-sm-1">
+                              <label for="bachelorInstitute"
+                                ><em
+                                  ><small
+                                    >&nbsp;&nbsp; University/Institute</small
+                                  ></em
+                                ></label
+                              >
+                              <input
+                                type="text"
+                                id="bachelorInstitute"
+                                class="form-control"
+                                [(ngModel)]="
+                                  userBachelorEduDetailsResponse.institute
+                                "
+                                name="bachelorInstitute"
+                                #bachelorEduInstitute="ngModel"
+                                pattern="^[^-\s][a-zA-Z_ ]*$"
+                                maxlength="72"
+                                required
+                              />
+                              <div
+                                class="row ml-3 mt-1"
+                                *ngIf="
+                                  bachelorEduInstitute.touched &&
+                                  bachelorEduInstitute.errors?.required
+                                "
+                              >
+                                <small style="color: red"
+                                  >University/Institute is required</small
+                                >
+                              </div>
+                              <div
+                                class="row ml-3 mt-1"
+                                *ngIf="bachelorEduInstitute.errors?.pattern"
+                              >
+                                <small style="color: red"
+                                  >University/Institute has invalid
+                                  characters</small
+                                >
+                              </div>
+                            </div>
+                          </div>
+                          <br />
+                          <div class="row">
+                            <div class="col-sm-4 offset-sm-1">
+                              <label for="bachelorSpecialization"
+                                ><em
+                                  ><small
+                                    >&nbsp;&nbsp; Specialization</small
+                                  ></em
+                                ></label
+                              >
+                              <input
+                                type="text"
+                                id="bachelorSpecialization"
+                                class="form-control"
+                                [(ngModel)]="
+                                  userBachelorEduDetailsResponse.specialization
+                                "
+                                name="bachelorSpecialization"
+                                #bachelorEduSpecialization="ngModel"
+                                pattern="^[^-\s][a-zA-Z_ ]*$"
+                                maxlength="72"
+                                required
+                              />
+                              <div
+                                class="row ml-3 mt-1"
+                                *ngIf="
+                                  bachelorEduSpecialization.touched &&
+                                  bachelorEduSpecialization.errors?.required
+                                "
+                              >
+                                <small style="color: red"
+                                  >Specialization is required</small
+                                >
+                              </div>
+                              <div
+                                class="row ml-3 mt-1"
+                                *ngIf="
+                                  bachelorEduSpecialization.errors?.pattern
+                                "
+                              >
+                                <small style="color: red"
+                                  >Specialization has invalid characters</small
+                                >
+                              </div>
+                            </div>
+                            <div class="col-sm-2 offset-sm-1">
+                              <label for="bachelorPassYear"
+                                ><em
+                                  ><small
+                                    >&nbsp;&nbsp; Passing out year</small
+                                  ></em
+                                ></label
+                              >
+                              <select
+                                id="bachelorPassYear"
+                                class="form-control"
+                                [(ngModel)]="
+                                  userBachelorEduDetailsResponse.passingYear
+                                "
+                                name="bachelorPassYear"
+                                #bachelorEduPassYear="ngModel"
+                                required
+                              >
+                                <option
+                                  *ngFor="let year of years"
+                                  value="{{ year }}"
+                                >
+                                  {{ year }}
+                                </option>
+                              </select>
+                              <div
+                                class="row ml-3 mt-1"
+                                *ngIf="
+                                  bachelorEduPassYear.touched &&
+                                  bachelorEduPassYear.errors?.required
+                                "
+                              >
+                                <small style="color: red"
+                                  >Passing year is required</small
+                                >
+                              </div>
+                            </div>
+                            <div
+                              class="col-sm-1 ml-5 mt-4 custom-control custom-radio custom-control-inline"
+                            >
+                              <input
+                                type="radio"
+                                class="custom-control-input"
+                                id="customRadio3"
+                                value="Full time"
+                                [(ngModel)]="
+                                  userBachelorEduDetailsResponse.courseType
+                                "
+                                name="bachelorCourseType"
+                              />
+                              <label
+                                class="custom-control-label"
+                                for="customRadio3"
+                                ><em
+                                  ><small>&nbsp;&nbsp; Full time</small></em
+                                ></label
+                              >
+                            </div>
+                            <div
+                              class="col-sm-1 ml-5 mt-4 custom-control custom-radio custom-control-inline"
+                            >
+                              <input
+                                type="radio"
+                                class="custom-control-input"
+                                id="customRadio4"
+                                value="Part time"
+                                [(ngModel)]="
+                                  userBachelorEduDetailsResponse.courseType
+                                "
+                                name="bachelorCourseType"
+                              />
+                              <label
+                                class="custom-control-label"
+                                for="customRadio4"
+                                ><em
+                                  ><small>&nbsp;&nbsp; Part time</small></em
+                                ></label
+                              >
+                            </div>
+                          </div>
+                          <br />
+                          <div class="row">
+                            <div class="col-sm-12 text-right">
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-success"
+                                [disabled]="!bachelorEducationForm.valid"
+                                (click)="
+                                  addBachelorEducation(bachelorEducationForm)
+                                "
+                              >
+                                Save
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                        <div *ngIf="isBachelorEducation" class="form-group row">
+                          <div class="col-sm-4 offset-sm-4">
+                            <h6 style="text-align: center; color: black">
+                              Saving...
+                            </h6>
+                            <mat-progress-bar
+                              mode="indeterminate"
+                              color="accent"
+                            ></mat-progress-bar>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header">
+                      <h2>
+                        <button
+                          id="accordianbutton"
+                          type="button"
+                          class="btn btn-sm btn-secondary"
+                          data-toggle="collapse"
+                          data-target="#collapseThreeThree"
+                        >
+                          Senior Secondary (12<sup>th</sup>)
+                        </button>
+                      </h2>
+                    </div>
+                    <div
+                      id="collapseThreeThree"
+                      class="collapse"
+                      data-parent="#educationAccordion"
+                    >
+                      <div class="card-body">
+                        <form #seniorSecondaryEducationForm="ngForm">
+                          <div class="row">
+                            <div class="col-sm-4 offset-sm-1">
+                              <label for="seniorSecondaryEducation"
+                                ><em
+                                  ><small>&nbsp;&nbsp; Education</small></em
+                                ></label
+                              >
+                              <input
+                                type="text"
+                                id="seniorSecondaryEducation"
+                                class="form-control"
+                                value="12th Standard/Intermediate"
+                                readonly
+                              />
+                            </div>
+                            <div class="col-sm-5 offset-sm-1">
+                              <label for="seniorSecondaryBoard"
+                                ><em
+                                  ><small>&nbsp;&nbsp; Board</small></em
+                                ></label
+                              >
+                              <input
+                                type="text"
+                                id="seniorSecondaryBoard"
+                                class="form-control"
+                                [(ngModel)]="
+                                  userIntermediateEduDetailsResponse.board
+                                "
+                                name="seniorSecondaryBoard"
+                                #seniorSecBoard="ngModel"
+                                pattern="^[^-\s][a-zA-Z_ ]*$"
+                                maxlength="72"
+                                required
+                              />
+                              <div
+                                class="row ml-3 mt-1"
+                                *ngIf="
+                                  seniorSecBoard.touched &&
+                                  seniorSecBoard.errors?.required
+                                "
+                              >
+                                <small style="color: red"
+                                  >Board is required</small
+                                >
+                              </div>
+                              <div
+                                class="row ml-3 mt-1"
+                                *ngIf="seniorSecBoard.errors?.pattern"
+                              >
+                                <small style="color: red"
+                                  >Board has invalid characters</small
+                                >
+                              </div>
+                            </div>
+                          </div>
+                          <br />
+                          <div class="row">
+                            <div class="col-sm-2 offset-sm-1">
+                              <label for="seniorSecondaryPercentage"
+                                ><em
+                                  ><small
+                                    >&nbsp;&nbsp; Percentage Of Marks</small
+                                  ></em
+                                ></label
+                              >
+                              <select
+                                id="seniorSecondaryPercentage"
+                                class="form-control"
+                                [(ngModel)]="
+                                  userIntermediateEduDetailsResponse.percentage
+                                "
+                                name="seniorSecondaryPercentage"
+                                #seniorSecPercentage="ngModel"
+                                required
+                              >
+                                <option
+                                  *ngFor="let mark of marks"
+                                  value="{{ mark }}"
+                                >
+                                  {{ mark }}
+                                </option>
+                              </select>
+                              <div
+                                class="row ml-3 mt-1"
+                                *ngIf="
+                                  seniorSecPercentage.touched &&
+                                  seniorSecPercentage.errors?.required
+                                "
+                              >
+                                <small style="color: red"
+                                  >Percentage of marks is required</small
+                                >
+                              </div>
+                            </div>
+                            <div class="col-sm-2 offset-sm-3">
+                              <label for="seniorSecondaryStream"
+                                ><em
+                                  ><small>&nbsp;&nbsp; Stream</small></em
+                                ></label
+                              >
+                              <select
+                                id="seniorSecondaryStream"
+                                class="form-control"
+                                [(ngModel)]="
+                                  userIntermediateEduDetailsResponse.stream
+                                "
+                                name="seniorSecondaryStream"
+                                #seniorSecStream="ngModel"
+                                required
+                              >
+                                <option
+                                  *ngFor="let stream of streams"
+                                  value="{{ stream }}"
+                                >
+                                  {{ stream }}
+                                </option>
+                              </select>
+                              <div
+                                class="row ml-3 mt-1"
+                                *ngIf="
+                                  seniorSecStream.touched &&
+                                  seniorSecStream.errors?.required
+                                "
+                              >
+                                <small style="color: red"
+                                  >Stream is required</small
+                                >
+                              </div>
+                            </div>
+                            <div class="col-sm-2 offset-sm-1">
+                              <label for="seniorSecondaryPassYear"
+                                ><em
+                                  ><small
+                                    >&nbsp;&nbsp; Passing out year</small
+                                  ></em
+                                ></label
+                              >
+                              <select
+                                id="seniorSecondaryPassYear"
+                                class="form-control"
+                                [(ngModel)]="
+                                  userIntermediateEduDetailsResponse.passingYear
+                                "
+                                name="seniorSecondaryPassYear"
+                                #seniorSecPassYear="ngModel"
+                                required
+                              >
+                                <option
+                                  *ngFor="let year of years"
+                                  value="{{ year }}"
+                                >
+                                  {{ year }}
+                                </option>
+                              </select>
+                              <div
+                                class="row ml-3 mt-1"
+                                *ngIf="
+                                  seniorSecPassYear.touched &&
+                                  seniorSecPassYear.errors?.required
+                                "
+                              >
+                                <small style="color: red"
+                                  >Passing year is required</small
+                                >
+                              </div>
+                            </div>
+                          </div>
+                          <br />
+                          <div class="row">
+                            <div class="col-sm-12 text-right">
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-success"
+                                [disabled]="!seniorSecondaryEducationForm.valid"
+                                (click)="
+                                  addSeniorSecondaryEducation(
+                                    seniorSecondaryEducationForm
+                                  )
+                                "
+                              >
+                                Save
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                        <div
+                          *ngIf="isSeniorSecEducation"
+                          class="form-group row"
+                        >
+                          <div class="col-sm-4 offset-sm-4">
+                            <h6 style="text-align: center; color: black">
+                              Saving...
+                            </h6>
+                            <mat-progress-bar
+                              mode="indeterminate"
+                              color="accent"
+                            ></mat-progress-bar>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header">
+                      <h2>
+                        <button
+                          id="accordianbutton"
+                          type="button"
+                          class="btn btn-sm btn-secondary"
+                          data-toggle="collapse"
+                          data-target="#collapseThreeFour"
+                        >
+                          Secondary (10<sup>th</sup>)
+                        </button>
+                      </h2>
+                    </div>
+                    <div
+                      id="collapseThreeFour"
+                      class="collapse"
+                      data-parent="#educationAccordion"
+                    >
+                      <div class="card-body">
+                        <form #secondaryEducationForm="ngForm">
+                          <div class="row">
+                            <div class="col-sm-4 offset-sm-1">
+                              <label for="secondaryEducation"
+                                ><em
+                                  ><small>&nbsp;&nbsp; Education</small></em
+                                ></label
+                              >
+                              <input
+                                type="text"
+                                id="secondaryEducation"
+                                class="form-control"
+                                value="10th Standard/Secondary"
+                                readonly
+                              />
+                            </div>
+                            <div class="col-sm-5 offset-sm-1">
+                              <label for="secondaryBoard"
+                                ><em
+                                  ><small>&nbsp;&nbsp; Board</small></em
+                                ></label
+                              >
+                              <input
+                                type="text"
+                                id="secondaryBoard"
+                                class="form-control"
+                                [(ngModel)]="
+                                  userSecondaryEduDetailsResponse.board
+                                "
+                                name="secondaryBoard"
+                                #secBoard="ngModel"
+                                pattern="^[^-\s][a-zA-Z_ ]*$"
+                                maxlength="72"
+                                required
+                              />
+                              <div
+                                class="row ml-3 mt-1"
+                                *ngIf="
+                                  secBoard.touched && secBoard.errors?.required
+                                "
+                              >
+                                <small style="color: red"
+                                  >Board is required</small
+                                >
+                              </div>
+                              <div
+                                class="row ml-3 mt-1"
+                                *ngIf="secBoard.errors?.pattern"
+                              >
+                                <small style="color: red"
+                                  >Board has invalid characters</small
+                                >
+                              </div>
+                            </div>
+                          </div>
+                          <br />
+                          <div class="row">
+                            <div class="col-sm-2 offset-sm-1">
+                              <label for="secondaryPercentage"
+                                ><em
+                                  ><small
+                                    >&nbsp;&nbsp; Percentage Of Marks</small
+                                  ></em
+                                ></label
+                              >
+                              <select
+                                id="secondaryPercentage"
+                                class="form-control"
+                                [(ngModel)]="
+                                  userSecondaryEduDetailsResponse.percentage
+                                "
+                                name="secondaryPercentage"
+                                #secPercentage="ngModel"
+                                required
+                              >
+                                <option
+                                  *ngFor="let mark of marks"
+                                  value="{{ mark }}"
+                                >
+                                  {{ mark }}
+                                </option>
+                              </select>
+                              <div
+                                class="row ml-3 mt-1"
+                                *ngIf="
+                                  secPercentage.touched &&
+                                  secPercentage.errors?.required
+                                "
+                              >
+                                <small style="color: red"
+                                  >Percentage of marks is required</small
+                                >
+                              </div>
+                            </div>
+                            <div class="col-sm-2 offset-sm-3">
+                              <label for="secondaryPassYear"
+                                ><em
+                                  ><small
+                                    >&nbsp;&nbsp; Passing out year</small
+                                  ></em
+                                ></label
+                              >
+                              <select
+                                id="secondaryPassYear"
+                                class="form-control"
+                                [(ngModel)]="
+                                  userSecondaryEduDetailsResponse.passingYear
+                                "
+                                name="secondaryPassYear"
+                                #secPassYear="ngModel"
+                                required
+                              >
+                                <option
+                                  *ngFor="let year of years"
+                                  value="{{ year }}"
+                                >
+                                  {{ year }}
+                                </option>
+                              </select>
+                              <div
+                                class="row ml-3 mt-1"
+                                *ngIf="
+                                  secPassYear.touched &&
+                                  secPassYear.errors?.required
+                                "
+                              >
+                                <small style="color: red"
+                                  >Passing year is required</small
+                                >
+                              </div>
+                            </div>
+                          </div>
+                          <br />
+                          <div class="row">
+                            <div class="col-sm-12 text-right">
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-success"
+                                [disabled]="!secondaryEducationForm.valid"
+                                (click)="
+                                  addSecondaryEducation(secondaryEducationForm)
+                                "
+                              >
+                                Save
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                        <div
+                          *ngIf="isSecondaryEducation"
+                          class="form-group row"
+                        >
+                          <div class="col-sm-4 offset-sm-4">
+                            <h6 style="text-align: center; color: black">
+                              Saving...
+                            </h6>
+                            <mat-progress-bar
+                              mode="indeterminate"
+                              color="accent"
+                            ></mat-progress-bar>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="card">
+            <div class="card-header">
+              <h2>
+                <button
+                  id="accordianbutton"
+                  type="button"
+                  class="btn btn-secondary"
+                  data-toggle="collapse"
+                  data-target="#collapseFour"
+                >
+                  Personal
+                </button>
+              </h2>
+            </div>
+            <div
+              id="collapseFour"
+              class="collapse"
+              data-parent="#profileAccordion"
+            >
+              <div class="card-body">
+                <form #personalDetailsForm="ngForm">
+                  <div class="row">
+                    <div class="col-sm-2 mx-5">
+                      <label for="gender"
+                        ><em><small>&nbsp;&nbsp; Gender</small></em></label
+                      >
+                      <select
+                        id="gender"
+                        class="form-control"
+                        [(ngModel)]="userBasicDetailsResponse.gender"
+                        name="userGender"
+                      >
+                        <option
+                          *ngFor="let gender of genders"
+                          value="{{ gender }}"
+                        >
+                          {{ gender }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="col-sm-2 mx-5">
+                      <label for="maritalStatus"
+                        ><em
+                          ><small>&nbsp;&nbsp; Marital Status</small></em
+                        ></label
+                      >
+                      <select
+                        id="maritalStatus"
+                        class="form-control"
+                        [(ngModel)]="userBasicDetailsResponse.maritalStatus"
+                        name="userMaritalStatus"
+                      >
+                        <option
+                          *ngFor="let maritalStatus of maritalStatuses"
+                          value="{{ maritalStatus }}"
+                        >
+                          {{ maritalStatus }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="col-sm-2 mx-5">
+                      <label for="hometown"
+                        ><em><small>&nbsp;&nbsp; Hometown</small></em></label
+                      >
+                      <input
+                        type="text"
+                        id="hometown"
+                        class="form-control"
+                        [(ngModel)]="userBasicDetailsResponse.hometown"
+                        name="userHometown"
+                        #userHometown="ngModel"
+                        pattern="^[^-\s][a-zA-Z_ ]*$"
+                        maxlength="32"
+                      />
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="userHometown.errors?.pattern"
+                      >
+                        <small style="color: red"
+                          >Home town has invalid characters</small
+                        >
+                      </div>
+                    </div>
+                    <div class="col-sm-2 mx-5">
+                      <label for="pincode"
+                        ><em><small>&nbsp;&nbsp; Pincode</small></em></label
+                      >
+                      <input
+                        type="text"
+                        id="pincode"
+                        class="form-control"
+                        [(ngModel)]="userBasicDetailsResponse.pinCode"
+                        name="userPinCode"
+                        #userPinCode="ngModel"
+                        pattern="^[0-9]*$"
+                        maxlength="6"
+                      />
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="userPinCode.errors?.pattern"
+                      >
+                        <small style="color: red"
+                          >Pin code has invalid characters</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <div class="row">
+                    <div class="col-sm-12 text-right">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-success"
+                        (click)="addPersonalDetails(personalDetailsForm)"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </form>
+                <div *ngIf="isPersonal" class="form-group row">
+                  <div class="col-sm-4 offset-sm-4">
+                    <h6 style="text-align: center; color: black">Saving...</h6>
+                    <mat-progress-bar
+                      mode="indeterminate"
+                      color="accent"
+                    ></mat-progress-bar>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="card">
+            <div class="card-header">
+              <h2>
+                <button
+                  id="accordianbutton"
+                  type="button"
+                  class="btn btn-secondary"
+                  data-toggle="collapse"
+                  data-target="#collapseFive"
+                >
+                  Skills
+                </button>
+              </h2>
+            </div>
+            <div
+              id="collapseFive"
+              class="collapse"
+              data-parent="#profileAccordion"
+            >
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-12 text-left">
+                    <h6 style="color: black">
+                      <em><u>Important:</u></em> Primary skill is the foremost
+                      criteria by which the seeker can apply to the jobs.
+                    </h6>
+                  </div>
+                </div>
+                <br />
+                <form #skillForm="ngForm">
+                  <div class="row">
+                    <div class="col-sm-2 offset-sm-1">
+                      <label for="primarySkill"
+                        ><em
+                          ><small
+                            >&nbsp;&nbsp; Please select primary skill</small
+                          ></em
+                        ></label
+                      >
+                      <select
+                        id="primarySkill"
+                        class="form-control"
+                        [(ngModel)]="userPrimarySkill"
+                        name="userPrimarySkill"
+                        #primarySkill="ngModel"
+                        required
+                      >
+                        <option
+                          *ngFor="let skill of skills"
+                          value="{{ skill }}"
+                        >
+                          {{ skill }}
+                        </option>
+                      </select>
+                      <div
+                        class="row ml-3 mt-1"
+                        *ngIf="
+                          primarySkill.touched && primarySkill.errors?.required
+                        "
+                      >
+                        <small style="color: red"
+                          >Primary Skill is mandatorily required</small
+                        >
+                      </div>
+                    </div>
+                    <div class="col-sm-2 offset-sm-1">
+                      <label for="skill"
+                        ><em
+                          ><small
+                            >&nbsp;&nbsp; Enter your secondary skills</small
+                          ></em
+                        ></label
+                      >
+                      <input
+                        type="text"
+                        id="skill"
+                        class="form-control"
+                        [(ngModel)]="secondarySkillShown"
+                        name="secondarySkillShown"
+                      />
+                    </div>
+                    <div class="col-sm-2 offset-sm-1 mt-4 text-left">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-success"
+                        (click)="addSecondarySkills(skillForm)"
+                      >
+                        Add Skill
+                      </button>
+                    </div>
+                    <div class="col-sm-2 mt-4 text-right">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-success"
+                        [disabled]="!skillForm.valid"
+                        (click)="saveSkills(skillForm)"
+                      >
+                        Save Skills
+                      </button>
+                    </div>
+                  </div>
+                  <br />
+                  <div *ngIf="userSecondarySkillSet.length != 0" class="row">
+                    <div class="col-sm-12">
+                      <em
+                        ><small
+                          >&nbsp;&nbsp; Your set of secondary skills</small
+                        ></em
+                      >
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div
+                        *ngFor="let secondarySkill of userSecondarySkillSet"
+                        class="chip ml-3 mt-4"
+                      >
+                        {{ secondarySkill }}
+                        &nbsp;&nbsp;
+                        <a
+                          (click)="removeSecondarySkills(secondarySkill)"
+                          style="color: black"
+                        >
+                          <i class="fa fa-times"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                <div *ngIf="isSkills" class="form-group row">
+                  <div class="col-sm-4 offset-sm-4">
+                    <h6 style="text-align: center; color: black">Saving...</h6>
+                    <mat-progress-bar
+                      mode="indeterminate"
+                      color="accent"
+                    ></mat-progress-bar>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <app-inside-footer></app-inside-footer>
+    </div>
+
+    <!--Edit Details Modal-->
+    <div
+      id="editDetailsModal"
+      class="modal fade animate__animated animate__fadeInDown"
+      role="dialog"
+      [ngStyle]="{ display: showEditDetailsModel ? 'block' : 'none' }"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" style="color: white">Basic Details</h5>
+            <button
+              type="button btn-secondary"
+              class="close"
+              data-dismiss="modal"
+              style="color: white"
+            >
+              &times;
+            </button>
+          </div>
+          <div *ngIf="showBasicDetailsScreen" class="form-group row">
+            <div class="col-sm-8 offset-sm-2">
+              <h6 style="text-align: center; color: black">
+                Fetching latest details....
+              </h6>
+              <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            </div>
+          </div>
+          <div class="modal-body">
+            <form #editDetailsForm="ngForm">
+              <div class="form-group">
+                <div class="row justify-content-center">
+                  <div class="col-sm-5">
+                    <label for="firstName"
+                      ><em><small>&nbsp;&nbsp;First Name</small></em></label
+                    >
+                    <input
+                      type="text"
+                      id="firstName"
+                      class="form-control"
+                      [(ngModel)]="userBasicDetailsModel.firstName"
+                      name="modalFirstName"
+                      #modalFirstName="ngModel"
+                      pattern="^[a-zA-Z]+$"
+                      minlength="3"
+                      maxlength="36"
+                      required
+                    />
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="
+                        modalFirstName.touched &&
+                        modalFirstName.errors?.required
+                      "
+                    >
+                      <small style="color: red">First name is required</small>
+                    </div>
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="modalFirstName.errors?.pattern"
+                    >
+                      <small style="color: red"
+                        >First name has invalid characters</small
+                      >
+                    </div>
+                  </div>
+                  <div class="col-sm-5 offset-sm-1">
+                    <label for="lastName"
+                      ><em><small>&nbsp;&nbsp;Last Name</small></em></label
+                    >
+                    <input
+                      type="text"
+                      id="lastName"
+                      class="form-control"
+                      [(ngModel)]="userBasicDetailsModel.lastName"
+                      name="modalLastName"
+                      #modalLastName="ngModel"
+                      pattern="^[a-zA-Z]+$"
+                      maxlength="36"
+                      required
+                    />
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="
+                        modalLastName.touched && modalLastName.errors?.required
+                      "
+                    >
+                      <small style="color: red">Last name is required</small>
+                    </div>
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="modalLastName.errors?.pattern"
+                    >
+                      <small style="color: red"
+                        >Last name has invalid characters</small
+                      >
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div class="row justify-content-center">
+                  <div class="col-sm-5">
+                    <label for="contactNumber"
+                      ><em><small>&nbsp;&nbsp;Phone Number</small></em></label
+                    >
+                    <input
+                      type="text"
+                      id="contactNumber"
+                      class="form-control"
+                      [(ngModel)]="userBasicDetailsModel.phoneNumber"
+                      name="modalPhoneNumber"
+                      #modalPhoneNumber="ngModel"
+                      pattern="^[0-9]*$"
+                      minlength="10"
+                      maxlength="10"
+                      required
+                    />
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="
+                        modalPhoneNumber.touched &&
+                        modalPhoneNumber.errors?.required
+                      "
+                    >
+                      <small style="color: red">Phone number is required</small>
+                    </div>
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="modalPhoneNumber.errors?.minlength"
+                    >
+                      <small style="color: red"
+                        >Phone number must be minimum 10 digits</small
+                      >
+                    </div>
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="modalPhoneNumber.errors?.pattern"
+                    >
+                      <small style="color: red"
+                        >Phone number should be digits only</small
+                      >
+                    </div>
+                  </div>
+                  <div class="col-sm-5 offset-sm-1">
+                    <label for="dateOfBirth"
+                      ><em><small>&nbsp;&nbsp;Date Of Birth</small></em></label
+                    >
+                    <input
+                      type="date"
+                      id="dateOfBirth"
+                      class="form-control"
+                      [(ngModel)]="shownDateOfBirth"
+                      name="modalDateOfBirth"
+                      #modalDateOfBirth="ngModel"
+                      pattern="^19[8-9][0-9]|20[0-0][0-2]-\d\d-\d\d$"
+                      required
+                    />
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="
+                        modalDateOfBirth.touched &&
+                        modalDateOfBirth.errors?.required
+                      "
+                    >
+                      <small style="color: red"
+                        >Date of birth is required</small
+                      >
+                    </div>
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="modalDateOfBirth.errors?.pattern"
+                    >
+                      <small style="color: red">Date of birth is invalid</small>
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div class="row justify-content-center">
+                  <div class="col-sm-5">
+                    <label for="location"
+                      ><em
+                        ><small>&nbsp;&nbsp;Current Location</small></em
+                      ></label
+                    >
+                    <select
+                      id="location"
+                      class="form-control"
+                      [(ngModel)]="userBasicDetailsModel.currentLocation"
+                      name="modalCurrentLocation"
+                      #modalCurrentLocation="ngModel"
+                      required
+                    >
+                      <option
+                        *ngFor="let location of locations"
+                        value="{{ location }}"
+                      >
+                        {{ location }}
+                      </option>
+                    </select>
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="
+                        modalCurrentLocation.touched &&
+                        modalCurrentLocation.errors?.required
+                      "
+                    >
+                      <small style="color: red"
+                        >Current location is required</small
+                      >
+                    </div>
+                  </div>
+                  <div class="col-sm-5 offset-sm-1">
+                    <label for="experience"
+                      ><em
+                        ><small>&nbsp;&nbsp;Years of experience</small></em
+                      ></label
+                    >
+                    <select
+                      id="experience"
+                      class="form-control"
+                      [(ngModel)]="userBasicDetailsModel.currentExperience"
+                      name="modalCurrentExperience"
+                      #modalCurrentExperience="ngModel"
+                      required
+                    >
+                      <option
+                        *ngFor="let expYear of expYears"
+                        value="{{ expYear }}"
+                      >
+                        {{ expYear }}
+                      </option>
+                    </select>
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="
+                        modalCurrentExperience.touched &&
+                        modalCurrentExperience.errors?.required
+                      "
+                    >
+                      <small style="color: red"
+                        >Current experience is required</small
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <div class="row">
+              <div class="col-sm-4">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-success"
+                  data-dismiss="modal"
+                  [disabled]="!editDetailsForm.valid"
+                  (click)="editDetails(editDetailsForm)"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Add Employment Modal-->
+    <div
+      id="addEmploymentModal"
+      class="modal fade animate__animated animate__fadeInDown"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" style="color: white">Employment Details</h5>
+            <button
+              type="button btn-secondary"
+              class="close"
+              data-dismiss="modal"
+              style="color: white"
+            >
+              &times;
+            </button>
+          </div>
+          <div class="modal-body">
+            <form #addEmploymentForm="ngForm">
+              <div class="form-group">
+                <div class="row justify-content-center">
+                  <div class="col-sm-5">
+                    <label for="addCompanyDesignation"
+                      ><em><small>&nbsp;&nbsp; Designation</small></em></label
+                    >
+                    <input
+                      ngModel
+                      type="text"
+                      id="addCompanyDesignation"
+                      class="form-control"
+                      name="empModelDesignation"
+                      #employeeDesignation="ngModel"
+                      pattern="^[^-\s][a-zA-Z_ ]*$"
+                      maxlength="36"
+                      required
+                    />
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="
+                        employeeDesignation.touched &&
+                        employeeDesignation.errors?.required
+                      "
+                    >
+                      <small style="color: red"
+                        >Employee designation is required</small
+                      >
+                    </div>
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="employeeDesignation.errors?.pattern"
+                    >
+                      <small style="color: red"
+                        >Employee designation has invalid characters</small
+                      >
+                    </div>
+                  </div>
+                  <div class="col-sm-5 offset-sm-1">
+                    <label for="addCompanyOrganization"
+                      ><em><small>&nbsp;&nbsp; Organization</small></em></label
+                    >
+                    <input
+                      ngModel
+                      type="text"
+                      id="addCompanyOrganization"
+                      class="form-control"
+                      name="empModelOrganization"
+                      #employeeOrganization="ngModel"
+                      pattern="^[^-\s][a-zA-Z_ ]*$"
+                      maxlength="36"
+                      required
+                    />
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="
+                        employeeOrganization.touched &&
+                        employeeOrganization.errors?.required
+                      "
+                    >
+                      <small style="color: red"
+                        >Employee organization is required</small
+                      >
+                    </div>
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="employeeOrganization.errors?.pattern"
+                    >
+                      <small style="color: red"
+                        >Employee organization has invalid characters</small
+                      >
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div class="row justify-content-center">
+                  <div class="col-sm-5">
+                    <label for="addStartingMonth"
+                      ><em
+                        ><small>&nbsp;&nbsp;Started Working From</small></em
+                      ></label
+                    >
+                    <select
+                      ngModel
+                      id="addStartingMonth"
+                      class="form-control"
+                      name="empModelStartMonth"
+                      #employeeStartMonth="ngModel"
+                      required
+                    >
+                      <option *ngFor="let month of months" value="{{ month }}">
+                        {{ month }}
+                      </option>
+                    </select>
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="
+                        employeeStartMonth.touched &&
+                        employeeStartMonth.errors?.required
+                      "
+                    >
+                      <small style="color: red"
+                        >Job starting month is required</small
+                      >
+                    </div>
+                  </div>
+                  <div class="col-sm-5 offset-sm-1 mt-2">
+                    <label for="addStartingYear"></label>
+                    <select
+                      ngModel
+                      id="addStartingYear"
+                      class="form-control"
+                      name="empModelStartYear"
+                      #employeeStartYear="ngModel"
+                      required
+                    >
+                      <option *ngFor="let year of years" value="{{ year }}">
+                        {{ year }}
+                      </option>
+                    </select>
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="
+                        employeeStartYear.touched &&
+                        employeeStartYear.errors?.required
+                      "
+                    >
+                      <small style="color: red"
+                        >Job starting year is required</small
+                      >
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div class="row justify-content-left">
+                  <div class="col-sm-5 ml-5 custom-control custom-checkbox">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="addPresentCompany"
+                      [(ngModel)]="empModelCurrentJob"
+                      name="empModelCurrentJob"
+                    />
+                    <label class="custom-control-label" for="addPresentCompany"
+                      ><em
+                        ><small>Are you still working here ?</small></em
+                      ></label
+                    >
+                  </div>
+                </div>
+                <br />
+                <div
+                  *ngIf="!empModelCurrentJob"
+                  class="row justify-content-center"
+                >
+                  <div class="col-sm-5">
+                    <label for="addEndingMonth"
+                      ><em><small>&nbsp;&nbsp;Worked till</small></em></label
+                    >
+                    <select
+                      ngModel
+                      id="addEndingMonth"
+                      class="form-control"
+                      name="empModelEndMonth"
+                      #employeeEndMonth="ngModel"
+                      required
+                    >
+                      <option *ngFor="let month of months" value="{{ month }}">
+                        {{ month }}
+                      </option>
+                    </select>
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="
+                        employeeEndMonth.touched &&
+                        employeeEndMonth.errors?.required
+                      "
+                    >
+                      <small style="color: red"
+                        >Job end month is required</small
+                      >
+                    </div>
+                  </div>
+                  <div class="col-sm-5 offset-sm-1 mt-2">
+                    <label for="addEndingYear"></label>
+                    <select
+                      ngModel
+                      id="addEndingYear"
+                      class="form-control"
+                      name="empModelEndYear"
+                      #employeeEndYear="ngModel"
+                      required
+                    >
+                      <option *ngFor="let year of years" value="{{ year }}">
+                        {{ year }}
+                      </option>
+                    </select>
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="
+                        employeeEndYear.touched &&
+                        employeeEndYear.errors?.required
+                      "
+                    >
+                      <small style="color: red">Job end year is required</small>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  *ngIf="empModelCurrentJob"
+                  class="row justify-content-left"
+                >
+                  <div class="col-sm-5 ml-4 pl-4">
+                    <label for="noticePeriod"
+                      ><em><small>&nbsp;&nbsp;Notice Period</small></em></label
+                    >
+                    <select
+                      ngModel
+                      id="noticePeriod"
+                      class="form-control"
+                      name="empModelNoticePeriod"
+                      #employeeNoticePeriod="ngModel"
+                      required
+                    >
+                      <option
+                        *ngFor="let notice of notices"
+                        value="{{ notice }}"
+                      >
+                        {{ notice }}
+                      </option>
+                    </select>
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="
+                        employeeNoticePeriod.touched &&
+                        employeeNoticePeriod.errors?.required
+                      "
+                    >
+                      <small style="color: red"
+                        >Notice period is required</small
+                      >
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div class="row justify-content-center">
+                  <div class="col-sm-11">
+                    <label for="addJobProfile"
+                      ><em
+                        ><small
+                          >&nbsp;&nbsp; Role & Responsibilities
+                        </small></em
+                      ></label
+                    >
+                    <textarea
+                      ngModel
+                      id="addJobProfile"
+                      rows="3"
+                      class="form-control"
+                      empModelJobRole="ngModel"
+                      name="empModelJobRole"
+                    >
+                    </textarea>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <div class="row">
+              <div class="col-sm-4">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-success"
+                  data-dismiss="modal"
+                  [disabled]="!addEmploymentForm.valid"
+                  (click)="addEmployment(addEmploymentForm)"
+                >
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Edit Employment Modal-->
+    <div
+      id="editEmploymentModal"
+      class="modal fade animate__animated animate__fadeInDown"
+      role="dialog"
+      [ngStyle]="{ display: showEditEmploymentModel ? 'block' : 'none' }"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" style="color: white">Employment Details</h5>
+            <button
+              type="button btn-secondary"
+              class="close"
+              data-dismiss="modal"
+              style="color: white"
+            >
+              &times;
+            </button>
+          </div>
+          <div *ngIf="showEmploymentDetailsScreen" class="form-group row">
+            <div class="col-sm-8 offset-sm-2">
+              <h6 style="text-align: center; color: black">
+                Fetching latest details....
+              </h6>
+              <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            </div>
+          </div>
+          <div class="modal-body">
+            <form #editEmploymentForm="ngForm">
+              <div class="form-group">
+                <div class="row justify-content-center">
+                  <div class="col-sm-5">
+                    <label for="editCompanyDesignation"
+                      ><em><small>&nbsp;&nbsp; Designation</small></em></label
+                    >
+                    <input
+                      type="text"
+                      id="editCompanyDesignation"
+                      class="form-control"
+                      [(ngModel)]="userEmpDetailsModel.designation"
+                      name="empModelDesignation"
+                      #employeeEditDesignation="ngModel"
+                      pattern="^[^-\s][a-zA-Z_ ]*$"
+                      maxlength="36"
+                      required
+                    />
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="
+                        employeeEditDesignation.touched &&
+                        employeeEditDesignation.errors?.required
+                      "
+                    >
+                      <small style="color: red"
+                        >Employee designation is required</small
+                      >
+                    </div>
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="employeeEditDesignation.errors?.pattern"
+                    >
+                      <small style="color: red"
+                        >Employee designation has invalid characters</small
+                      >
+                    </div>
+                  </div>
+                  <div class="col-sm-5 offset-sm-1">
+                    <label for="editCompanyOrganization"
+                      ><em><small>&nbsp;&nbsp; Organization</small></em></label
+                    >
+                    <input
+                      type="text"
+                      id="editCompanyOrganization"
+                      class="form-control"
+                      [(ngModel)]="userEmpDetailsModel.organization"
+                      name="empModelOrganization"
+                      #employeeEditOrganization="ngModel"
+                      pattern="^[^-\s][a-zA-Z_ ]*$"
+                      maxlength="36"
+                      required
+                    />
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="
+                        employeeEditOrganization.touched &&
+                        employeeEditOrganization.errors?.required
+                      "
+                    >
+                      <small style="color: red"
+                        >Employee organization is required</small
+                      >
+                    </div>
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="employeeEditOrganization.errors?.pattern"
+                    >
+                      <small style="color: red"
+                        >Employee organization has invalid characters</small
+                      >
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div class="row justify-content-center">
+                  <div class="col-sm-5">
+                    <label for="editStartingMonth"
+                      ><em
+                        ><small>&nbsp;&nbsp;Started Working From</small></em
+                      ></label
+                    >
+                    <select
+                      id="editStartingMonth"
+                      class="form-control"
+                      [(ngModel)]="userEmpDetailsModel.startMonth"
+                      name="empModelStartMonth"
+                      #employeeEditStartMonth="ngModel"
+                      required
+                    >
+                      <option *ngFor="let month of months" value="{{ month }}">
+                        {{ month }}
+                      </option>
+                    </select>
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="
+                        employeeEditStartMonth.touched &&
+                        employeeEditStartMonth.errors?.required
+                      "
+                    >
+                      <small style="color: red"
+                        >Job starting month is required</small
+                      >
+                    </div>
+                  </div>
+                  <div class="col-sm-5 offset-sm-1 mt-2">
+                    <label for="editStartingYear"></label>
+                    <select
+                      id="editStartingYear"
+                      class="form-control"
+                      [(ngModel)]="userEmpDetailsModel.startYear"
+                      name="empModelStartYear"
+                      #employeeEditStartYear="ngModel"
+                      required
+                    >
+                      <option *ngFor="let year of years" value="{{ year }}">
+                        {{ year }}
+                      </option>
+                    </select>
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="
+                        employeeEditStartYear.touched &&
+                        employeeEditStartYear.errors?.required
+                      "
+                    >
+                      <small style="color: red"
+                        >Job starting year is required</small
+                      >
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div class="row justify-content-left">
+                  <div class="col-sm-5 ml-5 custom-control custom-checkbox">
+                    <input
+                      type="checkbox"
+                      id="editPresentCompany"
+                      class="custom-control-input"
+                      [(ngModel)]="userEmpDetailsModel.currentJob"
+                      name="empEditModelCurrentJob"
+                      #empEditModelCurrentJob="ngModel"
+                    />
+                    <label class="custom-control-label" for="editPresentCompany"
+                      ><em
+                        ><small>Are you still working here?</small></em
+                      ></label
+                    >
+                  </div>
+                </div>
+                <br />
+                <div
+                  *ngIf="!userEmpDetailsModel.currentJob"
+                  class="row justify-content-center"
+                >
+                  <div class="col-sm-5">
+                    <label for="editEndingMonth"
+                      ><em><small>&nbsp;&nbsp;Worked till</small></em></label
+                    >
+                    <select
+                      id="editEndingMonth"
+                      class="form-control"
+                      [(ngModel)]="userEmpDetailsModel.endMonth"
+                      name="empModelEndMonth"
+                      #employeeEditEndMonth="ngModel"
+                      required
+                    >
+                      <option *ngFor="let month of months" value="{{ month }}">
+                        {{ month }}
+                      </option>
+                    </select>
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="
+                        employeeEditEndMonth.touched &&
+                        employeeEditEndMonth.errors?.required
+                      "
+                    >
+                      <small style="color: red"
+                        >Job end month is required</small
+                      >
+                    </div>
+                  </div>
+                  <div class="col-sm-5 offset-sm-1 mt-2">
+                    <label for="editEndingYear"></label>
+                    <select
+                      id="editEndingYear"
+                      class="form-control"
+                      [(ngModel)]="userEmpDetailsModel.endYear"
+                      name="empModelEndYear"
+                      #employeeEditEndYear="ngModel"
+                      required
+                    >
+                      <option *ngFor="let year of years" value="{{ year }}">
+                        {{ year }}
+                      </option>
+                    </select>
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="
+                        employeeEditEndYear.touched &&
+                        employeeEditEndYear.errors?.required
+                      "
+                    >
+                      <small style="color: red">Job end year is required</small>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  *ngIf="userEmpDetailsModel.currentJob"
+                  class="row justify-content-left"
+                >
+                  <div class="col-sm-5 ml-4 pl-4">
+                    <label for="noticePeriod"
+                      ><em><small>&nbsp;&nbsp;Notice Period</small></em></label
+                    >
+                    <select
+                      id="noticePeriod"
+                      class="form-control"
+                      [(ngModel)]="userEmpDetailsModel.noticePeriod"
+                      name="empModelNoticePeriod"
+                      #employeeEditNoticePeriod="ngModel"
+                      required
+                    >
+                      <option
+                        *ngFor="let notice of notices"
+                        value="{{ notice }}"
+                      >
+                        {{ notice }}
+                      </option>
+                    </select>
+                    <div
+                      class="row ml-3 mt-1"
+                      *ngIf="
+                        employeeEditNoticePeriod.touched &&
+                        employeeEditNoticePeriod.errors?.required
+                      "
+                    >
+                      <small style="color: red"
+                        >Notice period is required</small
+                      >
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div class="row justify-content-center">
+                  <div class="col-sm-11">
+                    <label for="editJobProfile"
+                      ><em
+                        ><small
+                          >&nbsp;&nbsp; Role & Responsibilities
+                        </small></em
+                      ></label
+                    >
+                    <textarea
+                      id="editJobProfile"
+                      rows="3"
+                      class="form-control"
+                      [(ngModel)]="userEmpDetailsModel.jobRole"
+                      name="empModelJobRole"
+                    >
+                    </textarea>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <div class="row">
+              <div class="col-sm-4">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-success"
+                  data-dismiss="modal"
+                  [disabled]="!editEmploymentForm.valid"
+                  (click)="editEmployment(editEmploymentForm)"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-notification></app-notification>
+  </body>
+</html>

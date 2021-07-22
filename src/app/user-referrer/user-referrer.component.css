@@ -1,0 +1,140 @@
+body {
+  background-color: #f5f5f5;
+}
+#headerContainer {
+  background-image: url("/assets/images/user_refer_head.jpg");
+  background-size: cover;
+  min-height: 30vh;
+}
+#addReferJobButton {
+  background-color: #455a64;
+  color: white;
+}
+#addReferJobButton:hover {
+  background-color: #37474f;
+  color: white;
+}
+#scrollUp {
+  border-color: #37474f;
+  color: #37474f;
+}
+#scrollUp:hover {
+  background-color: #37474f;
+  color: white;
+}
+.modal-header {
+  background-color: #37474f;
+  background-size: cover;
+  font-family: "Candara", cursive, sans-serif;
+}
+.addSkillButton {
+  border-radius: 10px;
+}
+.editAddSkillButton {
+  border-radius: 10px;
+}
+.chip {
+  display: inline-block;
+  padding: 0 10px;
+  height: 35px;
+  font-size: 14px;
+  line-height: 35px;
+  border-radius: 15px;
+  background-color: #546e7a;
+}
+.chip1 {
+  display: inline-block;
+  padding: 0 8px;
+  height: 25px;
+  font-size: 12px;
+  line-height: 25px;
+  border-radius: 5px;
+  background-color: #546e7a;
+}
+.form-control {
+  border-radius: 5px;
+}
+.form-control.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+.card {
+  border-radius: 5px;
+  background-color: #37474f;
+  background-size: cover;
+}
+.dropdown-menu {
+  background-color: #37474f;
+  color: white;
+}
+.cardDropBtn {
+  color: white;
+}
+.cardDropBtn:hover {
+  background-color: #546e7a;
+  color: white;
+}
+li {
+  font-family: "Candara", cursive, sans-serif;
+}
+p,
+a,
+h2,
+h5,
+h6 {
+  font-family: "Candara", cursive, sans-serif;
+}
+input[type="text"] {
+  font-family: "Candara", cursive, sans-serif;
+}
+input[type="select"] {
+  font-family: "Candara", cursive, sans-serif;
+}
+select {
+  font-family: "Candara", cursive, sans-serif;
+}
+a:focus {
+  box-shadow: none;
+}
+input[type="checkbox"] {
+  display: none;
+}
+input[type="checkbox"] + label {
+  position: relative;
+  padding-left: 20px;
+  font-family: "Candara", cursive, sans-serif;
+  color: black;
+  cursor: pointer;
+}
+input[type="checkbox"] + label:before {
+  content: "";
+  display: block;
+  width: 15px;
+  height: 15px;
+  border: 2px solid #37474f;
+  position: absolute;
+  left: 0;
+  top: 5px;
+  -webkit-transition: all 0.12s, border-color 0.08s;
+  transition: all 0.12s, border-color 0.08s;
+}
+input[type="checkbox"]:checked + label:before {
+  width: 10px;
+  top: 0px;
+  left: 1px;
+  border-radius: 0;
+  opacity: 1;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+button:focus {
+  outline: 0;
+}
+.clearAll {
+  color: #37474f;
+  cursor: pointer;
+}
+.clearAll:hover {
+  text-decoration: underline;
+}

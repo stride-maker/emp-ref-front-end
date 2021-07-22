@@ -1,0 +1,100 @@
+#firstContainer {
+  background-image: url("/assets/images/profile_head.jpg");
+  background-size: cover;
+}
+#accordianbutton,
+#addEmployementButton {
+  background-color: #4e342e;
+}
+#accordianbutton:hover,
+#addEmployementButton:hover {
+  background-color: #6d4c41;
+  color: white;
+}
+#accordianbutton:focus,
+#addEmployementButton:focus {
+  background-color: #4e342e;
+}
+#accordianbutton:active,
+#addEmployementButton:active {
+  background-color: #6d4c41;
+  color: white;
+}
+#employmentCard {
+  background-color: #f5f5f5;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+.container {
+  background-color: #4e342e;
+  border-radius: 15px;
+}
+.pointer {
+  cursor: pointer;
+}
+a {
+  color: white;
+}
+#resumeButton,
+#employmentButton {
+  color: #4e342e;
+}
+h2,
+h3,
+h6,
+h5,
+button {
+  font-family: "Candara", cursive, sans-serif;
+  color: white;
+}
+p {
+  background: #eee;
+  border: 1px solid #ccc;
+  margin: 20px 0;
+  padding: 30px;
+}
+.modal-content {
+  border-radius: 10px;
+}
+.modal-header {
+  background-color: #8d6e63;
+}
+.modal-footer {
+  background-color: #8d6e63;
+}
+.form-control {
+  border-radius: 10px;
+}
+.chip {
+  display: inline-block;
+  padding: 0 10px;
+  height: 35px;
+  font-size: 14px;
+  line-height: 35px;
+  border-radius: 15px;
+  background-color: #e0e0e0;
+}
+.form-control {
+  border-radius: 10px;
+}
+.form-control.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+.mat-progress-bar {
+  height: 4px;
+}
+input[type="text"] {
+  font-family: "Candara", cursive, sans-serif;
+}
+input[type="select"] {
+  font-family: "Candara", cursive, sans-serif;
+}
+select {
+  font-family: "Candara", cursive, sans-serif;
+}
+input[type="date"] {
+  font-family: "Candara", cursive, sans-serif;
+}
+button:focus {
+  outline: 0;
+}

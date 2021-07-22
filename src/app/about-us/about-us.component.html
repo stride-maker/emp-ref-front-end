@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> </head>
+
+  <body>
+    <div class="aboutus">
+      <!-- Header Section -->
+      <nav class="navbar navbar-expand-xl navbar-dark">
+        <a routerLink="" class="navbar-brand ml-1"
+          ><img
+            src="/assets/images/logo.png"
+            width="90px"
+            height="90px"
+            alt="FootstepsBrandLogo"
+        /></a>
+        <button
+          type="button"
+          class="navbar-toggler"
+          data-toggle="collapse"
+          data-target="#navbarCollapse"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item ml-4">
+              <a routerLink="/home" class="btn btn-sm btn-outline-dark px-3"
+                >HOME</a
+              >
+            </li>
+            <li class="nav-item ml-4">
+              <a
+                routerLink="/about-us"
+                class="btn btn-sm btn-outline-dark px-3 active"
+                >ABOUT US</a
+              >
+            </li>
+            <li class="nav-item ml-4">
+              <a
+                routerLink="/job-seeker"
+                class="btn btn-sm btn-outline-dark px-3"
+                >JOB SEEKER</a
+              >
+            </li>
+            <li class="nav-item ml-4">
+              <a
+                routerLink="/job-referrer"
+                class="btn btn-sm btn-outline-dark px-3"
+                >JOB REFERRER</a
+              >
+            </li>
+            <li class="nav-item dropdown ml-4">
+              <a
+                class="btn btn-sm btn-outline-dark dropdown-toggle px-3"
+                href=""
+                data-toggle="dropdown"
+              >
+                MORE
+              </a>
+              <div class="dropdown-menu">
+                <a routerLink="/contact-us" class="btn btn-sm dropdown-item"
+                  >Contact Us</a
+                >
+              </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item ml-4">
+              <a routerLink="/register" class="btn btn-sm btn-outline-dark px-3"
+                >REGISTER &nbsp;&nbsp; <i class="fa fa-user-plus"></i
+              ></a>
+            </li>
+            <li class="nav-item ml-4">
+              <a routerLink="/login" class="btn btn-sm btn-outline-dark px-3"
+                >LOGIN &nbsp;&nbsp; <i class="fa fa-sign-in"></i
+              ></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Data Section-->
+      <div class="container-fluid">
+        <hr />
+        <div class="row justify-content-center">
+          <div class="col-sm-9">
+            <h1><em>Li'l bit about us..</em></h1>
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+          <div class="col-sm-7">
+            <br />
+            <p class="mx-5 text-justify">
+              Footsteps is an organized career site that offers a simplified
+              forum for job seekers to uncover the secret positions alluded in
+              their target organizations by company employees. <br />We act as
+              an intermediate stage strives for excellence and keep sharing
+              referred job opportunities on this platform and we do not exchange
+              the referrer information to applicable applicants which restricts
+              them from bugging referrer now and then. We enable Jobseeker to
+              browse and apply jobs posted by employees of their dream company
+              and track the application status.
+            </p>
+            <br />
+            <h5 class="mx-5 text-justify">
+              <strong>How it works?</strong>
+            </h5>
+            <p class="mx-5 text-justify">
+              As per the job description, the referrer may post a referral
+              filling out the necessary information required by the employer.
+              Jobseeker will apply to these positions directly and monitor the
+              progress of the request. In order to receive their employee
+              referral incentive, the referrer can pick the candidate according
+              to the company's qualification criteria and tap them on behalf of
+              their current employer.
+            </p>
+          </div>
+          <div class="col-sm-3">
+            <br />
+            <img
+              src="/assets/images/aboutus.png"
+              width="375px"
+              height="230px"
+            />
+          </div>
+        </div>
+        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+        <div class="row">
+          <div class="col-sm-10 offset-sm-1">
+            <h5 class="mx-5">
+              <strong>Advantages in using our job platform</strong>
+            </h5>
+            <p class="mx-5 text-justify">
+              Some of the key reasons for using our work site<br />
+            </p>
+            <ul>
+              <li class="benefits">Ease of use</li>
+              <li class="benefits">Encourages Demand</li>
+              <li class="benefits">Build Engagement</li>
+              <li class="benefits">Quality of Hire</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row"><br /><br /></div>
+      </div>
+    </div>
+    <app-footer></app-footer>
+  </body>
+</html>
