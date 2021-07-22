@@ -1,8 +1,6 @@
-# FootstepsFront
+# Employee Referral Front End Application (HTML, CSS, Angular 7)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.0.
-
-![Build](https://github.com/pilot-footsteps/footsteps-front/workflows/Build/badge.svg?branch=master)
 
 ## Development server
 
